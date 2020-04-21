@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class Identity : Utility.Activation
+    public sealed class Identity : Utility.BaseActivation
     {
         public Identity(IdentitySettings settings = null) : base(settings) { }
 

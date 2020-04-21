@@ -10,7 +10,7 @@ namespace Vortex.Cost
     /// <summary>
     /// "Quadratic Cost": Also known as "Mean Squared Error" or "Maximum Likelihood" or "Sum Squared Error"
     /// </summary>
-    public class QuadraticCost : Utility.Cost
+    public class QuadraticCost : Utility.BaseCost
     {
         public QuadraticCost(QuadraticCostSettings settings) : base(settings) { }
         

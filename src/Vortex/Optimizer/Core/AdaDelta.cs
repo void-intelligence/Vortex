@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class AdaDelta : Utility.Optimizer
+    public sealed class AdaDelta : Utility.BaseOptimizer
     {
         public AdaDelta(AdaDeltaSettings settings) : base(settings)
         {

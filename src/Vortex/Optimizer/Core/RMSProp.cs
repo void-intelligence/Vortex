@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class RMSProp : Utility.Optimizer
+    public sealed class RMSProp : Utility.BaseOptimizer
     {
         public RMSProp(RMSPropSettings settings) : base(settings)
         {

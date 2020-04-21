@@ -5,7 +5,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Layer
 {
-    public class FullyConnected : Layer.Utility.Layer
+    public class FullyConnected : Layer.Utility.BaseLayer
     {
     }
 }

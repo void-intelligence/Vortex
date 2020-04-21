@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class AdaGrad : Utility.Optimizer
+    public sealed class AdaGrad : Utility.BaseOptimizer
     {
         public AdaGrad(AdaGradSettings settings): base(settings)
         {

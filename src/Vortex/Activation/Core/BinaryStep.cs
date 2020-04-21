@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class BinaryStep : Utility.Activation
+    public sealed class BinaryStep : Utility.BaseActivation
     {
         public BinaryStep(BinaryStepSettings settings = null) : base(settings) { }
 

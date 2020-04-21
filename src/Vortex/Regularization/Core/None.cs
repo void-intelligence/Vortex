@@ -5,7 +5,7 @@ using Vortex.Regularization.Utility;
 
 namespace Vortex.Regularization
 {
-    public sealed class None : Utility.Regularization
+    public sealed class None : Utility.BaseRegularization
     {
         public None() : base(null) { }
 

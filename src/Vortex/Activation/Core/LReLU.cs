@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class LReLU : Utility.Activation
+    public sealed class LReLU : Utility.BaseActivation
     {
         public double Alpha { get; set; }
 

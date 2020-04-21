@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class Mish : Utility.Activation
+    public sealed class Mish : Utility.BaseActivation
     {
         public Mish(MishSettings settings = null) : base(settings) { }
 

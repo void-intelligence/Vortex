@@ -12,7 +12,7 @@ namespace Vortex.Layer.Utility
     /// <summary>
     /// Base of all Layer classes
     /// </summary>
-    public abstract class Layer
+    public abstract class BaseLayer
     {
     }
 

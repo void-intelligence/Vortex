@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class SeLU : Utility.Activation
+    public sealed class SeLU : Utility.BaseActivation
     {
         public SeLU(SeLUSettings settings = null) : base(settings) { }
 

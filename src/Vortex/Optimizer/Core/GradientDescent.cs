@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class GradientDescent : Utility.Optimizer
+    public sealed class GradientDescent : Utility.BaseOptimizer
     {
         public GradientDescent(GradientDescentSettings settings) : base(settings)
         {

@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class NesterovMomentum : Utility.Optimizer
+    public sealed class NesterovMomentum : Utility.BaseOptimizer
     {
         public NesterovMomentum(NesterovMomentumSettings settings) : base(settings)
         {

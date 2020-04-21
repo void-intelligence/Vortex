@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class Logit : Utility.Activation
+    public sealed class Logit : Utility.BaseActivation
     {
         public Logit(LogitSettings settings = null) : base(settings) { }
 

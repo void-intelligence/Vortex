@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class Softsign : Utility.Activation
+    public sealed class Softsign : Utility.BaseActivation
     {
         public Softsign(SoftsignSettings settings = null) : base(settings) { }
 

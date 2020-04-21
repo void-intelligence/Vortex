@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class Nadam : Utility.Optimizer
+    public sealed class Nadam : Utility.BaseOptimizer
     {
         public Nadam(NadamSettings settings) : base(settings)
         {

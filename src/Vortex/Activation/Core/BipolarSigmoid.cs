@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class BipolarSigmoid : Utility.Activation
+    public sealed class BipolarSigmoid : Utility.BaseActivation
     {
         public BipolarSigmoid(BipolarSigmoidSettings settings = null) : base(settings) { }
 

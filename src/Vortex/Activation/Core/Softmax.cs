@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class Softmax : Utility.Activation
+    public sealed class Softmax : Utility.BaseActivation
     {
         public Softmax(SoftmaxSettings settings = null) : base(settings) { }
 

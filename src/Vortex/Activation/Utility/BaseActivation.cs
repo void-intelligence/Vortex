@@ -4,9 +4,9 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation.Utility
 {
-    public abstract class Activation
+    public abstract class BaseActivation
     {
-        public Activation(ActivationSettings settings) { }
+        public BaseActivation(ActivationSettings settings) { }
 
         public abstract Matrix Forward(Matrix input);
 

@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class Adamax : Utility.Optimizer
+    public sealed class Adamax : Utility.BaseOptimizer
     {
         public Adamax(AdamaxSettings settings) : base(settings)
         {

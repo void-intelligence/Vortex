@@ -10,7 +10,7 @@ namespace Vortex.Cost
     /// <summary>
     /// "Cross Entropy Cost": Also known as "Bernoulli negative log-likelihood" and "Binary Cross-Entropy"
     /// </summary>
-    public class CrossEntropyCost : Utility.Cost
+    public class CrossEntropyCost : Utility.BaseCost
     {
         public CrossEntropyCost(CrossEntropyCostSettings settings) : base(settings) { }
 

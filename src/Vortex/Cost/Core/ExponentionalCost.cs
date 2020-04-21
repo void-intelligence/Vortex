@@ -10,7 +10,7 @@ namespace Vortex.Cost
     /// <summary>
     /// "Exponential Cost"
     /// </summary>
-    public class ExponentionalCost : Utility.Cost
+    public class ExponentionalCost : Utility.BaseCost
     {
         public double Tao { get; set; }
 

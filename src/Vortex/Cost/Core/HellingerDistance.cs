@@ -10,7 +10,7 @@ namespace Vortex.Cost
     /// <summary>
     /// "Hellinger Distance": needs to have positive values, and ideally values between 0 and 1. The same is true for the following divergences.
     /// </summary>
-    public class HellingerDistance : Utility.Cost
+    public class HellingerDistance : Utility.BaseCost
     {
         public HellingerDistance(HellingerDistanceSettings settings) : base(settings) { }
         

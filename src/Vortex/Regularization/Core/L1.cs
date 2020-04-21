@@ -8,7 +8,7 @@ namespace Vortex.Regularization
     /// <summary>
     /// Lasso Regularization
     /// </summary>
-    public sealed class L1 : Utility.Regularization
+    public sealed class L1 : Utility.BaseRegularization
     {
         public L1(L1Settings settings) : base(settings) { Lambda = settings.Lambda; }
 

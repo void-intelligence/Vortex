@@ -10,7 +10,7 @@ namespace Vortex.Cost
     /// <summary>
     /// "Kullback Leibler Divergence" Also known as "Information Divergence", "Information Gain", "Relative entropy", "KLIC", or "KL Divergence".
     /// </summary>
-    public class KullbackLeiblerDivergence : Utility.Cost
+    public class KullbackLeiblerDivergence : Utility.BaseCost
     {
         public KullbackLeiblerDivergence(KullbackLeiblerDivergenceSettings settings) : base(settings) { }
 

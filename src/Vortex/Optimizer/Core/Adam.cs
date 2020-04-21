@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class Adam : Utility.Optimizer
+    public sealed class Adam : Utility.BaseOptimizer
     {
         public Adam(AdamSettings settings) : base(settings)
         {

@@ -8,7 +8,7 @@ namespace Vortex.Regularization
     /// <summary>
     /// Ridge Regularization
     /// </summary>
-    public sealed class L2 : Utility.Regularization
+    public sealed class L2 : Utility.BaseRegularization
     {
         public L2(L2Settings settings) : base(settings) { Lambda = settings.Lambda; }
 

@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class ReLU : Utility.Activation
+    public sealed class ReLU : Utility.BaseActivation
     {
         public ReLU(ReLUSettings settings = null) : base(settings) { }
 

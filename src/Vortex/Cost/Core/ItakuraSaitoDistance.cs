@@ -10,7 +10,7 @@ namespace Vortex.Cost
     /// <summary>
     /// "Itakura Saito Distance" cost function
     /// </summary>
-    public class ItakuraSaitoDistance : Utility.Cost
+    public class ItakuraSaitoDistance : Utility.BaseCost
     {
         public ItakuraSaitoDistance(ItakuraSaitoDistanceSettings settings) : base(settings) { }
 

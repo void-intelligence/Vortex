@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class HardTanh : Utility.Activation
+    public sealed class HardTanh : Utility.BaseActivation
     {
         public HardTanh(HardTanhSettings settings = null) : base(settings) { }
 

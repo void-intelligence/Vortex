@@ -5,7 +5,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class Momentum : Utility.Optimizer
+    public sealed class Momentum : Utility.BaseOptimizer
     {
         public double Tao { get; set; }
 

@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation
 {
-    public sealed class Arctan : Utility.Activation
+    public sealed class Arctan : Utility.BaseActivation
     {
         public Arctan(ArctanSettings settings = null) : base(settings) { }
 

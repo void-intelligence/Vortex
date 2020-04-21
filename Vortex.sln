@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex", "src\Vortex\Vortex.csproj", "{33830DE8-5B8E-4721-925A-7D3547C27552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vortex", "src\Vortex\Vortex.csproj", "{33830DE8-5B8E-4721-925A-7D3547C27552}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vortex-Tests", "src\Vortex-Tests\Vortex-Tests.csproj", "{6A620D68-A0D9-417C-80F1-DBBD700DE019}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vortex-Tests", "src\Vortex-Tests\Vortex-Tests.csproj", "{6A620D68-A0D9-417C-80F1-DBBD700DE019}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

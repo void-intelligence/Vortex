@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Optimizer\Core\AdaDelta.cs~RF12757067.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="VI-Nomad" Version="1.0.0" />
   </ItemGroup>
 

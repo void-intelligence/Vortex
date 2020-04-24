@@ -21,7 +21,7 @@ namespace Vortex.Regularization
 
     public sealed class L1Settings : RegularizationSettings
     {
-        public L1Settings(double lambda, double dropout = 0.0) : base(dropout)
+        public L1Settings(double lambda)
         {
             Lambda = lambda;
         }

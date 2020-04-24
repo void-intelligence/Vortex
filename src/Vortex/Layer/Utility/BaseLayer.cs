@@ -16,7 +16,6 @@ namespace Vortex.Layer.Utility
     /// </summary>
     public abstract class BaseLayer
     {
-        public float DropoutChance; // [0.0, 1.0]
         public float RegularizationValue { get; protected set; }
         public LayerSettings Settings { get; private set; }
         public int NeuronCount { get; private set; }
@@ -39,9 +38,6 @@ namespace Vortex.Layer.Utility
             Settings = layerSettings;
 
             NeuronCount = Settings.NeuronCount;
-
-            DropoutChance = (float)Settings.RegularizationFunctionSettings.Dropout;
-            DropoutChance = Math.Clamp(DropoutChance, 0.0f, 1.0f);
 
             // Activation Setup
             ActivationFunction = (Settings.ActivationFunctionSettings.Type()) switch
@@ -84,9 +80,11 @@ namespace Vortex.Layer.Utility
 
         // All Layer Optimization Calculations
         public abstract void Optimize();
+
+        public abstract ELayerType Type();
     }
 
-    public class LayerSettings
+    public abstract class LayerSettings
     {
         public int NeuronCount { get; private set; }
         public ActivationSettings ActivationFunctionSettings { get; private set; }
@@ -98,5 +96,7 @@ namespace Vortex.Layer.Utility
             ActivationFunctionSettings = activationSettings;
             RegularizationFunctionSettings = regularizationSettings;
         }
+
+        public abstract ELayerType Type();
     }
 }

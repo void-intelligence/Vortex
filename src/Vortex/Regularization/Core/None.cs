@@ -18,7 +18,7 @@ namespace Vortex.Regularization
 
     public sealed class NoneSettings : RegularizationSettings
     {
-        public NoneSettings(double dropout = 0.0) : base(dropout)
+        public NoneSettings()
         {
         }
 

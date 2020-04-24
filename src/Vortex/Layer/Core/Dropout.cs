@@ -8,17 +8,23 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Layer
 {
-    public class FullyConnected : BaseLayer
+    public class Dropout : BaseLayer
     {
-        public FullyConnected(LayerSettings settings, BaseOptimizer optimizer) 
+        public float DropoutChance;
+
+        public Dropout(DropoutSettings settings, BaseOptimizer optimizer)
             : base(settings, optimizer)
         {
+            DropoutChance = settings.DropoutChacne;
         }
 
         public override Matrix Forward(Matrix inputs)
         {
             // Calculate Regularization Value On W and B
             RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]) + (float)RegularizationFunction.CalculateNorm(Params["B"]);
+
+            // Dropout
+            inputs.InDropout(DropoutChance);
 
             // Calculate Feed Forward Operation
             Params["X"] = inputs;
@@ -48,16 +54,19 @@ namespace Vortex.Layer
             Params["B"] = Params["B"] - deltaB;
         }
 
-        public override ELayerType Type() => ELayerType.FullyConnected;
+        public override ELayerType Type() => ELayerType.Dropout;
     }
 
-    public class FullyConnectedSettings: LayerSettings
+    public class DropoutSettings : LayerSettings
     {
-        public FullyConnectedSettings(int neuronCount, ActivationSettings activation, RegularizationSettings regularization)
+        public float DropoutChacne { get; set; }
+
+        public DropoutSettings(int neuronCount, ActivationSettings activation, RegularizationSettings regularization, float dropoutChance = 0.5f)
             : base(neuronCount, activation, regularization)
         {
+            DropoutChacne = dropoutChance;
         }
 
-        public override ELayerType Type() => ELayerType.FullyConnected;
+        public override ELayerType Type() => ELayerType.Dropout;
     }
 }

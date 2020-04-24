@@ -31,5 +31,6 @@ namespace Vortex.Optimizer
         public double Alpha { get; set; }
         public double BetaPrimary { get; set; }
         public double BetaSecondary { get; set; }
+        public override EOptimizerType Type() => EOptimizerType.Adamax;
     }
 }

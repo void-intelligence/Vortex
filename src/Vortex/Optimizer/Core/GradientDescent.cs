@@ -33,6 +33,7 @@ namespace Vortex.Optimizer
         public GradientDescentSettings(double alpha)
         {
             Alpha = alpha;
-        }
+            public override EOptimizerType Type() => EOptimizerType.GradientDescent;
+    }
     }
 }

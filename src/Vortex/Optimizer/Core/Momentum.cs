@@ -34,5 +34,6 @@ namespace Vortex.Optimizer
     {
         public double Alpha { get; set; }
         public double Tao { get; set; }
+        public override EOptimizerType Type() => EOptimizerType.Momentum;
     }
 }

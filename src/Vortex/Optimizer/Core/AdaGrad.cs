@@ -31,5 +31,6 @@ namespace Vortex.Optimizer
     {
         public double Alpha { get; set; }
         public double Epsilon { get; set; }
+        public override EOptimizerType Type() => EOptimizerType.AdaGrad;
     }
 }

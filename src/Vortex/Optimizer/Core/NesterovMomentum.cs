@@ -30,5 +30,6 @@ namespace Vortex.Optimizer
     public sealed class NesterovMomentumSettings : OptimizerSettings
     {
         public double Alpha { get; set; }
+        public override EOptimizerType Type() => EOptimizerType.NesterovMomentum;
     }
 }

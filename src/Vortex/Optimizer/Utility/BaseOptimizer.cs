@@ -15,5 +15,6 @@ namespace Vortex.Optimizer.Utility
 
     public abstract class OptimizerSettings
     {
+        public abstract EOptimizerType Type();
     }
 }

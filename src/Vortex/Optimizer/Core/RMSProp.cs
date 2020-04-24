@@ -5,12 +5,12 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer
 {
-    public sealed class RMSProp : Utility.BaseOptimizer
+    public sealed class RmsProp : Utility.BaseOptimizer
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }
 
-        public RMSProp(RMSPropSettings settings) : base(settings)
+        public RmsProp(RmsPropSettings settings) : base(settings)
         {
             Rho = settings.Rho;
             Epsilon = settings.Epsilon;
@@ -24,13 +24,13 @@ namespace Vortex.Optimizer
         public override EOptimizerType Type() => EOptimizerType.RMSProp;
     }
 
-    public sealed class RMSPropSettings : OptimizerSettings
+    public sealed class RmsPropSettings : OptimizerSettings
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.RMSProp;
 
-        public RMSPropSettings(double alpha, double rho, double epsilon) : base(alpha)
+        public RmsPropSettings(double alpha, double rho, double epsilon) : base(alpha)
         {
             Rho = rho;
             Epsilon = epsilon;

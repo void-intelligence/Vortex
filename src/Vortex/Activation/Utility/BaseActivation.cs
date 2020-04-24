@@ -6,7 +6,7 @@ namespace Vortex.Activation.Utility
 {
     public abstract class BaseActivation
     {
-        public BaseActivation(ActivationSettings settings) { }
+        protected BaseActivation(ActivationSettings settings) { }
 
         public abstract Matrix Forward(Matrix input);
 

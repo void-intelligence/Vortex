@@ -14,11 +14,11 @@ namespace Vortex.Cost.Utility
     /// </summary>
     public abstract class BaseCost
     {
-        public BaseCost(CostSettings settings) { }
+        protected BaseCost(CostSettings settings) { }
         
-        public abstract double Forward(Matrix Actual, Matrix Expected);
+        public abstract double Forward(Matrix actual, Matrix expected);
 
-        public abstract Matrix Backward(Matrix Actual, Matrix Expected);
+        public abstract Matrix Backward(Matrix Actual, Matrix expected);
 
         public abstract ECostType Type();
 

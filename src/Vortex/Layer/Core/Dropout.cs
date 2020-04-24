@@ -15,7 +15,7 @@ namespace Vortex.Layer
         public Dropout(DropoutSettings settings, BaseOptimizer optimizer)
             : base(settings, optimizer)
         {
-            DropoutChance = settings.DropoutChacne;
+            DropoutChance = settings.DropoutChance;
         }
 
         public override Matrix Forward(Matrix inputs)
@@ -59,12 +59,12 @@ namespace Vortex.Layer
 
     public class DropoutSettings : LayerSettings
     {
-        public float DropoutChacne { get; set; }
+        public float DropoutChance { get; set; }
 
         public DropoutSettings(int neuronCount, ActivationSettings activation, RegularizationSettings regularization, float dropoutChance = 0.5f)
             : base(neuronCount, activation, regularization)
         {
-            DropoutChacne = dropoutChance;
+            DropoutChance = dropoutChance;
         }
 
         public override ELayerType Type() => ELayerType.Dropout;

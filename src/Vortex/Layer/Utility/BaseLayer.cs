@@ -25,7 +25,7 @@ namespace Vortex.Layer.Utility
         public Dictionary<string, Matrix> Params { get; private set; }
         public Dictionary<string, Matrix> Grads { get; private set; }
 
-        public BaseLayer(LayerSettings layerSettings, BaseOptimizer optimizer)
+        protected BaseLayer(LayerSettings layerSettings, BaseOptimizer optimizer)
         {
             RegularizationValue = 0.0f;
 
@@ -90,7 +90,7 @@ namespace Vortex.Layer.Utility
         public ActivationSettings ActivationFunctionSettings { get; private set; }
         public RegularizationSettings RegularizationFunctionSettings { get; private set; }
 
-        public LayerSettings(int neuronCount, ActivationSettings activationSettings, RegularizationSettings regularizationSettings) 
+        protected LayerSettings(int neuronCount, ActivationSettings activationSettings, RegularizationSettings regularizationSettings) 
         {
             NeuronCount = neuronCount;
             ActivationFunctionSettings = activationSettings;

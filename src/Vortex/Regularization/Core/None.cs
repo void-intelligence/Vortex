@@ -7,7 +7,7 @@ namespace Vortex.Regularization
 {
     public sealed class None : Utility.BaseRegularization
     {
-        public None(NoneSettings settings) : base(settings) { }
+        public None(NoneSettings settings = null) : base(settings) { }
 
         public override double CalculateNorm(Matrix X) => 0;
 
@@ -18,10 +18,6 @@ namespace Vortex.Regularization
 
     public sealed class NoneSettings : RegularizationSettings
     {
-        public NoneSettings()
-        {
-        }
-
         public override ERegularizationType Type() => ERegularizationType.None;
     }
 }

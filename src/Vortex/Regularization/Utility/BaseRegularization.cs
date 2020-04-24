@@ -8,9 +8,7 @@ namespace Vortex.Regularization.Utility
     {
         public double Lambda { get; set; }
 
-        public BaseRegularization(RegularizationSettings settings) 
-        {
-        }
+        protected BaseRegularization(RegularizationSettings settings) {}
 
         public abstract double CalculateNorm(Matrix input);
 
@@ -19,7 +17,7 @@ namespace Vortex.Regularization.Utility
 
     public abstract class RegularizationSettings
     {
-        public RegularizationSettings()
+        protected RegularizationSettings()
         {
         }
 

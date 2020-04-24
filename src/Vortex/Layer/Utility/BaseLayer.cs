@@ -16,6 +16,7 @@ namespace Vortex.Layer.Utility
     /// </summary>
     public abstract class BaseLayer
     {
+        public float DropoutChance; // [0.0, 1.0]
         public float RegularizationValue { get; protected set; }
         public LayerSettings Settings { get; private set; }
         public int NeuronCount { get; private set; }
@@ -38,19 +39,22 @@ namespace Vortex.Layer.Utility
             Settings = layerSettings;
 
             NeuronCount = Settings.NeuronCount;
-            
+
+            DropoutChance = (float)Settings.RegularizationFunctionSettings.Dropout;
+            DropoutChance = Math.Clamp(DropoutChance, 0.0f, 1.0f);
+
             // Activation Setup
-            ActivationFunction = (Settings.ActivationFunction.Type()) switch
+            ActivationFunction = (Settings.ActivationFunctionSettings.Type()) switch
             {
                 EActivationType.Arctan => new Arctan(),
                 EActivationType.BinaryStep => new BinaryStep(),
                 EActivationType.BipolarSigmoid => new BipolarSigmoid(),
-                EActivationType.ELU => new ELU((ELUSettings)Settings.ActivationFunction),
+                EActivationType.ELU => new ELU((ELUSettings)Settings.ActivationFunctionSettings),
                 EActivationType.HardSigmoid=> new HardSigmoid(),
                 EActivationType.HardTanh=> new HardTanh(),
                 EActivationType.Identity=> new Identity(),
                 EActivationType.Logit=> new Logit(),
-                EActivationType.LReLU=> new LReLU((LReLUSettings)Settings.ActivationFunction),
+                EActivationType.LReLU=> new LReLU((LReLUSettings)Settings.ActivationFunctionSettings),
                 EActivationType.Mish=> new Mish(),
                 EActivationType.ReLU => new ReLU(),
                 EActivationType.SeLU => new SeLU(),
@@ -63,11 +67,11 @@ namespace Vortex.Layer.Utility
             };
 
             // Regularization Setup
-            RegularizationFunction = (Settings.RegularizationFunction.Type()) switch
+            RegularizationFunction = (Settings.RegularizationFunctionSettings.Type()) switch
             {
-                ERegularizationType.None => new Regularization.None(),
-                ERegularizationType.L1 => new Regularization.L1((L1Settings)Settings.RegularizationFunction),
-                ERegularizationType.L2 => new Regularization.L2((L2Settings)Settings.RegularizationFunction),
+                ERegularizationType.None => new Regularization.None((NoneSettings)Settings.RegularizationFunctionSettings),
+                ERegularizationType.L1 => new Regularization.L1((L1Settings)Settings.RegularizationFunctionSettings),
+                ERegularizationType.L2 => new Regularization.L2((L2Settings)Settings.RegularizationFunctionSettings),
                 _ => throw new ArgumentException("Regularization Type Invalid."),
             };
         }
@@ -85,14 +89,14 @@ namespace Vortex.Layer.Utility
     public class LayerSettings
     {
         public int NeuronCount { get; private set; }
-        public ActivationSettings ActivationFunction { get; private set; }
-        public RegularizationSettings RegularizationFunction { get; private set; }
+        public ActivationSettings ActivationFunctionSettings { get; private set; }
+        public RegularizationSettings RegularizationFunctionSettings { get; private set; }
 
-        public LayerSettings(int neuronCount, ActivationSettings activation, RegularizationSettings regularization) 
+        public LayerSettings(int neuronCount, ActivationSettings activationSettings, RegularizationSettings regularizationSettings) 
         {
             NeuronCount = neuronCount;
-            ActivationFunction = activation;
-            RegularizationFunction = regularization;
+            ActivationFunctionSettings = activationSettings;
+            RegularizationFunctionSettings = regularizationSettings;
         }
     }
 }

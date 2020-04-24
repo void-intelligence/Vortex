@@ -19,7 +19,10 @@ namespace Vortex.Layer
         {
             // Calculate Regularization Value On W and B
             RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]) + (float)RegularizationFunction.CalculateNorm(Params["B"]);
-            
+
+            // Dropout
+            inputs.InDropout(DropoutChance);
+
             // Calculate Feed Forward Operation
             Params["X"] = inputs;
             Params["Z"] = (Params["W"].T() * Params["X"]) + Params["B"];

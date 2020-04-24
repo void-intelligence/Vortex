@@ -6,7 +6,13 @@
 
 Welcome To Vortex, The Void-Intelligence Artificial Cortex library for Neural Network and Deep Learning development. 
 
-Vortex is built with the aim of allowing Deep-Learning researchers to test and see the result of their new formulas in all aspects of the network formula without even needing to read the source code, be it custom optimizer functions, regularization methods, cost functions, activation functions or any other feature function you can think of. 
+Vortex is built with the aim of allowing Deep-Learning researchers to test, and see the result of their new formulas in all aspects of the data-flow pipeline, without the need to read the source code. Researchers can write their custom functions / formulas for the currently developed features of the library:
 
-With vortex, everything is a hyper-parameter, and everything can be tuned, added together, separated and much more.
+- Activation
+- Cost
+- Layer
+- Optimizer
+- Regularization
+
+
 

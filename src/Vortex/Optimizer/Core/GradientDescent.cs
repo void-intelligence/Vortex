@@ -11,19 +11,13 @@ namespace Vortex.Optimizer
         {
             Alpha = settings.Alpha;
         }
-        public override string ToString() => Type().ToString();
+
+        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        {
+            return (Alpha * (X.Hadamard(dJdX)));
+        }
 
         public override EOptimizerType Type() => EOptimizerType.GradientDescent;
-
-        public override Matrix CalculateDeltaW(Matrix W, Matrix dJdW)
-        {
-            return (Alpha * (W.Transpose().Hadamard(dJdW)));
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdb)
-        {
-            return (Alpha * (b.Hadamard(dJdb)));
-        }
     }
 
     public sealed class GradientDescentSettings : OptimizerSettings
@@ -33,7 +27,8 @@ namespace Vortex.Optimizer
         public GradientDescentSettings(double alpha)
         {
             Alpha = alpha;
-            public override EOptimizerType Type() => EOptimizerType.GradientDescent;
-    }
+        }
+
+        public override EOptimizerType Type() => EOptimizerType.GradientDescent;
     }
 }

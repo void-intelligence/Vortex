@@ -15,19 +15,12 @@ namespace Vortex.Optimizer
             Tao = settings.Tao;
         }
 
-        public override string ToString() => Type().ToString();
+        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        {
+            return null;
+        }
 
         public override EOptimizerType Type() => EOptimizerType.Momentum;
-
-        public override Matrix CalculateDeltaW(Matrix W, Matrix dJdW)
-        {
-            return null;
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdb)
-        {
-            return null;
-        }
     }
 
     public sealed class MomentumSettings : OptimizerSettings

@@ -12,20 +12,12 @@ namespace Vortex.Optimizer
             Alpha = settings.Alpha;
         }
 
-        public override string ToString() => Type().ToString();
+        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        {
+            return null;
+        }
 
         public override EOptimizerType Type() => EOptimizerType.AdaDelta;
-
-
-        public override Matrix CalculateDeltaW(Matrix W, Matrix dJdW)
-        {
-            return null;
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdb)
-        {
-            return null;
-        }
     }
 
     public sealed class AdaDeltaSettings : OptimizerSettings

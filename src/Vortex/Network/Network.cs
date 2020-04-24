@@ -65,15 +65,22 @@ namespace Vortex.Network
 
         }
 
-        public void CreateLayer(int neuronCount, ActivationSettings activation, RegularizationSettings regularization)
+        public void CreateLayer(ELayerType layerType, int neuronCount, ActivationSettings activation, RegularizationSettings regularization)
         {
             if (IsLocked)
             {
                 throw new InvalidOperationException("Network is Locked.");
             }
 
-            // To-Do: Add More Layer Types
-            Layers.Add(new FullyConnected(new LayerSettings(neuronCount, activation, regularization), OptimizerFunction));
+            // Regularization Setup
+            BaseLayer layer = (layerType) switch
+            {
+                ELayerType.FullyConnected => new FullyConnected(new FullyConnectedSettings(neuronCount, activation, regularization), OptimizerFunction),
+                ELayerType.Dropout => new Dropout(new DropoutSettings(neuronCount, activation, regularization), OptimizerFunction),
+                _ => throw new ArgumentException("Layer Type Invalid."),
+            };
+
+            Layers.Add(layer);
         }
 
         public void InitNetwork()

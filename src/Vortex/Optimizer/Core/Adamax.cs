@@ -7,29 +7,33 @@ namespace Vortex.Optimizer
 {
     public sealed class Adamax : Utility.BaseOptimizer
     {
+        public double BetaPrimary { get; set; }
+        public double BetaSecondary { get; set; }
+
         public Adamax(AdamaxSettings settings) : base(settings)
         {
-            Alpha = settings.Alpha;
+            BetaPrimary = settings.BetaPrimary;
+            BetaSecondary = settings.BetaSecondary;
         }
-        public override string ToString() => Type().ToString();
+
+        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        {
+            return null;
+        }
 
         public override EOptimizerType Type() => EOptimizerType.Adamax;
-
-        public override Matrix CalculateDeltaW(Matrix W, Matrix dJdW)
-        {
-            return null;
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdb)
-        {
-            return null;
-        }
     }
 
     public sealed class AdamaxSettings : OptimizerSettings
     {
-        public double Alpha { get; set; }
         public double BetaPrimary { get; set; }
         public double BetaSecondary { get; set; }
+        public override EOptimizerType Type() => EOptimizerType.Adamax;
+
+        public AdamaxSettings(double alpha, double betaPrimary, double betaSecondary) : base(alpha)
+        {
+            BetaPrimary = betaPrimary;
+            BetaSecondary = betaSecondary;
+        }
     }
 }

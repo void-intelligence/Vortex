@@ -14,7 +14,7 @@ namespace Vortex.Cost
     {
         public CrossEntropyCost(CrossEntropyCostSettings settings) : base(settings) { }
 
-        public override double Forward(Matrix Actual, Matrix Expected, int layerCount)
+        public override double Forward(Matrix Actual, Matrix Expected)
         {
             double error = 0.0;
 
@@ -30,7 +30,7 @@ namespace Vortex.Cost
             return error;
         }
 
-        public override Matrix Backward(Matrix Actual, Matrix Expected, int layerCount)
+        public override Matrix Backward(Matrix Actual, Matrix Expected)
         {
             Matrix gradMatrix = Actual.Duplicate();
 
@@ -45,16 +45,11 @@ namespace Vortex.Cost
             return gradMatrix;
         }
 
-        public override string ToString()
-        {
-            return Type().ToString();
-        }
-
-        public override ECostType Type()
-        {
-            return ECostType.CrossEntropyCost;
-        }
+        public override ECostType Type() => ECostType.CrossEntropyCost;
     }
 
-    public class CrossEntropyCostSettings : CostSettings { }
+    public class CrossEntropyCostSettings : CostSettings 
+    {
+        public override ECostType Type() => ECostType.CrossEntropyCost;
+    }
 }

@@ -16,9 +16,9 @@ namespace Vortex.Cost.Utility
     {
         public BaseCost(CostSettings settings) { }
         
-        public abstract double Forward(Matrix Actual, Matrix Expected, int layerCount);
+        public abstract double Forward(Matrix Actual, Matrix Expected);
 
-        public abstract Matrix Backward(Matrix Actual, Matrix Expected, int layerCount);
+        public abstract Matrix Backward(Matrix Actual, Matrix Expected);
 
         public abstract ECostType Type();
 
@@ -27,5 +27,8 @@ namespace Vortex.Cost.Utility
         public virtual void ResetCost() { BatchCost = 0; }
     }
 
-    public abstract class CostSettings { }
+    public abstract class CostSettings
+    {
+        public abstract ECostType Type();
+    }
 }

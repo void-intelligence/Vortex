@@ -11,28 +11,25 @@ namespace Vortex.Optimizer
 
         public Momentum(MomentumSettings settings) : base(settings)
         {
-            Alpha = settings.Alpha;
             Tao = settings.Tao;
         }
 
-        public override string ToString() => Type().ToString();
+        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        {
+            return null;
+        }
 
         public override EOptimizerType Type() => EOptimizerType.Momentum;
-
-        public override Matrix CalculateDeltaW(Matrix W, Matrix dJdW)
-        {
-            return null;
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdb)
-        {
-            return null;
-        }
     }
 
     public sealed class MomentumSettings : OptimizerSettings
     {
-        public double Alpha { get; set; }
         public double Tao { get; set; }
+        public override EOptimizerType Type() => EOptimizerType.Momentum;
+
+        public MomentumSettings(double alpha, double tao) : base(alpha)
+        {
+            Tao = tao;
+        }
     }
 }

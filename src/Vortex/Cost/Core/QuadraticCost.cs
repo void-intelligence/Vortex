@@ -14,7 +14,7 @@ namespace Vortex.Cost
     {
         public QuadraticCost(QuadraticCostSettings settings) : base(settings) { }
         
-        public override double Forward(Matrix Actual, Matrix Expected, int layerCount)
+        public override double Forward(Matrix Actual, Matrix Expected)
         {
             double error = 0.0;
 
@@ -33,21 +33,16 @@ namespace Vortex.Cost
             return error;
         }
 
-        public override Matrix Backward(Matrix Actual, Matrix Expected, int layerCount)
+        public override Matrix Backward(Matrix Actual, Matrix Expected)
         {
             return Actual - Expected;
         }
 
-        public override string ToString()
-        {
-            return Type().ToString();
-        }
-
-        public override ECostType Type()
-        {
-            return ECostType.QuadraticCost;
-        }
+        public override ECostType Type() => ECostType.QuadraticCost;
     }
 
-    public class QuadraticCostSettings : CostSettings { }
+    public class QuadraticCostSettings : CostSettings
+    {
+        public override ECostType Type() => ECostType.QuadraticCost;
+    }
 }

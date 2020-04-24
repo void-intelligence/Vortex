@@ -19,7 +19,7 @@ namespace Vortex.Cost
             Tao = settings.Tao;
         }
 
-        public override double Forward(Matrix Actual, Matrix Expected, int layerCount)
+        public override double Forward(Matrix Actual, Matrix Expected)
         {
             double error = 0.0;
             
@@ -42,7 +42,7 @@ namespace Vortex.Cost
             return error;
         }
 
-        public override Matrix Backward(Matrix Actual, Matrix Expected, int layerCount)
+        public override Matrix Backward(Matrix Actual, Matrix Expected)
         {
             double error = 0.0;
 
@@ -72,15 +72,7 @@ namespace Vortex.Cost
             return gradMatrix;
         }
 
-        public override string ToString()
-        {
-            return Type().ToString();
-        }
-
-        public override ECostType Type()
-        {
-            return ECostType.CrossEntropyCost;
-        }
+        public override ECostType Type() => ECostType.ExponentionalCost;
     }
 
     public class ExponentionalCostSettings : CostSettings
@@ -88,5 +80,7 @@ namespace Vortex.Cost
         public double Tao { get; set; }
 
         public ExponentionalCostSettings(double tao) { Tao = tao; }
+
+        public override ECostType Type() => ECostType.ExponentionalCost;
     }
 }

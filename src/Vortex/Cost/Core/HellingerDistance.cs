@@ -14,7 +14,7 @@ namespace Vortex.Cost
     {
         public HellingerDistance(HellingerDistanceSettings settings) : base(settings) { }
         
-        public override double Forward(Matrix Actual, Matrix Expected, int layerCount)
+        public override double Forward(Matrix Actual, Matrix Expected)
         {
             double error = 0.0;
 
@@ -33,7 +33,7 @@ namespace Vortex.Cost
             return error;
         }
 
-        public override Matrix Backward(Matrix Actual, Matrix Expected, int layerCount)
+        public override Matrix Backward(Matrix Actual, Matrix Expected)
         {
             if (Actual.Rows != Expected.Rows || Actual.Columns != Expected.Columns)
             {
@@ -53,16 +53,11 @@ namespace Vortex.Cost
             return gradMatrix;
         }
 
-        public override string ToString()
-        {
-            return Type().ToString();
-        }
-
-        public override ECostType Type()
-        {
-            return ECostType.HellingerDistance;
-        }
+        public override ECostType Type() => ECostType.HellingerDistance;
     }
 
-    public class HellingerDistanceSettings : CostSettings { }
+    public class HellingerDistanceSettings : CostSettings 
+    {
+        public override ECostType Type() => ECostType.HellingerDistance;
+    }
 }

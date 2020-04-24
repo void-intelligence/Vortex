@@ -17,9 +17,9 @@ namespace Vortex.Layer
 
         public override Matrix Forward(Matrix inputs)
         {
-            // Calculate Regularization Value
-            RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]);
-
+            // Calculate Regularization Value On W and B
+            RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]) + (float)RegularizationFunction.CalculateNorm(Params["B"]);
+            
             // Calculate Feed Forward Operation
             Params["X"] = inputs;
             Params["Z"] = (Params["W"].T() * Params["X"]) + Params["B"];
@@ -41,8 +41,8 @@ namespace Vortex.Layer
 
         public override void Optimize()
         {
-            Matrix deltaW = OptimizerFunction.CalculateDeltaW(Params["W"], Grads["DW"]);
-            Matrix deltaB = OptimizerFunction.CalculateDeltaB(Params["B"], Grads["DB"]);
+            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"], Grads["DW"]);
+            Matrix deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
 
             Params["W"] = Params["W"] - deltaW;
             Params["B"] = Params["B"] - deltaB;

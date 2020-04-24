@@ -11,7 +11,6 @@ namespace Vortex.Optimizer
 
         public Momentum(MomentumSettings settings) : base(settings)
         {
-            Alpha = settings.Alpha;
             Tao = settings.Tao;
         }
 
@@ -25,8 +24,12 @@ namespace Vortex.Optimizer
 
     public sealed class MomentumSettings : OptimizerSettings
     {
-        public double Alpha { get; set; }
         public double Tao { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Momentum;
+
+        public MomentumSettings(double alpha, double tao) : base(alpha)
+        {
+            Tao = tao;
+        }
     }
 }

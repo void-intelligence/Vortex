@@ -9,7 +9,6 @@ namespace Vortex.Optimizer
     {
         public GradientDescent(GradientDescentSettings settings) : base(settings)
         {
-            Alpha = settings.Alpha;
         }
 
         public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
@@ -22,13 +21,10 @@ namespace Vortex.Optimizer
 
     public sealed class GradientDescentSettings : OptimizerSettings
     {
-        public double Alpha { get; private set; }
-
-        public GradientDescentSettings(double alpha)
-        {
-            Alpha = alpha;
-        }
-
         public override EOptimizerType Type() => EOptimizerType.GradientDescent;
+
+        public GradientDescentSettings(double alpha) : base(alpha)
+        {
+        }
     }
 }

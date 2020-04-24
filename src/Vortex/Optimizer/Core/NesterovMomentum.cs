@@ -9,7 +9,6 @@ namespace Vortex.Optimizer
     {
         public NesterovMomentum(NesterovMomentumSettings settings) : base(settings)
         {
-            Alpha = settings.Alpha;
         }
 
         public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
@@ -18,12 +17,14 @@ namespace Vortex.Optimizer
         }
 
         public override EOptimizerType Type() => EOptimizerType.NesterovMomentum;
-
     }
 
     public sealed class NesterovMomentumSettings : OptimizerSettings
     {
-        public double Alpha { get; set; }
         public override EOptimizerType Type() => EOptimizerType.NesterovMomentum;
+
+        public NesterovMomentumSettings(double alpha) : base(alpha)
+        {
+        }
     }
 }

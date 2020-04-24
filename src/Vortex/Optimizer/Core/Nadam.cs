@@ -9,7 +9,6 @@ namespace Vortex.Optimizer
     {
         public Nadam(NadamSettings settings) : base(settings)
         {
-            Alpha = settings.Alpha;
         }
 
         public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
@@ -22,7 +21,10 @@ namespace Vortex.Optimizer
 
     public sealed class NadamSettings : OptimizerSettings
     {
-        public double Alpha { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Nadam;
+
+        public NadamSettings(double alpha) : base(alpha)
+        {
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Vortex.Optimizer
         }
         private double OneOver(double x)
         {
-            return x * x;
+            return 1 / x;
         }
 
         private Matrix _sDw;

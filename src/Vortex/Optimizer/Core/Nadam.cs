@@ -10,6 +10,9 @@ namespace Vortex.Optimizer
         public Nadam(NadamSettings settings) : base(settings)
         {
         }
+        public Nadam(double alpha = 0.001) : base(new NadamSettings(alpha))
+        {
+        }
 
         public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
         {
@@ -23,7 +26,7 @@ namespace Vortex.Optimizer
     {
         public override EOptimizerType Type() => EOptimizerType.Nadam;
 
-        public NadamSettings(double alpha) : base(alpha)
+        public NadamSettings(double alpha = 0.001) : base(alpha)
         {
         }
     }

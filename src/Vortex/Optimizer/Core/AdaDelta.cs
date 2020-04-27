@@ -30,7 +30,7 @@ namespace Vortex.Optimizer
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.AdaDelta;
 
-        public AdaDeltaSettings(double alpha, double rho, double epsilon) : base(alpha)
+        public AdaDeltaSettings(double rho, double epsilon, double alpha = 0.001) : base(alpha)
         {
             Rho = rho;
             Epsilon = epsilon;

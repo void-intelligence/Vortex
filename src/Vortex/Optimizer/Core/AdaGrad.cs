@@ -27,7 +27,7 @@ namespace Vortex.Optimizer
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.AdaGrad;
 
-        public AdaGradSettings(double alpha, double epsilon) : base(alpha)
+        public AdaGradSettings(double epsilon, double alpha = 0.001) : base(alpha)
         {
             Epsilon = epsilon;
         }

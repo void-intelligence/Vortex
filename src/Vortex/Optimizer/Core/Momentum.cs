@@ -27,7 +27,7 @@ namespace Vortex.Optimizer
         public double Tao { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Momentum;
 
-        public MomentumSettings(double alpha, double tao) : base(alpha)
+        public MomentumSettings(double tao, double alpha = 0.001) : base(alpha)
         {
             Tao = tao;
         }

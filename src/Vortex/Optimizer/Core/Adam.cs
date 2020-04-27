@@ -38,7 +38,7 @@ namespace Vortex.Optimizer
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Adam;
 
-        public AdamSettings(double alpha, double betaPrimary, double betaSecondary, double betaPrimary_T, double betaSecondary_T, double epsilon) : base(alpha)
+        public AdamSettings(double betaPrimary, double betaSecondary, double betaPrimary_T, double betaSecondary_T, double epsilon, double alpha = 0.001) : base(alpha)
         {
             BetaPrimary = betaPrimary;
             BetaSecondary = betaSecondary;

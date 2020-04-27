@@ -30,7 +30,7 @@ namespace Vortex.Optimizer
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.RMSProp;
 
-        public RMSPropSettings(double alpha, double rho, double epsilon) : base(alpha)
+        public RMSPropSettings(double rho, double epsilon, double alpha = 0.001) : base(alpha)
         {
             Rho = rho;
             Epsilon = epsilon;

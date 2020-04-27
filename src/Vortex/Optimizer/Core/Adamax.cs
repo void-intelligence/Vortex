@@ -30,7 +30,7 @@ namespace Vortex.Optimizer
         public double BetaSecondary { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Adamax;
 
-        public AdamaxSettings(double alpha, double betaPrimary, double betaSecondary) : base(alpha)
+        public AdamaxSettings(double betaPrimary, double betaSecondary, double alpha = 0.001) : base(alpha)
         {
             BetaPrimary = betaPrimary;
             BetaSecondary = betaSecondary;

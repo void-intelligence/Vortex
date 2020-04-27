@@ -18,14 +18,12 @@ namespace VortexTests
 
             X.InFill(100);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 dJdX.InRandomize();
                 Matrix deltas = gd.CalculateDeltaW(X, dJdX);
                 X -= deltas;
             }
-
-            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "SGD Successful");
         }
 
         [TestMethod]
@@ -37,34 +35,30 @@ namespace VortexTests
 
             X.InFill(100);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 dJdX.InRandomize();
                 Matrix deltas = momentum.CalculateDeltaW(X, dJdX);
                 X -= deltas;
             }
-
-            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "Momentum Successful");
         }
 
         [TestMethod]
         public void RMSPropTest()
         {
-            Momentum rms = new Momentum();
+            RMSProp rms = new RMSProp();
             Matrix X = new Matrix(10, 10);
             Matrix dJdX = new Matrix(10, 10);
 
             X.InFill(100);
            
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
-                dJdX.InRandomize();
+                dJdX.InRandomize(2);
                 Matrix deltas = rms.CalculateDeltaW(X, dJdX);
                 X -= deltas;
             }
-
-            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "RMSProp Successful");
         }
     }
 }

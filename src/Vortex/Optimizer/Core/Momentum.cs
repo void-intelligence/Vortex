@@ -37,7 +37,7 @@ namespace Vortex.Optimizer
             if (_initw)
             {
                 _initw = false;
-                _vDw = (Alpha * (w.Hadamard(dJdW)));
+                _vDw = (Tao * (Alpha * (w.Hadamard(dJdW))) + ((1 - Tao) * dJdW));
             }
             else
             {
@@ -51,7 +51,7 @@ namespace Vortex.Optimizer
             if (_initb)
             {
                 _initb = false;
-                _vDb = (Alpha * (b.Hadamard(dJdB)));
+                _vDb = (Tao * (Alpha * (b.Hadamard(dJdB))) + ((1 - Tao) * dJdB));
             }
             else
             {

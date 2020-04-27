@@ -39,7 +39,7 @@ namespace Vortex.Network
             CostFunction = (costSettings.Type()) switch
             {
                 ECostType.CrossEntropyCost => new CrossEntropyCost((CrossEntropyCostSettings)costSettings),
-                ECostType.ExponentionalCost => new ExponentionalCost((ExponentionalCostSettings)costSettings),
+                ECostType.ExponentionalCost => new ExponentialCost((ExponentionalCostSettings)costSettings),
                 ECostType.GeneralizedKullbackLeiblerDivergence => new GeneralizedKullbackLeiblerDivergence((GeneralizedKullbackLeiblerDivergenceSettings)costSettings),
                 ECostType.HellingerDistance => new HellingerDistance((HellingerDistanceSettings)costSettings),
                 ECostType.ItakuraSaitoDistance => new ItakuraSaitoDistance((ItakuraSaitoDistanceSettings)costSettings),

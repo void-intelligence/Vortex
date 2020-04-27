@@ -10,24 +10,24 @@ namespace Vortex.Cost
     /// <summary>
     /// "Exponential Cost"
     /// </summary>
-    public class ExponentionalCost : Utility.BaseCost
+    public class ExponentialCost : Utility.BaseCost
     {
         public double Tao { get; set; }
 
-        public ExponentionalCost(ExponentionalCostSettings settings) : base(settings)
+        public ExponentialCost(ExponentionalCostSettings settings) : base(settings)
         {
             Tao = settings.Tao;
         }
 
-        public override double Forward(Matrix Actual, Matrix Expected)
+        public override double Forward(Matrix actual, Matrix expected)
         {
             double error = 0.0;
             
-            for (int i = 0; i < Actual.Rows; i++)
+            for (int i = 0; i < actual.Rows; i++)
             {
-                for (int j = 0; j < Actual.Columns; j++)
+                for (int j = 0; j < actual.Columns; j++)
                 {
-                    error += Math.Pow((Actual[i, j] - Expected[i, j]), 2);
+                    error += Math.Pow((actual[i, j] - expected[i, j]), 2);
                 }
             }
 
@@ -42,15 +42,15 @@ namespace Vortex.Cost
             return error;
         }
 
-        public override Matrix Backward(Matrix Actual, Matrix Expected)
+        public override Matrix Backward(Matrix actual, Matrix expected)
         {
             double error = 0.0;
 
-            for (int i = 0; i < Actual.Rows; i++)
+            for (int i = 0; i < actual.Rows; i++)
             {
-                for (int j = 0; j < Actual.Columns; j++)
+                for (int j = 0; j < actual.Columns; j++)
                 {
-                    error += Math.Pow((Actual[i, j] - Expected[i, j]), 2);
+                    error += Math.Pow((actual[i, j] - expected[i, j]), 2);
                 }
             }
 
@@ -60,12 +60,12 @@ namespace Vortex.Cost
 
             error *= Tao;
             
-            Matrix gradMatrix = Actual.Duplicate();
-            for (int i = 0; i < Actual.Rows; i++)
+            Matrix gradMatrix = actual.Duplicate();
+            for (int i = 0; i < actual.Rows; i++)
             {
-                for (int j = 0; j < Actual.Columns; j++)
+                for (int j = 0; j < actual.Columns; j++)
                 {
-                    gradMatrix[i, j] = (Actual[i, j] - Expected[i, j]) * error;
+                    gradMatrix[i, j] = (actual[i, j] - expected[i, j]) * error;
                 }
             }
 

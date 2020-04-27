@@ -1,5 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
+using System.Runtime.CompilerServices;
 using Nomad.Matrix;
 using Vortex.Optimizer.Utility;
 
@@ -7,7 +8,9 @@ namespace Vortex.Optimizer
 {
     public sealed class Momentum : Utility.BaseOptimizer
     {
+        private bool _initw;
         private Matrix _vDw;
+        private bool _initb;
         private Matrix _vDb;
 
         /// <summary>
@@ -17,17 +20,23 @@ namespace Vortex.Optimizer
 
         public Momentum(MomentumSettings settings) : base(settings)
         {
+            _initw = true;
+            _initb = true;
+
             Tao = settings.Tao;
         }
 
         public Momentum(double tao = 0.9, double alpha = 0.001) : base(new MomentumSettings(tao, alpha))
         {
+            _initw = true;
+            _initb = true;
         }
 
         public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
         {
-            if (_vDw == null)
+            if (_initw)
             {
+                _initw = false;
                 _vDw = (Alpha * (w.Hadamard(dJdW)));
             }
             else
@@ -39,8 +48,9 @@ namespace Vortex.Optimizer
 
         public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
         {
-            if (_vDb == null)
+            if (_initb)
             {
+                _initb = false;
                 _vDb = (Alpha * (b.Hadamard(dJdB)));
             }
             else

@@ -28,7 +28,6 @@ namespace VortexTests
             Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "SGD Successful");
         }
 
-
         [TestMethod]
         public void MomentumTest()
         {
@@ -45,7 +44,7 @@ namespace VortexTests
                 X -= deltas;
             }
 
-            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "SGD Successful");
+            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "Momentum Successful");
         }
 
         [TestMethod]
@@ -65,7 +64,7 @@ namespace VortexTests
                 X -= deltas;
             }
 
-            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "SGD Successful");
+            Assert.IsTrue(X.FrobeniusNorm() < X.Fill(100).FrobeniusNorm(), "RMSProp Successful");
         }
     }
 }

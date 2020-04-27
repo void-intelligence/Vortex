@@ -8,10 +8,6 @@ namespace Vortex.Optimizer
 {
     public sealed class RMSProp : Utility.BaseOptimizer
     {
-        private double Power2(double x)
-        {
-            return x * x;
-        }
         private double OneOver(double x)
         {
             return 1 / x;
@@ -33,7 +29,7 @@ namespace Vortex.Optimizer
         {
             if (_sDw != null)
             {
-                _sDw = Rho * _sDw + (1 - Rho) * dJdW.Map(Power2);
+                _sDw = Rho * _sDw + (1 - Rho) * dJdW.Hadamard(dJdW);
                 Matrix mat = _sDw.Map(Math.Sqrt);
                 mat.InMap(OneOver);
                 mat.InHadamard(dJdW);
@@ -47,7 +43,7 @@ namespace Vortex.Optimizer
         {
             if (_sDb != null)
             {
-                _sDb = Rho * _sDb + (1 - Rho) * dJdB.Map(Power2);
+                _sDb = Rho * _sDb + (1 - Rho) * dJdB.Hadamard(dJdB);
                 Matrix mat = _sDb.Map(Math.Sqrt);
                 mat.InMap(OneOver);
                 mat.InHadamard(dJdB);

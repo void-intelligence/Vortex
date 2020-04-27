@@ -48,8 +48,8 @@ namespace Vortex.Layer
 
         public override void Optimize()
         {
-            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"].T(), Grads["DW"]);
-            Matrix deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
+            Matrix deltaW = OptimizerFunction.CalculateDeltaW(Params["W"].T(), Grads["DW"]);
+            Matrix deltaB = OptimizerFunction.CalculateDeltaB(Params["B"], Grads["DB"]);
 
             Params["W"] = Params["W"] - deltaW;
             Params["B"] = Params["B"] - deltaB;

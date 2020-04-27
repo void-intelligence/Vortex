@@ -8,7 +8,8 @@ namespace Vortex.Optimizer.Utility
     {
         public double Alpha { get; set; }
         protected BaseOptimizer(OptimizerSettings settings) { Alpha = settings.Alpha; }
-        public abstract Matrix CalculateDelta(Matrix X, Matrix dJdX);
+        public abstract Matrix CalculateDeltaW(Matrix w, Matrix dJdW);
+        public abstract Matrix CalculateDeltaB(Matrix b, Matrix dJdB);
         public abstract EOptimizerType Type();
     }
 

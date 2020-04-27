@@ -13,15 +13,65 @@ namespace Vortex_Tests
         [TestMethod]
         public void ArctanTest()
         {
-            Arctan a = new Arctan();
-            
-            Matrix mat = new Matrix(2,2);
-            mat.InRandomize();
+            Matrix a = new Matrix(2, 2);
+            a.InRandomize();
+            Matrix b = a.Duplicate();
 
-            Matrix act = a.Forward(mat);
+            // Activate
+            a = new Arctan().Forward(a);
 
-            
+            // Test
+            b.InMap(System.Math.Atan);
 
+            Assert.IsTrue(a == b, "Arctan Activation successful");
+        }
+
+        [TestMethod]
+        public void ArctanPrimeTest()
+        {
+            Matrix a = new Matrix(2, 2);
+            a.InRandomize();
+            Matrix b = a.Duplicate();
+
+            // Activate
+            a = new Arctan().Backward(a);
+
+            // Test
+            b.InMap((x) => 1 / (1 + System.Math.Pow(x, 2)));
+
+            Assert.IsTrue(a == b, "Arctan Activation Derivative successful");
+        }
+
+        [TestMethod]
+        public void BinaryStepTest()
+        {
+            Matrix a = new Matrix(2, 2);
+            a.InRandomize();
+            Matrix b = a.Duplicate();
+
+            // Activate
+            a = new BinaryStep().Forward(a);
+
+            // Test
+            b.InMap((x) => (x < 0) ? 0 : 1);
+
+            Assert.IsTrue(a == b, "BinaryStep Activation successful");
+        }
+
+        [TestMethod]
+        public void BinaryStepPrimeTest()
+        {
+            Matrix a = new Matrix(2, 2);
+            a.InRandomize();
+            Matrix b = a.Duplicate();
+
+            // Activate
+            a = new BinaryStep().Backward(a);
+
+            // Test
+            b.InMap((x) => 0);
+
+            Assert.IsTrue(a == b, "BinaryStep Activation Derivative successful");
         }
     }
 }

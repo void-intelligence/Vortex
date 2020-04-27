@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Text;
 using Nomad.Matrix;
 using Vortex.Activation;
 
-namespace Vortex_Tests
+namespace VortexTests
 {
-
     [TestClass]
     public class VortexActivation
     {

@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>Vortex_Tests</RootNamespace>
+    <RootNamespace>VortexTests</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>VortexTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

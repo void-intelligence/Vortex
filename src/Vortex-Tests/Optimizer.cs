@@ -17,7 +17,7 @@ namespace VortexTests
             Matrix dJdX = new Matrix(10, 10);
             X.InRandomize();
             dJdX.InRandomize();
-            gd.CalculateDelta(X, dJdX);
+            gd.CalculateDeltaW(X, dJdX);
         } 
     }
 }

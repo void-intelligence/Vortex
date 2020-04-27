@@ -8,9 +8,9 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Layer
 {
-    public class FullyConnected : BaseLayer
+    public class Output : BaseLayer
     {
-        public FullyConnected(LayerSettings settings, BaseOptimizer optimizer) 
+        public Output(LayerSettings settings, BaseOptimizer optimizer) 
             : base(settings, optimizer)
         {
         }
@@ -42,29 +42,29 @@ namespace Vortex.Layer
                 Grads["DW"] = Grads["DZ"] * Params["A-1"].Transpose();
             }
             Grads["DB"] = Grads["DZ"];
-            Grads["DA-1"] = Params["W"] * Grads["DZ"];
+            Grads["DA-1"] = Params["W"].T() * Grads["DZ"];
             return Grads["DA-1"];
         }
 
         public override void Optimize()
         {
-            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"].T(), Grads["DW"]).T();
+            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"].T(), Grads["DW"]);
             Matrix deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
 
             Params["W"] = Params["W"] - deltaW;
             Params["B"] = Params["B"] - deltaB;
         }
 
-        public override ELayerType Type() => ELayerType.FullyConnected;
+        public override ELayerType Type() => ELayerType.Output;
     }
 
-    public class FullyConnectedSettings: LayerSettings
+    public class OutputSettings: LayerSettings
     {
-        public FullyConnectedSettings(int neuronCount, ActivationSettings activation, RegularizationSettings regularization)
+        public OutputSettings(int neuronCount, ActivationSettings activation, RegularizationSettings regularization)
             : base(neuronCount, activation, regularization)
         {
         }
 
-        public override ELayerType Type() => ELayerType.FullyConnected;
+        public override ELayerType Type() => ELayerType.Output;
     }
 }

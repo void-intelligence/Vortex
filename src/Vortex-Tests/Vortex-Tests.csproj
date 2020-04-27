@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>Vortex_Tests</RootNamespace>
+    <RootNamespace>VortexTests</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <AssemblyName>VortexTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,10 @@
     <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
     <PackageReference Include="VI-Nomad" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vortex\Vortex.csproj" />
   </ItemGroup>
 
 </Project>

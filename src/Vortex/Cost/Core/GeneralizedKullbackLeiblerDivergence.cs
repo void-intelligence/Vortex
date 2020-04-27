@@ -12,17 +12,17 @@ namespace Vortex.Cost
     /// </summary>
     public class GeneralizedKullbackLeiblerDivergence : Utility.BaseCost
     {
-        public GeneralizedKullbackLeiblerDivergence(GeneralizedKullbackLeiblerDivergenceSettings settings) : base(settings) { }
+        public GeneralizedKullbackLeiblerDivergence(GeneralizedKullbackLeiblerDivergenceSettings settings = null) : base(settings) { }
 
-        public override double Forward(Matrix Actual, Matrix Expected)
+        public override double Forward(Matrix actual, Matrix expected)
         {
             double error = 0.0;
 
-            for (int i = 0; i < Actual.Rows; i++)
+            for (int i = 0; i < actual.Rows; i++)
             {
-                for (int j = 0; j < Actual.Columns; j++)
+                for (int j = 0; j < actual.Columns; j++)
                 {
-                    error += Expected[i, j] * Math.Log(Expected[i, j] / Actual[i, j]) - Expected[i, j] + Actual[i, j];
+                    error += expected[i, j] * Math.Log(expected[i, j] / actual[i, j]) - expected[i, j] + actual[i, j];
                 }
             }
 
@@ -30,15 +30,15 @@ namespace Vortex.Cost
             return error;
         }
 
-        public override Matrix Backward(Matrix Actual, Matrix Expected)
+        public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            Matrix gradMatrix = Actual.Duplicate();
+            Matrix gradMatrix = actual.Duplicate();
 
-            for (int i = 0; i < Actual.Rows; i++)
+            for (int i = 0; i < actual.Rows; i++)
             {
-                for (int j = 0; j < Actual.Columns; j++)
+                for (int j = 0; j < actual.Columns; j++)
                 {
-                    gradMatrix[i, j] = (Actual[i, j] - Expected[i, j]) / Actual[i, j];
+                    gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / actual[i, j];
                 }
             }
 

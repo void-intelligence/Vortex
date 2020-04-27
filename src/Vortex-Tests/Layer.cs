@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
 using Vortex.Activation;
 using Vortex.Cost;

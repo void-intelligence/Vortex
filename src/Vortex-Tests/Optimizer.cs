@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
+
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;

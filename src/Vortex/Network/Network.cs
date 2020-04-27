@@ -77,6 +77,7 @@ namespace Vortex.Network
             {
                 ELayerType.FullyConnected => new FullyConnected(new FullyConnectedSettings(neuronCount, activation, regularization), OptimizerFunction),
                 ELayerType.Dropout => new Dropout(new DropoutSettings(neuronCount, activation, regularization), OptimizerFunction),
+                ELayerType.Output => new Output(new OutputSettings(neuronCount, activation, regularization), OptimizerFunction),
                 _ => throw new ArgumentException("Layer Type Invalid."),
             };
 
@@ -102,9 +103,16 @@ namespace Vortex.Network
                 Layers[i].Params["X"] = new Matrix(Layers[i].NeuronCount, 1);
 
                 // Biases
-                Layers[i].Params["B"] = new Matrix(Layers[i].NeuronCount, 1);
+                Layers[i].Params["B"] = new Matrix(Layers[i + 1].NeuronCount, 1);
                 Layers[i].Params["B"].InRandomize();
             }
+            // Final Layer
+            Layers[^1].Params["W"] = new Matrix(Layers[^1].NeuronCount, Layers[^1].NeuronCount);
+            Layers[^1].Params["W"].InRandomize();
+
+            Layers[^1].Params["B"] = new Matrix(Layers[^1].NeuronCount, 1);
+            Layers[^1].Params["B"].InRandomize();
+
         }
 
         private Matrix last_x;
@@ -124,7 +132,7 @@ namespace Vortex.Network
             }
             last_x = _x;
 
-            last_err = (float)CostFunction.Forward(input, Y);
+            last_err = (float)CostFunction.Forward(last_x, Y);
             
             // Apply Regularization
             last_err += regularizationSum;

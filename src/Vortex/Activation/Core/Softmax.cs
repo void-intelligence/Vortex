@@ -20,18 +20,22 @@ namespace Vortex.Activation
             Matrix res = input.Duplicate();
             SumExp = 0.0;
 
-            if (input.Columns == 1)
+            for (int i = 0; i < res.Rows; i++)
             {
-                for (int j = 0; j < input.Columns; j++)
-                {
-                    SumExp += System.Math.Exp(input[0, j]);
-                }
-
                 for (int j = 0; j < res.Columns; j++)
                 {
-                    res[0, j] = System.Math.Exp(input[0, j]) / SumExp;
+                    SumExp += System.Math.Exp(input[i, j]);
                 }
             }
+
+            for (int i = 0; i < res.Rows; i++)
+            {
+                for (int j = 0; j < res.Columns; j++)
+                {
+                    res[i, j] = System.Math.Exp(input[i, j]) / SumExp;
+                }
+            }
+
 
             return res;
         }

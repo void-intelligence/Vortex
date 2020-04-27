@@ -22,8 +22,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (input >= 0) ? 1 : Alpha * System.Math.Exp(input);
 
         public override Utility.EActivationType Type() => Utility.EActivationType.ELU;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class ELUSettings : Utility.ActivationSettings

@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => System.Math.Exp(input) / (1 + System.Math.Exp(input));
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Softplus;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class SoftplusSettings : Utility.ActivationSettings

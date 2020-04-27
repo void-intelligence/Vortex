@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => 0;
 
         public override Utility.EActivationType Type() => Utility.EActivationType.BinaryStep;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class BinaryStepSettings : Utility.ActivationSettings

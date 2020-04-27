@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (input > 1 || input < 0) ? 0 : 1;
 
         public override Utility.EActivationType Type() => Utility.EActivationType.HardSigmoid;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class HardSigmoidSettings : Utility.ActivationSettings

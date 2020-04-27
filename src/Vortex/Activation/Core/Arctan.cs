@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => 1 / (1 + System.Math.Pow(input, 2));
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Arctan;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class ArctanSettings : Utility.ActivationSettings

@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (input < -1) ? 0 : (input > 1) ? 0 : 1;
 
         public override Utility.EActivationType Type() => Utility.EActivationType.HardTanh;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class HardTanhSettings : Utility.ActivationSettings

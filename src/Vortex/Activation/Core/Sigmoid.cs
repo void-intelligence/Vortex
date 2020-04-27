@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (1.0 / (1 + System.Math.Exp(-input))) * (1 - (1.0 / (1 + System.Math.Exp(-input))));
         
         public override Utility.EActivationType Type() => Utility.EActivationType.Sigmoid;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class SigmoidSettings : Utility.ActivationSettings

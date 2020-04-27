@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => input / System.Math.Pow((1 + System.Math.Abs(input)), 2);   
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Softsign;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class SoftsignSettings : Utility.ActivationSettings

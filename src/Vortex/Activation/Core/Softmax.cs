@@ -47,8 +47,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => System.Math.Exp(input) / SumExp * (1 - System.Math.Exp(input) / SumExp);
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Softmax;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class SoftmaxSettings : Utility.ActivationSettings

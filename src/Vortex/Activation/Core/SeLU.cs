@@ -21,8 +21,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (input > 0) ? Lambda : Lambda * Alpha * System.Math.Exp(input);
 
         public override Utility.EActivationType Type() => Utility.EActivationType.SeLU;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class SeLUSettings : Utility.ActivationSettings

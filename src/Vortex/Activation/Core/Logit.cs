@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (-1 / System.Math.Pow(input, 2)) - (1 / (System.Math.Pow((1 - input), 2)));
         
         public override Utility.EActivationType Type() => Utility.EActivationType.Logit;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class LogitSettings : Utility.ActivationSettings

@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => 1 - System.Math.Pow((System.Math.Exp(input) - System.Math.Exp(-input)) / (System.Math.Exp(input) + System.Math.Exp(-input)), 2);
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Tanh;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class TanhSettings : Utility.ActivationSettings

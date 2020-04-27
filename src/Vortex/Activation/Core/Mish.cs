@@ -25,8 +25,6 @@ namespace Vortex.Activation
         }
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Mish;
-        
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class MishSettings : Utility.ActivationSettings

@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => (input > 0) ? 1 : 0;
 
         public override Utility.EActivationType Type() => Utility.EActivationType.ReLU;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class ReLUSettings : Utility.ActivationSettings

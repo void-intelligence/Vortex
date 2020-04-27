@@ -17,8 +17,6 @@ namespace Vortex.Activation
         protected override double Derivative(double input) => 1;
 
         public override Utility.EActivationType Type() => Utility.EActivationType.Identity;
-
-        public override string ToString() => Type().ToString();
     }
 
     public sealed class IdentitySettings : Utility.ActivationSettings

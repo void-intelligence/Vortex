@@ -23,13 +23,13 @@ namespace Vortex.Layer
             // Calculate Regularization Value On W and B
             RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]) + (float)RegularizationFunction.CalculateNorm(Params["B"]);
 
-            // Dropout
-            inputs.InDropout(DropoutChance);
-
             // Calculate Feed Forward Operation
             Params["X"] = inputs;
             Params["Z"] = (Params["W"].T() * Params["X"]) + Params["B"];
             Params["A"] = ActivationFunction.Forward(Params["Z"]);
+            
+            // Dropout
+            Params["A"].InDropout(DropoutChance);
             return Params["A"];
         }
 
@@ -39,15 +39,22 @@ namespace Vortex.Layer
             Grads["DA"] = dA;
             Grads["G'"] = ActivationFunction.Backward(Params["Z"]);
             Grads["DZ"] = Grads["DA"].Hadamard(Grads["G'"]);
-            Grads["DW"] = Grads["DZ"] * Params["A-1"];
+            if (!Params.ContainsKey("A-1"))
+            {
+                Grads["DW"] = Grads["DZ"];
+            }
+            else
+            {
+                Grads["DW"] = Grads["DZ"] * Params["A-1"].Transpose();
+            }
             Grads["DB"] = Grads["DZ"];
-            Grads["DA-1"] = Params["W"].T() * Grads["DZ"];
+            Grads["DA-1"] = Params["W"] * Grads["DZ"];
             return Grads["DA-1"];
         }
 
         public override void Optimize()
         {
-            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"], Grads["DW"]);
+            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"].T(), Grads["DW"]).T();
             Matrix deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
 
             Params["W"] = Params["W"] - deltaW;

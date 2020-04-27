@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Text;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
 using Vortex.Activation;
 using Vortex.Cost;

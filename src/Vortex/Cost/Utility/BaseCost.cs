@@ -18,7 +18,7 @@ namespace Vortex.Cost.Utility
         
         public abstract double Forward(Matrix actual, Matrix expected);
 
-        public abstract Matrix Backward(Matrix Actual, Matrix expected);
+        public abstract Matrix Backward(Matrix actual, Matrix expected);
 
         public abstract ECostType Type();
 

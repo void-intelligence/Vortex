@@ -7,7 +7,7 @@ using Nomad.Matrix;
 namespace Vortex_Tests
 {
     [TestClass]
-    public class UnitTestVortex
+    public class VortexRegularization
     {
 
     }

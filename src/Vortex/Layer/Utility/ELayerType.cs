@@ -7,6 +7,6 @@ namespace Vortex.Layer.Utility
         Invalid,
         FullyConnected,
         Dropout,
-        
+        Output,
     }
 }

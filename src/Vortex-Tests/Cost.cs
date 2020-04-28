@@ -36,7 +36,6 @@ namespace VortexTests
         [TestMethod]
         public void CrossEntropyPrimeTest()
         {
-            double error = 0.0;
             Matrix actual = new Matrix(4, 1);
             actual.InRandomize();
             Matrix expected = new Matrix(4, 1);
@@ -152,7 +151,6 @@ namespace VortexTests
         [TestMethod]
         public void GeneralizedKullbackLeiblerDivergencePrimeTest()
         {
-            double error = 0.0;
             Matrix actual = new Matrix(4, 1);
             actual.InRandomize();
             Matrix expected = new Matrix(4, 1);

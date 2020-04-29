@@ -30,17 +30,13 @@ namespace Vortex.Layer
         public override Matrix Backward(Matrix dA)
         {
             // Note: Params["A-1"] will be set in Network.Backward() function
+            // Helper Grads
             Grads["DA"] = dA;
             Grads["G'"] = ActivationFunction.Backward(Params["Z"]);
             Grads["DZ"] = Grads["DA"].Hadamard(Grads["G'"]);
-            if (!Params.ContainsKey("A-1"))
-            {
-                Grads["DW"] = Grads["DZ"];
-            }
-            else
-            {
-                Grads["DW"] = Grads["DZ"] * Params["A-1"].Transpose();
-            }
+
+            // The Intended Grads
+            Grads["DW"] = Params["A-1"] * Grads["DZ"].T();
             Grads["DB"] = Grads["DZ"];
             Grads["DA-1"] = Params["W"] * Grads["DZ"];
             return Grads["DA-1"];
@@ -48,7 +44,7 @@ namespace Vortex.Layer
 
         public override void Optimize()
         {
-            Matrix deltaW = OptimizerFunction.CalculateDeltaW(Params["W"].T(), Grads["DW"]).T();
+            Matrix deltaW = OptimizerFunction.CalculateDeltaW(Params["W"], Grads["DW"]);
             Matrix deltaB = OptimizerFunction.CalculateDeltaB(Params["B"], Grads["DB"]);
 
             Params["W"] = Params["W"] - deltaW;

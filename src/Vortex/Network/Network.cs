@@ -115,38 +115,46 @@ namespace Vortex.Network
 
         }
 
-        private Matrix last_x;
-        private Matrix last_y;
+        private Matrix GlobalY;
+        private Matrix GlobalYHat;
         private float last_err;
         private float regularizationSum;
         public Matrix Forward(Matrix input, Matrix Y)
         {
             regularizationSum = 0.0f;
-            
-            last_y = Y;
-            Matrix _x = input;
+
+            Matrix yHat = input;
             for (int i = 0; i < Layers.Count; i++)
             {
-                _x = Layers[i].Forward(_x);
+                yHat = Layers[i].Forward(yHat);
                 regularizationSum += Layers[i].RegularizationValue;
             }
-            last_x = _x;
 
-            last_err = (float)CostFunction.Forward(last_x, Y);
+            GlobalY = Y;
+            GlobalYHat = yHat;
+
+            last_err = (float)CostFunction.Forward(GlobalYHat, GlobalY);
             
             // Apply Regularization
             last_err += regularizationSum;
 
-            return _x;
+            return yHat;
         }
 
         public Matrix Backward()
         {
-            Matrix da = CostFunction.Backward(last_x, last_y);
+            Matrix da = CostFunction.Backward(GlobalYHat, GlobalY);
             for (int i = Layers.Count - 1; i > 0; i--)
             {
                 Layers[i].Params["A-1"] = Layers[i - 1].Params["A"];
                 da = Layers[i].Backward(da);
+            }
+
+            Layers[0].Params["A-1"] = Layers[0].Params["A"];
+            da = Layers[0].Backward(da);
+
+            for (int i = Layers.Count - 1; i > 0; i--)
+            {
                 Layers[i].Optimize();
             }
             return da;

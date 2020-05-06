@@ -1,4 +1,4 @@
-# Vortex: Deep Learning Playground
+# Vortex: Deep Learning Playground [![Void-Intelligence](https://circleci.com/gh/void-intelligence/Vortex.svg?style=shield)](https://app.circleci.com/pipelines/github/void-intelligence/Vortex)
 
 <p align="center">
   <img src="https://github.com/void-intelligence/Vortex/blob/master/resources/Vortex-Logo.png" alt="Vortex Logo">

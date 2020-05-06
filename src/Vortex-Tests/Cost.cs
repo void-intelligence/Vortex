@@ -36,7 +36,6 @@ namespace VortexTests
         [TestMethod]
         public void CrossEntropyPrimeTest()
         {
-            double error = 0.0;
             Matrix actual = new Matrix(4, 1);
             actual.InRandomize();
             Matrix expected = new Matrix(4, 1);
@@ -152,7 +151,6 @@ namespace VortexTests
         [TestMethod]
         public void GeneralizedKullbackLeiblerDivergencePrimeTest()
         {
-            double error = 0.0;
             Matrix actual = new Matrix(4, 1);
             actual.InRandomize();
             Matrix expected = new Matrix(4, 1);
@@ -354,7 +352,18 @@ namespace VortexTests
             expected.InRandomize();
 
             Matrix gradMatrix = actual.Duplicate();
-            gradMatrix = actual - expected;
+
+            int n = 0;
+            Matrix da = actual.Duplicate();
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++)
+            {
+                n++;
+                da[i, j] = Math.Pow(expected[i, j] - actual[i, j], 2);
+            }
+
+            gradMatrix = da * (1.0 / n);
+
 
             QuadraticCost cost = new QuadraticCost();
             Matrix calculatedMatrix = cost.Backward(actual, expected);

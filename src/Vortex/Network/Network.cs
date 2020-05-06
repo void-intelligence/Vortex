@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using Nomad.Matrix;
-
+using Nomad.Utility;
 using Vortex.Cost;
 using Vortex.Cost.Utility;
 
@@ -92,64 +92,72 @@ namespace Vortex.Network
             }
             IsLocked = true;
 
+            Result result = new Result(new ResultSettings(Layers[^1].NeuronCount));
+            Layers.Add(result);
+
             // Initialize All Layers, Their Ws and Bs
             for (int i = 0; i < Layers.Count - 1; i++)
             {
                 // Weights
-                Layers[i].Params["W"] = new Matrix(Layers[i].NeuronCount, Layers[i + 1].NeuronCount);
-                Layers[i].Params["W"].InRandomize();
+                Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
+                Layers[i].Params["W"].InRandomize(-0.5, 0.5, EDistribution.Gaussian);
+                Layers[i].Params["W"] *= 0.01;
 
-                // Inputs
-                Layers[i].Params["X"] = new Matrix(Layers[i].NeuronCount, 1);
 
                 // Biases
                 Layers[i].Params["B"] = new Matrix(Layers[i + 1].NeuronCount, 1);
-                Layers[i].Params["B"].InRandomize();
+                Layers[i].Params["B"].InFill(0);
             }
-            // Final Layer
-            Layers[^1].Params["W"] = new Matrix(Layers[^1].NeuronCount, Layers[^1].NeuronCount);
-            Layers[^1].Params["W"].InRandomize();
-
-            Layers[^1].Params["B"] = new Matrix(Layers[^1].NeuronCount, 1);
-            Layers[^1].Params["B"].InRandomize();
-
         }
 
-        private Matrix last_x;
-        private Matrix last_y;
         private float last_err;
         private float regularizationSum;
-        public Matrix Forward(Matrix input, Matrix Y)
+
+        private Matrix actual;
+        private Matrix y;
+
+        public Matrix Forward(Matrix input)
         {
             regularizationSum = 0.0f;
-            
-            last_y = Y;
-            Matrix _x = input;
+
+            Matrix yHat = input;
             for (int i = 0; i < Layers.Count; i++)
             {
-                _x = Layers[i].Forward(_x);
+                yHat = Layers[i].Forward(yHat);
                 regularizationSum += Layers[i].RegularizationValue;
             }
-            last_x = _x;
 
-            last_err = (float)CostFunction.Forward(last_x, Y);
-            
-            // Apply Regularization
-            last_err += regularizationSum;
-
-            return _x;
+            // Save data
+            actual = yHat;
+            return yHat;
         }
 
-        public Matrix Backward()
+        public void Backward(Matrix expected)
         {
-            Matrix da = CostFunction.Backward(last_x, last_y);
-            for (int i = Layers.Count - 1; i > 0; i--)
+            y = expected;
+            last_err = (float)CostFunction.Forward(actual, expected);
+            last_err += regularizationSum;
+            regularizationSum = 0;
+
+            Matrix da = CostFunction.Backward(actual, expected);
+            // Calculate da for all layers
+            for (var i = Layers.Count - 2; i >= 0; i--)
             {
-                Layers[i].Params["A-1"] = Layers[i - 1].Params["A"];
                 da = Layers[i].Backward(da);
-                Layers[i].Optimize();
             }
-            return da;
+
+            // Optimize
+            foreach (var t in Layers)
+            {
+                t.Optimize();
+            }
+        }
+
+        public double Train(Matrix input, Matrix expected)
+        {
+            Matrix actual = Forward(input);
+            Backward(expected);
+            return last_err;
         }
     }
 }

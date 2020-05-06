@@ -21,7 +21,12 @@ namespace Vortex.Optimizer
             Epsilon = settings.Epsilon;
         }
 
-        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
+        {
+            return null;
+        }
+
+        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
         {
             return null;
         }
@@ -38,7 +43,7 @@ namespace Vortex.Optimizer
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Adam;
 
-        public AdamSettings(double alpha, double betaPrimary, double betaSecondary, double betaPrimary_T, double betaSecondary_T, double epsilon) : base(alpha)
+        public AdamSettings(double betaPrimary, double betaSecondary, double betaPrimary_T, double betaSecondary_T, double epsilon, double alpha = 0.001) : base(alpha)
         {
             BetaPrimary = betaPrimary;
             BetaSecondary = betaSecondary;

@@ -15,12 +15,17 @@ namespace Vortex.Optimizer
             Rho = settings.Rho;
             Epsilon = settings.Epsilon;
         }
-
-        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        
+        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
         {
             return null;
         }
 
+        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
+        {
+            return null;
+        }
+        
         public override EOptimizerType Type() => EOptimizerType.AdaDelta;
     }
 
@@ -30,7 +35,7 @@ namespace Vortex.Optimizer
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.AdaDelta;
 
-        public AdaDeltaSettings(double alpha, double rho, double epsilon) : base(alpha)
+        public AdaDeltaSettings(double rho, double epsilon, double alpha = 0.001) : base(alpha)
         {
             Rho = rho;
             Epsilon = epsilon;

@@ -8,5 +8,6 @@ namespace Vortex.Layer.Utility
         FullyConnected,
         Dropout,
         Output,
+        Result,
     }
 }

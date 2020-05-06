@@ -16,10 +16,16 @@ namespace Vortex.Optimizer
             BetaSecondary = settings.BetaSecondary;
         }
 
-        public override Matrix CalculateDelta(Matrix X, Matrix dJdX)
+        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
         {
             return null;
         }
+
+        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
+        {
+            return null;
+        }
+
 
         public override EOptimizerType Type() => EOptimizerType.Adamax;
     }
@@ -30,7 +36,7 @@ namespace Vortex.Optimizer
         public double BetaSecondary { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Adamax;
 
-        public AdamaxSettings(double alpha, double betaPrimary, double betaSecondary) : base(alpha)
+        public AdamaxSettings(double betaPrimary, double betaSecondary, double alpha = 0.001) : base(alpha)
         {
             BetaPrimary = betaPrimary;
             BetaSecondary = betaSecondary;

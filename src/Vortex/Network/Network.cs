@@ -130,6 +130,8 @@ namespace Vortex.Network
             _regularizationSum = 0;
 
             var da = CostFunction.Backward(_actual, expected);
+            da *= LastError;
+
             // Calculate da for all layers
             for (var i = Layers.Count - 2; i >= 0; i--) da = Layers[i].Backward(da);
 

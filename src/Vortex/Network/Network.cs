@@ -20,19 +20,17 @@ namespace Vortex.Network
 
         public float LastError { get; private set; }
         public Matrix Y { get; private set; }
-
-        public List<BaseLayerKernel> Layers { get; private set; }
-
-        public BaseOptimizerKernel OptimizerFunction { get; private set; }
-
-        public BaseCost CostFunction { get; private set; }
-
+        public List<BaseLayerKernel> Layers { get; }
+        public List<double> LayerRandomScales { get; }
+        public BaseOptimizerKernel OptimizerFunction { get; }
+        public BaseCost CostFunction { get; }
         public bool IsLocked { get; private set; }
 
-        public Network(CostSettings costSettings, Optimizer.Utility.Optimizer optimizerSettings)
+        public Network(CostSettings costSettings, BaseOptimizer optimizerSettings)
         {
             IsLocked = false;
             Layers = new List<BaseLayerKernel>();
+            LayerRandomScales = new List<double>();
 
             CostFunction = costSettings.Type() switch
             {
@@ -63,9 +61,11 @@ namespace Vortex.Network
 
         }
 
-        public void CreateLayer(ELayerType layerType, int neuronCount, Activation.Utility.BaseActivation activation, Regularization.Utility.Regularization regularization)
+        public void CreateLayer(ELayerType layerType, int neuronCount, Activation.Utility.BaseActivation activation, Regularization.Utility.Regularization regularization, double randomScale = 0.01)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
+
+            LayerRandomScales.Add(randomScale);
 
             // Regularization Setup
             BaseLayerKernel layer = layerType switch
@@ -93,8 +93,7 @@ namespace Vortex.Network
                 // Weights
                 Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
                 Layers[i].Params["W"].InRandomize(-0.5, 0.5, EDistribution.Gaussian);
-                Layers[i].Params["W"] *= 0.01;
-
+                Layers[i].Params["W"] *= LayerRandomScales[i];
 
                 // Biases
                 Layers[i].Params["B"] = new Matrix(Layers[i + 1].NeuronCount, 1);

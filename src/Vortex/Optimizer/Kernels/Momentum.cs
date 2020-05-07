@@ -63,7 +63,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.Momentum;
     }
 
-    public sealed class Momentum : Utility.Optimizer
+    public sealed class Momentum : Utility.BaseOptimizer
     {
         public double Tao { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Momentum;

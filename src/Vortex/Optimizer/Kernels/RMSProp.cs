@@ -67,7 +67,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.RmsProp;
     }
 
-    public sealed class RmsProp : Utility.Optimizer
+    public sealed class RmsProp : Utility.BaseOptimizer
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }

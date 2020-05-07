@@ -31,7 +31,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.NesterovMomentum;
     }
 
-    public sealed class NesterovMomentum : Utility.Optimizer
+    public sealed class NesterovMomentum : Utility.BaseOptimizer
     {
         public override EOptimizerType Type() => EOptimizerType.NesterovMomentum;
 

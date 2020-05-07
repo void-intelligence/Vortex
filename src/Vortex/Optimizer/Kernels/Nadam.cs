@@ -26,7 +26,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.Nadam;
     }
 
-    public sealed class Nadam : Utility.Optimizer
+    public sealed class Nadam : Utility.BaseOptimizer
     {
         public override EOptimizerType Type() => EOptimizerType.Nadam;
 

@@ -30,7 +30,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.Adamax;
     }
 
-    public sealed class Adamax : Utility.Optimizer
+    public sealed class Adamax : Utility.BaseOptimizer
     {
         public double BetaPrimary { get; set; }
         public double BetaSecondary { get; set; }

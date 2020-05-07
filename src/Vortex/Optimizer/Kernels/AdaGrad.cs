@@ -27,7 +27,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.AdaGrad;
     }
 
-    public sealed class AdaGrad : Utility.Optimizer
+    public sealed class AdaGrad : Utility.BaseOptimizer
     {
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.AdaGrad;

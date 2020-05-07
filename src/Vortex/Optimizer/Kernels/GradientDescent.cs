@@ -28,7 +28,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.GradientDescent;
     }
 
-    public sealed class GradientDescent : Utility.Optimizer
+    public sealed class GradientDescent : Utility.BaseOptimizer
     {
         public override EOptimizerType Type() => EOptimizerType.GradientDescent;
 

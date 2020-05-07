@@ -34,7 +34,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.Adam;
     }
 
-    public sealed class Adam : Utility.Optimizer
+    public sealed class Adam : Utility.BaseOptimizer
     {
         public double BetaPrimary { get; set; }
         public double BetaSecondary { get; set; }

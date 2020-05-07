@@ -3,82 +3,77 @@ using System.Collections.Generic;
 
 using Nomad.Matrix;
 using Nomad.Utility;
-using Vortex.Cost;
+
+using Vortex.Cost.Kernels;
 using Vortex.Cost.Utility;
 
-using Vortex.Layer;
+using Vortex.Layer.Kernels;
 using Vortex.Layer.Utility;
 
-using Vortex.Optimizer;
+using Vortex.Optimizer.Kernels;
 using Vortex.Optimizer.Utility;
-
-using Vortex.Activation;
-using Vortex.Activation.Utility;
-
-using Vortex.Regularization;
-using Vortex.Regularization.Utility;
 
 namespace Vortex.Network
 {
     public class Network
     {
 
-        public List<BaseLayer> Layers { get; private set; }
+        public float LastError { get; private set; }
+        public Matrix Y { get; private set; }
 
-        public BaseOptimizer OptimizerFunction { get; private set; }
+        public List<BaseLayerKernel> Layers { get; private set; }
+
+        public BaseOptimizerKernel OptimizerFunction { get; private set; }
 
         public BaseCost CostFunction { get; private set; }
 
         public bool IsLocked { get; private set; }
 
-        public Network(CostSettings costSettings, OptimizerSettings optimizerSettings)
+        public Network(CostSettings costSettings, Optimizer.Utility.Optimizer optimizerSettings)
         {
             IsLocked = false;
-            Layers = new List<BaseLayer>();
+            Layers = new List<BaseLayerKernel>();
 
-            CostFunction = (costSettings.Type()) switch
+            CostFunction = costSettings.Type() switch
             {
-                ECostType.CrossEntropyCost => new CrossEntropyCost((CrossEntropyCostSettings)costSettings),
-                ECostType.ExponentionalCost => new ExponentialCost((ExponentionalCostSettings)costSettings),
-                ECostType.GeneralizedKullbackLeiblerDivergence => new GeneralizedKullbackLeiblerDivergence((GeneralizedKullbackLeiblerDivergenceSettings)costSettings),
-                ECostType.HellingerDistance => new HellingerDistance((HellingerDistanceSettings)costSettings),
-                ECostType.ItakuraSaitoDistance => new ItakuraSaitoDistance((ItakuraSaitoDistanceSettings)costSettings),
-                ECostType.KullbackLeiblerDivergence => new KullbackLeiblerDivergence((KullbackLeiblerDivergenceSettings)costSettings),
-                ECostType.QuadraticCost => new QuadraticCost((QuadraticCostSettings)costSettings),
-                _ => throw new ArgumentException("Cost Type Invalid."),
+                ECostType.CrossEntropyCost => new CrossEntropyCostKernel((CrossEntropyCost)costSettings),
+                ECostType.ExponentionalCost => new ExponentialCostKernel((ExponentionalCost)costSettings),
+                ECostType.GeneralizedKullbackLeiblerDivergence => new GeneralizedKullbackLeiblerDivergenceKernel((GeneralizedKullbackLeiblerDivergence)costSettings),
+                ECostType.HellingerDistance => new HellingerDistanceKernel((HellingerDistance)costSettings),
+                ECostType.ItakuraSaitoDistance => new ItakuraSaitoDistanceKernel((ItakuraSaitoDistance)costSettings),
+                ECostType.KullbackLeiblerDivergence => new KullbackLeiblerDivergenceKernel((KullbackLeiblerDivergence)costSettings),
+                ECostType.QuadraticCost => new QuadraticCostKernel((QuadraticCost)costSettings),
+                _ => throw new ArgumentException("Cost Type Invalid.")
             };
 
             // Optimizer Function Setup
-            OptimizerFunction = (optimizerSettings.Type()) switch
+            OptimizerFunction = optimizerSettings.Type() switch
             {
-                EOptimizerType.AdaDelta => new AdaDelta((AdaDeltaSettings)optimizerSettings),
-                EOptimizerType.AdaGrad => new AdaGrad((AdaGradSettings)optimizerSettings),
-                EOptimizerType.Adam => new Adam((AdamSettings)optimizerSettings),
-                EOptimizerType.Adamax => new Adamax((AdamaxSettings)optimizerSettings),
-                EOptimizerType.GradientDescent => new GradientDescent((GradientDescentSettings)optimizerSettings),
-                EOptimizerType.Momentum => new Momentum((MomentumSettings)optimizerSettings),
-                EOptimizerType.Nadam => new Nadam((NadamSettings)optimizerSettings),
-                EOptimizerType.NesterovMomentum => new NesterovMomentum((NesterovMomentumSettings)optimizerSettings),
-                EOptimizerType.RMSProp => new RMSProp((RMSPropSettings)optimizerSettings),
-                _ => throw new ArgumentException("Optimizer Type Invalid."),
+                EOptimizerType.AdaDelta => new AdaDeltaKernel((AdaDelta)optimizerSettings),
+                EOptimizerType.AdaGrad => new AdaGradKernel((AdaGrad)optimizerSettings),
+                EOptimizerType.Adam => new AdamKernel((Adam)optimizerSettings),
+                EOptimizerType.Adamax => new AdamaxKernel((Adamax)optimizerSettings),
+                EOptimizerType.GradientDescent => new GradientDescentKernel((GradientDescent)optimizerSettings),
+                EOptimizerType.Momentum => new MomentumKernel((Momentum)optimizerSettings),
+                EOptimizerType.Nadam => new NadamKernel((Nadam)optimizerSettings),
+                EOptimizerType.NesterovMomentum => new NesterovMomentumKernel((NesterovMomentum)optimizerSettings),
+                EOptimizerType.RmsProp => new RmsPropKernel((RmsProp)optimizerSettings),
+                _ => throw new ArgumentException("Optimizer Type Invalid.")
             };
 
         }
 
-        public void CreateLayer(ELayerType layerType, int neuronCount, ActivationSettings activation, RegularizationSettings regularization)
+        public void CreateLayer(ELayerType layerType, int neuronCount, Activation.Utility.BaseActivation activation, Regularization.Utility.Regularization regularization)
         {
-            if (IsLocked)
-            {
-                throw new InvalidOperationException("Network is Locked.");
-            }
+            if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 
             // Regularization Setup
-            BaseLayer layer = (layerType) switch
+            BaseLayerKernel layer = layerType switch
             {
-                ELayerType.FullyConnected => new FullyConnected(new FullyConnectedSettings(neuronCount, activation, regularization), OptimizerFunction),
-                ELayerType.Dropout => new Dropout(new DropoutSettings(neuronCount, activation, regularization), OptimizerFunction),
-                ELayerType.Output => new Output(new OutputSettings(neuronCount, activation, regularization), OptimizerFunction),
-                _ => throw new ArgumentException("Layer Type Invalid."),
+                ELayerType.FullyConnected => new FullyConnectedKernel(new FullyConnected(neuronCount, activation, regularization), OptimizerFunction),
+                ELayerType.Dropout => new DropoutKernel(new Dropout(neuronCount, activation, regularization), OptimizerFunction),
+                ELayerType.Output => new OutputKernel(new Output(neuronCount, activation, regularization), OptimizerFunction),
+                _ => throw new ArgumentException("Layer Type Invalid.")
             };
 
             Layers.Add(layer);
@@ -86,17 +81,14 @@ namespace Vortex.Network
 
         public void InitNetwork()
         {
-            if (IsLocked)
-            {
-                throw new InvalidOperationException("Network is Locked.");
-            }
+            if (IsLocked) throw new InvalidOperationException("Network is Locked.");
             IsLocked = true;
 
-            Result result = new Result(new ResultSettings(Layers[^1].NeuronCount));
+            var result = new ResultKernel(new Result(Layers[^1].NeuronCount));
             Layers.Add(result);
 
             // Initialize All Layers, Their Ws and Bs
-            for (int i = 0; i < Layers.Count - 1; i++)
+            for (var i = 0; i < Layers.Count - 1; i++)
             {
                 // Weights
                 Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
@@ -110,54 +102,39 @@ namespace Vortex.Network
             }
         }
 
-        private float last_err;
-        private float regularizationSum;
+        private float _regularizationSum;
 
-        private Matrix actual;
-        private Matrix y;
+        private Matrix _actual;
 
         public Matrix Forward(Matrix input)
         {
-            regularizationSum = 0.0f;
+            _regularizationSum = 0.0f;
 
-            Matrix yHat = input;
-            for (int i = 0; i < Layers.Count; i++)
+            var yHat = input;
+            foreach (var t in Layers)
             {
-                yHat = Layers[i].Forward(yHat);
-                regularizationSum += Layers[i].RegularizationValue;
+                yHat = t.Forward(yHat);
+                _regularizationSum += t.RegularizationValue;
             }
 
             // Save data
-            actual = yHat;
+            _actual = yHat;
             return yHat;
         }
 
         public void Backward(Matrix expected)
         {
-            y = expected;
-            last_err = (float)CostFunction.Forward(actual, expected);
-            last_err += regularizationSum;
-            regularizationSum = 0;
+            Y = expected;
+            LastError = (float)CostFunction.Forward(_actual, expected);
+            LastError += _regularizationSum;
+            _regularizationSum = 0;
 
-            Matrix da = CostFunction.Backward(actual, expected);
+            var da = CostFunction.Backward(_actual, expected);
             // Calculate da for all layers
-            for (var i = Layers.Count - 2; i >= 0; i--)
-            {
-                da = Layers[i].Backward(da);
-            }
+            for (var i = Layers.Count - 2; i >= 0; i--) da = Layers[i].Backward(da);
 
             // Optimize
-            foreach (var t in Layers)
-            {
-                t.Optimize();
-            }
-        }
-
-        public double Train(Matrix input, Matrix expected)
-        {
-            Matrix actual = Forward(input);
-            Backward(expected);
-            return last_err;
+            foreach (var t in Layers) t.Optimize();
         }
     }
 }

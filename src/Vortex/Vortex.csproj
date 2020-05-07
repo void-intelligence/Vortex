@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Optimizer\Core\AdaDelta.cs~RF12757067.TMP" />
+    <None Remove="Optimizer\Kernels\AdaDelta.cs~RF12757067.TMP" />
   </ItemGroup>
 
   <ItemGroup>

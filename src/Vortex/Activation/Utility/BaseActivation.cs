@@ -4,9 +4,14 @@ using Nomad.Matrix;
 
 namespace Vortex.Activation.Utility
 {
-    public abstract class BaseActivation
+    public abstract class BaseActivationKernel
     {
-        protected BaseActivation(ActivationSettings settings) { }
+        public BaseActivation Settings { get; }
+
+        protected BaseActivationKernel(BaseActivation settings)
+        {
+            Settings = settings;
+        }
 
         public abstract Matrix Forward(Matrix input);
 
@@ -19,7 +24,7 @@ namespace Vortex.Activation.Utility
         public abstract EActivationType Type();
     }
 
-    public abstract class ActivationSettings
+    public abstract class BaseActivation
     {
         public abstract EActivationType Type();
     }

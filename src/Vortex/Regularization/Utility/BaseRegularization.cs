@@ -4,23 +4,19 @@ using Nomad.Matrix;
 
 namespace Vortex.Regularization.Utility
 {
-    public abstract class BaseRegularization
+    public abstract class BaseRegularizationKernel
     {
         public double Lambda { get; set; }
 
-        protected BaseRegularization(RegularizationSettings settings) {}
+        protected BaseRegularizationKernel(Regularization settings) {}
 
         public abstract double CalculateNorm(Matrix input);
 
         public abstract ERegularizationType Type();
     }
 
-    public abstract class RegularizationSettings
+    public abstract class Regularization
     {
-        protected RegularizationSettings()
-        {
-        }
-
         public abstract ERegularizationType Type();
     }
 }

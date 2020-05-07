@@ -1,16 +1,17 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nomad.Matrix;
 using System.Collections.Generic;
-using Vortex.Activation;
-using Vortex.Cost;
-using Vortex.Layer.Utility;
-using Vortex.Network;
-using Vortex.Optimizer;
-using Vortex.Regularization;
 using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Nomad.Matrix;
+using Vortex.Network;
+using Vortex.Layer.Utility;
+using Vortex.Activation.Kernels;
+using Vortex.Regularization.Kernels;
+using Vortex.Cost.Kernels;
+using Vortex.Optimizer.Kernels;
 
 namespace VortexTests
 {
@@ -20,18 +21,18 @@ namespace VortexTests
         [TestMethod]
         public void SequentualForwardTest()
         {
-            Network network = new Network(new CrossEntropyCostSettings(), new GradientDescentSettings(0.1));
-            network.CreateLayer(ELayerType.FullyConnected, 784, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.Dropout, 100, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.FullyConnected, 100, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.Dropout, 100, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.Output, 10, new SigmoidSettings(), new L2Settings(2));
+            var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
+            network.CreateLayer(ELayerType.FullyConnected, 784, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.FullyConnected, 100, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.Output, 10, new Sigmoid(), new L2(2));
             network.InitNetwork();
 
-            Matrix x = new Matrix(784, 1);
+            var x = new Matrix(784, 1);
             x.InFlatten();
 
-            Matrix y = new Matrix(10, 1);
+            var y = new Matrix(10, 1);
             y.InRandomize();
 
             network.Forward(x);
@@ -40,18 +41,18 @@ namespace VortexTests
         [TestMethod]
         public void SequentualBackwardTest()
         {
-            Network network = new Network(new CrossEntropyCostSettings(), new GradientDescentSettings(0.1));
-            network.CreateLayer(ELayerType.FullyConnected, 784, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.Dropout, 100, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.FullyConnected, 100, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.Dropout, 100, new SigmoidSettings(), new L2Settings(2));
-            network.CreateLayer(ELayerType.Output, 10, new SigmoidSettings(), new L2Settings(2));
+            var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
+            network.CreateLayer(ELayerType.FullyConnected, 784, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.FullyConnected, 100, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2));
+            network.CreateLayer(ELayerType.Output, 10, new Sigmoid(), new L2(2));
             network.InitNetwork();
 
-            Matrix x = new Matrix(784, 1);
+            var x = new Matrix(784, 1);
             x.InFlatten();
 
-            Matrix y = new Matrix(10, 1);
+            var y = new Matrix(10, 1);
             y.InRandomize();
 
             network.Forward(x);
@@ -62,11 +63,11 @@ namespace VortexTests
         [TestMethod]
         public void XorTest()
         {
-            Network net = new Network(new QuadraticCostSettings(), new GradientDescentSettings(0.033));
-            net.CreateLayer(ELayerType.FullyConnected, 3, new TanhSettings(), new NoneSettings());
-            net.CreateLayer(ELayerType.FullyConnected, 25, new TanhSettings(), new NoneSettings());
-            net.CreateLayer(ELayerType.FullyConnected, 25, new TanhSettings(), new NoneSettings());
-            net.CreateLayer(ELayerType.Output, 1, new TanhSettings(), new NoneSettings());
+            var net = new Network(new QuadraticCost(), new GradientDescent(0.033));
+            net.CreateLayer(ELayerType.FullyConnected, 3, new Tanh(), new None());
+            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None());
+            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None());
+            net.CreateLayer(ELayerType.Output, 1, new Tanh(), new None());
             net.InitNetwork();
 
             var inputs = new List<Matrix>();
@@ -163,8 +164,7 @@ namespace VortexTests
                 correct += Math.Abs(net.Forward(inputs[6])[0, 0]) < 0.1 ? 1 : 0;
                 correct += Math.Abs(net.Forward(inputs[7])[0, 0]) - 1 < 0.1 ? 1 : 0;
             }
-            var acc = (double)correct / 1000.0 * 100;
-
+            var acc = correct / 1000.0 * 100.0;
 
             Trace.WriteLine(" Acc: " + acc);
             Assert.IsTrue(acc > 80.0, "Network did not learn XOR");

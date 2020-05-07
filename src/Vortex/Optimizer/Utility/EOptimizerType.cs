@@ -13,6 +13,6 @@ namespace Vortex.Optimizer.Utility
         Momentum,
         Nadam,
         NesterovMomentum,
-        RMSProp
+        RmsProp
     }
 }

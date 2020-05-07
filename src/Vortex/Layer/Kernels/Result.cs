@@ -18,7 +18,7 @@ namespace Vortex.Layer.Kernels
 
         public override Matrix Forward(Matrix inputs)
         {
-            // Calculate Feed Forward Operation
+            // The result layer just holds the values of the input
             Params["X"] = inputs;
             return Params["X"];
         }

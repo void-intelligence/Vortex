@@ -33,7 +33,7 @@ namespace Vortex.Activation.Kernels
             Alpha = alpha;
         }
 
-        public double Alpha { get; private set; }
+        public double Alpha { get; }
 
         public override EActivationType Type() => EActivationType.Elu;
     }

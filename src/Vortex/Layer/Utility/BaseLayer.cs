@@ -18,13 +18,13 @@ namespace Vortex.Layer.Utility
     public abstract class BaseLayerKernel
     {
         public float RegularizationValue { get; protected set; }
-        public BaseLayer Settings { get; private set; }
-        public int NeuronCount { get; private set; }
-        public BaseActivationKernel ActivationFunction { get; private set; }
-        public BaseRegularizationKernel RegularizationFunction { get; private set; }
-        public BaseOptimizerKernel OptimizerFunction { get; private set; }
-        public Dictionary<string, Matrix> Params { get; private set; }
-        public Dictionary<string, Matrix> Grads { get; private set; }
+        public BaseLayer Settings { get; }
+        public int NeuronCount { get; }
+        public BaseActivationKernel ActivationFunction { get; }
+        public BaseRegularizationKernel RegularizationFunction { get; }
+        public BaseOptimizerKernel OptimizerFunction { get; }
+        public Dictionary<string, Matrix> Params { get; }
+        public Dictionary<string, Matrix> Grads { get; }
 
         protected BaseLayerKernel(BaseLayer layerSettings, BaseOptimizerKernel optimizer)
         {
@@ -90,9 +90,9 @@ namespace Vortex.Layer.Utility
 
     public abstract class BaseLayer
     {
-        public int NeuronCount { get; private set; }
-        public Activation.Utility.BaseActivation ActivationFunctionSettings { get; private set; }
-        public Regularization.Utility.Regularization RegularizationFunctionSettings { get; private set; }
+        public int NeuronCount { get; }
+        public Activation.Utility.BaseActivation ActivationFunctionSettings { get; }
+        public Regularization.Utility.Regularization RegularizationFunctionSettings { get; }
 
         protected BaseLayer(int neuronCount, Activation.Utility.BaseActivation activationSettings, Regularization.Utility.Regularization regularizationSettings) 
         {

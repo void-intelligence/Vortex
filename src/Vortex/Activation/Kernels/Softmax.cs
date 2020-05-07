@@ -10,7 +10,7 @@ namespace Vortex.Activation.Kernels
     {
         public SoftmaxKernel(Softmax settings = null) : base(settings) { }
 
-        public double SumExp { get; }
+        public double SumExp { get; private set; }
 
         public SoftmaxKernel() : base(null)
         {

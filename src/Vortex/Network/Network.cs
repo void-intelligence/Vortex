@@ -17,13 +17,13 @@ namespace Vortex.Network
 {
     public class Network
     {
-        public float LastError { get; }
-        public Matrix Y { get; }
+        public float LastError { get; private set; }
+        public Matrix Y { get; private set; }
         public List<BaseLayerKernel> Layers { get; }
         public List<double> LayerRandomScales { get; }
         public BaseOptimizerKernel OptimizerFunction { get; }
         public BaseCost CostFunction { get; }
-        public bool IsLocked { get; }
+        public bool IsLocked { get; private set; }
 
         public Network(CostSettings costSettings, BaseOptimizer optimizerSettings)
         {

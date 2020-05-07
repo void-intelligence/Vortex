@@ -17,7 +17,6 @@ namespace Vortex.Network
 {
     public class Network
     {
-
         public float LastError { get; private set; }
         public Matrix Y { get; private set; }
         public List<BaseLayerKernel> Layers { get; }

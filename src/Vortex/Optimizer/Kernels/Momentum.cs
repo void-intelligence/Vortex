@@ -41,7 +41,7 @@ namespace Vortex.Optimizer.Kernels
             }
             else
             {
-                _vDw = (Tao * _vDw) + ((1 - Tao) * dJdW);
+                _vDw = (Tao * (Alpha * (w.Hadamard(dJdW))) + ((1 - Tao) * dJdW)) * _vDw;
             }
             return _vDw;
         }
@@ -55,7 +55,7 @@ namespace Vortex.Optimizer.Kernels
             }
             else
             {
-                _vDb = (Tao * _vDb) + ((1 - Tao) * dJdB);
+                _vDb = (Tao * (Alpha * (b.Hadamard(dJdB))) + ((1 - Tao) * dJdB)) * _vDb;
             }
             return _vDb;
         }

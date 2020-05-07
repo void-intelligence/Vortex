@@ -9,9 +9,11 @@ namespace Vortex.Activation.Utility
         BinaryStep,
         BipolarSigmoid,
         Elu,
+        Exponential,
         HardSigmoid,
         HardTanh,
         Identity,
+        Loggy,
         Logit,
         LRelu,
         Mish,
@@ -21,6 +23,7 @@ namespace Vortex.Activation.Utility
         Softmax,
         Softplus,
         Softsign,
+        Swish,
         Tanh            
     }
 }

@@ -1,6 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-namespace Vortex.Initializers.Utility
+namespace Vortex.Initializer.Utility
 {
     public enum EInitializerType
     {

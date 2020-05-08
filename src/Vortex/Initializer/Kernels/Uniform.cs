@@ -1,8 +1,8 @@
 ﻿using Nomad.Matrix;
 using Nomad.Utility;
-using Vortex.Initializers.Utility;
+using Vortex.Initializer.Utility;
 
-namespace Vortex.Initializers.Kernels
+namespace Vortex.Initializer.Kernels
 {
     public class UniformKernel : BaseInitializerKernel
     {

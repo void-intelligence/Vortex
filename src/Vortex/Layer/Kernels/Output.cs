@@ -5,7 +5,7 @@ using Vortex.Layer.Utility;
 using Vortex.Optimizer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
-using Vortex.Initializers.Utility;
+using Vortex.Initializer.Utility;
 
 namespace Vortex.Layer.Kernels
 {

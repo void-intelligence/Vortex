@@ -1,7 +1,7 @@
 ﻿using System;
 using Nomad.Matrix;
 
-namespace Vortex.Initializers.Utility
+namespace Vortex.Initializer.Utility
 {
     public abstract class BaseInitializerKernel
     {

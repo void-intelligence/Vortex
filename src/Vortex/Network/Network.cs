@@ -13,8 +13,8 @@ using Vortex.Layer.Utility;
 using Vortex.Optimizer.Kernels;
 using Vortex.Optimizer.Utility;
 
-using Vortex.Initializers.Kernels;
-using Vortex.Initializers.Utility;
+using Vortex.Initializer.Kernels;
+using Vortex.Initializer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 
@@ -143,6 +143,12 @@ namespace Vortex.Network
 
             // Optimize
             foreach (var t in Layers) t.Optimize();
+        }
+
+        public void Train(Matrix input, Matrix output)
+        {
+            Forward(input);
+            Backward(output);
         }
     }
 }

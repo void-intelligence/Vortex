@@ -1,8 +1,8 @@
 ﻿using System;
 using Nomad.Matrix;
-using Vortex.Initializers.Utility;
+using Vortex.Initializer.Utility;
 
-namespace Vortex.Initializers.Kernels
+namespace Vortex.Initializer.Kernels
 {
     public sealed class ConstKernel : BaseInitializerKernel
     {

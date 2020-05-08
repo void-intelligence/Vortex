@@ -12,7 +12,7 @@ using Vortex.Activation.Kernels;
 using Vortex.Regularization.Kernels;
 using Vortex.Cost.Kernels;
 using Vortex.Optimizer.Kernels;
-using Vortex.Initializers.Kernels;
+using Vortex.Initializer.Kernels;
 
 namespace VortexTests
 {
@@ -127,30 +127,7 @@ namespace VortexTests
 
             for (var i = 0; i < 5000; i++)
             {
-                net.Forward(inputs[0]);
-                net.Backward(outputs[0]);
-
-                net.Forward(inputs[1]);
-                net.Backward(outputs[1]);
-
-                net.Forward(inputs[2]);
-                net.Backward(outputs[2]);
-
-                net.Forward(inputs[3]);
-                net.Backward(outputs[3]);
-
-                net.Forward(inputs[4]);
-                net.Backward(outputs[4]);
-
-                net.Forward(inputs[5]);
-                net.Backward(outputs[5]);
-
-                net.Forward(inputs[6]);
-                net.Backward(outputs[6]);
-
-                net.Forward(inputs[7]);
-                net.Backward(outputs[7]);
-
+                net.Train(inputs[i % 8], outputs[i % 8]);
             }
 
             var correct = 0;

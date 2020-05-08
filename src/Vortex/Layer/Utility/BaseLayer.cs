@@ -9,8 +9,8 @@ using Nomad.Matrix;
 using System.Collections.Generic;
 using Vortex.Optimizer.Utility;
 using Vortex.Regularization.Kernels;
-using Vortex.Initializers.Kernels;
-using Vortex.Initializers.Utility;
+using Vortex.Initializer.Kernels;
+using Vortex.Initializer.Utility;
 
 namespace Vortex.Layer.Utility
 {

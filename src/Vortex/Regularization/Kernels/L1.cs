@@ -19,7 +19,7 @@ namespace Vortex.Regularization.Kernels
         public override ERegularizationType Type() => ERegularizationType.L1;
     }
 
-    public sealed class L1 : Utility.Regularization
+    public sealed class L1 : BaseRegularization
     {
         public L1(double lambda)
         {

@@ -8,14 +8,14 @@ namespace Vortex.Regularization.Utility
     {
         public double Lambda { get; set; }
 
-        protected BaseRegularizationKernel(Regularization settings) {}
+        protected BaseRegularizationKernel(BaseRegularization settings) {}
 
         public abstract double CalculateNorm(Matrix input);
 
         public abstract ERegularizationType Type();
     }
 
-    public abstract class Regularization
+    public abstract class BaseRegularization
     {
         public abstract ERegularizationType Type();
     }

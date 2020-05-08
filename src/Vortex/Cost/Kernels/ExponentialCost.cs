@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Exponential Cost"
     /// </summary>
-    public class ExponentialCostKernel : BaseCost
+    public class ExponentialCostKernel : BaseCostKernel
     {
         public double Tao { get; set; }
 
@@ -74,7 +74,7 @@ namespace Vortex.Cost.Kernels
         public override ECostType Type() => ECostType.ExponentionalCost;
     }
 
-    public class ExponentionalCost : CostSettings
+    public class ExponentionalCost : BaseCost
     {
         public double Tao { get; set; }
 

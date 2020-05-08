@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Quadratic Cost": Also known as "Mean Squared Error" or "Maximum Likelihood" or "Sum Squared Error"
     /// </summary>
-    public class QuadraticCostKernel : BaseCost
+    public class QuadraticCostKernel : BaseCostKernel
     {
         public QuadraticCostKernel(QuadraticCost settings = null) : base(settings) { }
         
@@ -49,7 +49,7 @@ namespace Vortex.Cost.Kernels
         public override ECostType Type() => ECostType.QuadraticCost;
     }
 
-    public class QuadraticCost : CostSettings
+    public class QuadraticCost : BaseCost
     {
         public override ECostType Type() => ECostType.QuadraticCost;
     }

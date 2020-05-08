@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Generalized Kullback Leibler Divergence": also known as "Bregman divergence"
     /// </summary>
-    public class GeneralizedKullbackLeiblerDivergenceKernel : BaseCost
+    public class GeneralizedKullbackLeiblerDivergenceKernel : BaseCostKernel
     {
         public GeneralizedKullbackLeiblerDivergenceKernel(GeneralizedKullbackLeiblerDivergence settings = null) : base(settings) { }
 
@@ -47,7 +47,7 @@ namespace Vortex.Cost.Kernels
         public override ECostType Type() => ECostType.GeneralizedKullbackLeiblerDivergence;
     }
 
-    public class GeneralizedKullbackLeiblerDivergence : CostSettings
+    public class GeneralizedKullbackLeiblerDivergence : BaseCost
     {
         public override ECostType Type() => ECostType.GeneralizedKullbackLeiblerDivergence;
     }

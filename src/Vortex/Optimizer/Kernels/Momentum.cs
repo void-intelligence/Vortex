@@ -55,7 +55,7 @@ namespace Vortex.Optimizer.Kernels
             }
             else
             {
-                _vDb = (Tao * (Alpha * (b.Hadamard(dJdB))) + ((1 - Tao) * dJdB)) * _vDb;
+                _vDb = (Tao * _vDb + ((1 - Tao) * dJdB)) * (Alpha * (b.Hadamard(dJdB)));
             }
             return _vDb;
         }

@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Itakura Saito Distance" cost function
     /// </summary>
-    public class ItakuraSaitoDistanceKernel : BaseCost
+    public class ItakuraSaitoDistanceKernel : BaseCostKernel
     {
         public ItakuraSaitoDistanceKernel(ItakuraSaitoDistance settings = null) : base(settings) { }
 
@@ -52,7 +52,7 @@ namespace Vortex.Cost.Kernels
         public override ECostType Type() => ECostType.ItakuraSaitoDistance;
     }
 
-    public class ItakuraSaitoDistance : CostSettings
+    public class ItakuraSaitoDistance : BaseCost
     {
         public override ECostType Type() => ECostType.ItakuraSaitoDistance;
     }

@@ -12,4 +12,8 @@
     <PackageReference Include="VI-Nomad" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Initializers\Kernels\" />
+  </ItemGroup>
+
 </Project>

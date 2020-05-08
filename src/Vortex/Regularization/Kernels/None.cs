@@ -16,7 +16,7 @@ namespace Vortex.Regularization.Kernels
         public override ERegularizationType Type() => ERegularizationType.None;
     }
 
-    public sealed class None : Utility.Regularization
+    public sealed class None : BaseRegularization
     {
         public override ERegularizationType Type() => ERegularizationType.None;
     }

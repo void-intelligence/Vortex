@@ -12,9 +12,9 @@ namespace Vortex.Cost.Utility
     /// It also may depend on variables such as weights and biases.
     /// A cost function is a single value, not a vector, because it rates how good the neural network did as a whole.
     /// </summary>
-    public abstract class BaseCost
+    public abstract class BaseCostKernel
     {
-        protected BaseCost(CostSettings settings) { }
+        protected BaseCostKernel(BaseCost settings) { }
         
         public abstract double Forward(Matrix actual, Matrix expected);
 
@@ -27,7 +27,7 @@ namespace Vortex.Cost.Utility
         public virtual void ResetCost() { BatchCost = 0; }
     }
 
-    public abstract class CostSettings
+    public abstract class BaseCost
     {
         public abstract ECostType Type();
     }

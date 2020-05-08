@@ -29,7 +29,7 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type() => EOptimizerType.AdaDelta;
     }
 
-    public sealed class AdaDelta : Utility.BaseOptimizer
+    public sealed class AdaDelta : BaseOptimizer
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }

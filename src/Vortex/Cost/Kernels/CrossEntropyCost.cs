@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Cross Entropy Cost": Also known as "Bernoulli negative log-likelihood" and "Binary Cross-Entropy"
     /// </summary>
-    public class CrossEntropyCostKernel : BaseCost
+    public class CrossEntropyCostKernel : BaseCostKernel
     {
         public CrossEntropyCostKernel(CrossEntropyCost settings = null) : base(settings) { }
 
@@ -47,7 +47,7 @@ namespace Vortex.Cost.Kernels
         public override ECostType Type() => ECostType.CrossEntropyCost;
     }
 
-    public class CrossEntropyCost : CostSettings 
+    public class CrossEntropyCost : BaseCost 
     {
         public override ECostType Type() => ECostType.CrossEntropyCost;
     }

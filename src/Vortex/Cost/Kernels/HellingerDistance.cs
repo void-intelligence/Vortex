@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Hellinger Distance": needs to have positive values, and ideally values between 0 and 1. The same is true for the following divergences.
     /// </summary>
-    public class HellingerDistanceKernel : BaseCost
+    public class HellingerDistanceKernel : BaseCostKernel
     {
         public HellingerDistanceKernel(HellingerDistance settings = null) : base(settings) { }
         
@@ -55,7 +55,7 @@ namespace Vortex.Cost.Kernels
         public override ECostType Type() => ECostType.HellingerDistance;
     }
 
-    public class HellingerDistance : CostSettings 
+    public class HellingerDistance : BaseCost 
     {
         public override ECostType Type() => ECostType.HellingerDistance;
     }

@@ -3,12 +3,15 @@
 using Nomad.Matrix;
 using Vortex.Layer.Utility;
 using Vortex.Optimizer.Utility;
+using Vortex.Activation.Utility;
+using Vortex.Regularization.Utility;
+using Vortex.Initializers.Utility;
 
 namespace Vortex.Layer.Kernels
 {
     public class FullyConnectedKernel : BaseLayerKernel
     {
-        public FullyConnectedKernel(Utility.BaseLayer settings, BaseOptimizerKernel optimizer) 
+        public FullyConnectedKernel(BaseLayer settings, BaseOptimizerKernel optimizer) 
             : base(settings, optimizer)
         {
         }
@@ -49,8 +52,8 @@ namespace Vortex.Layer.Kernels
 
     public class FullyConnected : BaseLayer
     {
-        public FullyConnected(int neuronCount, Activation.Utility.BaseActivation activation, Regularization.Utility.Regularization regularization)
-            : base(neuronCount, activation, regularization)
+        public FullyConnected(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer)
+            : base(neuronCount, activation, regularization, initializer)
         {
         }
 

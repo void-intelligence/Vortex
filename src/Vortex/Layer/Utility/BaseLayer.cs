@@ -9,6 +9,8 @@ using Nomad.Matrix;
 using System.Collections.Generic;
 using Vortex.Optimizer.Utility;
 using Vortex.Regularization.Kernels;
+using Vortex.Initializers.Kernels;
+using Vortex.Initializers.Utility;
 
 namespace Vortex.Layer.Utility
 {
@@ -23,6 +25,7 @@ namespace Vortex.Layer.Utility
         public BaseActivationKernel ActivationFunction { get; }
         public BaseRegularizationKernel RegularizationFunction { get; }
         public BaseOptimizerKernel OptimizerFunction { get; }
+        public BaseInitializerKernel Initializer { get; }
         public Dictionary<string, Matrix> Params { get; }
         public Dictionary<string, Matrix> Grads { get; }
 
@@ -40,20 +43,38 @@ namespace Vortex.Layer.Utility
 
             NeuronCount = Settings.NeuronCount;
 
+            // Initializer Setup
+            Initializer = (Settings.InitializerFunction.Type()) switch
+            {
+                EInitializerType.Const => new ConstKernel((Const)Settings.InitializerFunction),
+                EInitializerType.GlorotNormal => new GlorotNormalKernel((GlorotNormal)Settings.InitializerFunction),
+                EInitializerType.GlorotUniform => new GlorotUniformKernel((GlorotUniform)Settings.InitializerFunction),
+                EInitializerType.HeNormal => new HeNormalKernel((HeNormal)Settings.InitializerFunction),
+                EInitializerType.HeUniform => new HeUniformKernel((HeUniform)Settings.InitializerFunction),
+                EInitializerType.LeCunNormal => new LeCunNormalKernel((LeCunNormal)Settings.InitializerFunction),
+                EInitializerType.LeCunUniform => new LeCunUniformKernel((LeCunUniform)Settings.InitializerFunction),
+                EInitializerType.Normal => new NormalKernel((Normal)Settings.InitializerFunction),
+                EInitializerType.One => new OneKernel((One)Settings.InitializerFunction),
+                EInitializerType.Uniform => new UniformKernel((Uniform)Settings.InitializerFunction),
+                EInitializerType.Zero => new ZeroKernel((Zero)Settings.InitializerFunction),
+                _ => throw new ArgumentException("Initializer Type Invalid.")
+            };
+
+
             // Activation Setup
-            ActivationFunction = (Settings.ActivationFunctionSettings.Type()) switch
+            ActivationFunction = (Settings.ActivationFunction.Type()) switch
             {
                 EActivationType.Arctan => new ArctanKernel(),
                 EActivationType.BinaryStep => new BinaryStepKernel(),
                 EActivationType.BipolarSigmoid => new BipolarSigmoidKernel(),
-                EActivationType.Elu => new EluKernel((Elu)Settings.ActivationFunctionSettings),
+                EActivationType.Elu => new EluKernel((Elu)Settings.ActivationFunction),
                 EActivationType.Exponential => new ExponentialKernel(),
                 EActivationType.HardSigmoid=> new HardSigmoidKernel(),
                 EActivationType.HardTanh=> new HardTanhKernel(),
                 EActivationType.Identity=> new IdentityKernel(),
                 EActivationType.Loggy => new LoggyKernel(),
                 EActivationType.Logit => new LogitKernel(),
-                EActivationType.LRelu => new LReluKernel((LRelu)Settings.ActivationFunctionSettings),
+                EActivationType.LRelu => new LReluKernel((LRelu)Settings.ActivationFunction),
                 EActivationType.Mish => new MishKernel(),
                 EActivationType.Relu => new ReluKernel(),
                 EActivationType.Selu => new SeluKernel(),
@@ -67,11 +88,11 @@ namespace Vortex.Layer.Utility
             };
 
             // Regularization Setup
-            RegularizationFunction = (Settings.RegularizationFunctionSettings.Type()) switch
+            RegularizationFunction = (Settings.RegularizationFunction.Type()) switch
             {
-                ERegularizationType.None => new NoneKernel((None)Settings.RegularizationFunctionSettings),
-                ERegularizationType.L1 => new L1Kernel((L1)Settings.RegularizationFunctionSettings),
-                ERegularizationType.L2 => new L2Kernel((L2)Settings.RegularizationFunctionSettings),
+                ERegularizationType.None => new NoneKernel((None)Settings.RegularizationFunction),
+                ERegularizationType.L1 => new L1Kernel((L1)Settings.RegularizationFunction),
+                ERegularizationType.L2 => new L2Kernel((L2)Settings.RegularizationFunction),
                 _ => throw new ArgumentException("Regularization Type Invalid."),
             };
         }
@@ -91,14 +112,16 @@ namespace Vortex.Layer.Utility
     public abstract class BaseLayer
     {
         public int NeuronCount { get; }
-        public Activation.Utility.BaseActivation ActivationFunctionSettings { get; }
-        public Regularization.Utility.Regularization RegularizationFunctionSettings { get; }
+        public BaseActivation ActivationFunction { get; }
+        public BaseRegularization RegularizationFunction { get; }
+        public BaseInitializer InitializerFunction { get; }
 
-        protected BaseLayer(int neuronCount, Activation.Utility.BaseActivation activationSettings, Regularization.Utility.Regularization regularizationSettings) 
+        protected BaseLayer(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer) 
         {
             NeuronCount = neuronCount;
-            ActivationFunctionSettings = activationSettings;
-            RegularizationFunctionSettings = regularizationSettings;
+            ActivationFunction = activation;
+            RegularizationFunction = regularization;
+            InitializerFunction = initializer;
         }
 
         public abstract ELayerType Type();

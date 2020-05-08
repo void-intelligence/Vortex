@@ -6,6 +6,7 @@ using Vortex.Layer.Utility;
 using Vortex.Activation.Kernels;
 using Vortex.Optimizer.Kernels;
 using Vortex.Regularization.Kernels;
+using Vortex.Initializers.Kernels;
 
 namespace Vortex.Layer.Kernels
 {
@@ -38,7 +39,7 @@ namespace Vortex.Layer.Kernels
     public class Result : BaseLayer
     {
         public Result(int neuronCount)
-            : base(neuronCount, new Identity(), new None())
+            : base(neuronCount, new Identity(), new None(), new One(0,0))
         {
         }
 

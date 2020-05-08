@@ -3,6 +3,9 @@
 using Nomad.Matrix;
 using Vortex.Layer.Utility;
 using Vortex.Optimizer.Utility;
+using Vortex.Activation.Utility;
+using Vortex.Regularization.Utility;
+using Vortex.Initializers.Utility;
 
 namespace Vortex.Layer.Kernels
 {
@@ -57,8 +60,8 @@ namespace Vortex.Layer.Kernels
     {
         public float DropoutChance { get; set; }
 
-        public Dropout(int neuronCount, Activation.Utility.BaseActivation activation, Regularization.Utility.Regularization regularization, float dropoutChance = 0.5f)
-            : base(neuronCount, activation, regularization)
+        public Dropout(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, float dropoutChance = 0.5f)
+            : base(neuronCount, activation, regularization, initializer)
         {
             DropoutChance = dropoutChance;
         }

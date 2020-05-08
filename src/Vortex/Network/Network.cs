@@ -13,6 +13,11 @@ using Vortex.Layer.Utility;
 using Vortex.Optimizer.Kernels;
 using Vortex.Optimizer.Utility;
 
+using Vortex.Initializers.Kernels;
+using Vortex.Initializers.Utility;
+using Vortex.Activation.Utility;
+using Vortex.Regularization.Utility;
+
 namespace Vortex.Network
 {
     public class Network
@@ -21,15 +26,19 @@ namespace Vortex.Network
         public Matrix Y { get; private set; }
         public List<BaseLayerKernel> Layers { get; }
         public List<double> LayerRandomScales { get; }
-        public BaseOptimizerKernel OptimizerFunction { get; }
-        public BaseCost CostFunction { get; }
         public bool IsLocked { get; private set; }
 
-        public Network(CostSettings costSettings, BaseOptimizer optimizerSettings)
+
+        public BaseOptimizerKernel OptimizerFunction { get; }
+        public BaseCostKernel CostFunction { get; }
+
+        public Network(BaseCost costSettings, BaseOptimizer optimizerSettings)
         {
             IsLocked = false;
             Layers = new List<BaseLayerKernel>();
             LayerRandomScales = new List<double>();
+
+
 
             CostFunction = costSettings.Type() switch
             {
@@ -57,10 +66,9 @@ namespace Vortex.Network
                 EOptimizerType.RmsProp => new RmsPropKernel((RmsProp)optimizerSettings),
                 _ => throw new ArgumentException("Optimizer Type Invalid.")
             };
-
         }
 
-        public void CreateLayer(ELayerType layerType, int neuronCount, Activation.Utility.BaseActivation activation, Regularization.Utility.Regularization regularization, double randomScale = 0.01)
+        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializerSettings, double randomScale = 1.0)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 
@@ -69,10 +77,10 @@ namespace Vortex.Network
             // Regularization Setup
             BaseLayerKernel layer = layerType switch
             {
-                ELayerType.FullyConnected => new FullyConnectedKernel(new FullyConnected(neuronCount, activation, regularization), OptimizerFunction),
-                ELayerType.Dropout => new DropoutKernel(new Dropout(neuronCount, activation, regularization), OptimizerFunction),
-                ELayerType.Output => new OutputKernel(new Output(neuronCount, activation, regularization), OptimizerFunction),
-                _ => throw new ArgumentException("Layer Type Invalid.")
+                ELayerType.FullyConnected => new FullyConnectedKernel(new FullyConnected(neuronCount, activation, regularization, initializerSettings), OptimizerFunction),
+                ELayerType.Dropout => new DropoutKernel(new Dropout(neuronCount, activation, regularization, initializerSettings), OptimizerFunction),
+                ELayerType.Output => new OutputKernel(new Output(neuronCount, activation, regularization, initializerSettings), OptimizerFunction),
+                _ => throw new ArgumentException("Invalid Layer Type.")
             };
 
             Layers.Add(layer);
@@ -91,7 +99,7 @@ namespace Vortex.Network
             {
                 // Weights
                 Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
-                Layers[i].Params["W"].InRandomize(-0.5, 0.5, EDistribution.Gaussian);
+                Layers[i].Params["W"] = Layers[i].Initializer.Initialize(Layers[i].Params["W"]);
                 Layers[i].Params["W"] *= LayerRandomScales[i];
 
                 // Biases

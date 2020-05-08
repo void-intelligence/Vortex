@@ -6,13 +6,180 @@
 
 Welcome To Vortex, The Void-Intelligence Artificial Cortex library for Neural Network and Deep Learning development. 
 
-Vortex is built with the aim of allowing Deep-Learning researchers to test, and see the result of their new formulas in all aspects of the data-flow pipeline, without the need to read the source code. Researchers can write their custom functions / formulas for the currently developed features of the library:
+Vortex is built with the aim of allowing Deep-Learning researchers to test, and see the result of their new formulas in all aspects of the data-flow pipeline, without the need to read the source code. Researchers can write their custom functions / formulas for the currently developed (and planned) features of the library:
 
-- Activation
-- Cost
-- Layer
-- Optimizer
-- Regularization
+- Activation Functions
+- Cost Functions
+- Layers
+- Optimizer Functions
+- Regularization Methods
+- Weight Initializers
+- Normalizer Functions
+- Genetic Mutation Algorithms
+- Random Distribution Generators
+- And many more
 
+The architecture of this library is built in a way where you can easily create your functions and test out your ideas with absolute ease.
 
+The entire architecture is built as a pair of ```Kernel``` classes and ```Utility``` classes, Kernel classes hold the main functionality of the component of the library while the utility allows object oriented flexibility across Vortex, so in short, you've got both functional and object oriented in the same pack!
 
+## Vortex Quickstart
+
+Let us write an example project that will learn an XOR table of 3 inputs, with 1 output predicting the final result.
+
+First we need to import our namespaces:
+
+```C#
+// For the console
+using System;
+
+// Our Matrix Library
+using Nomad.Matrix;
+
+// Our Main Network class
+using Vortex.Network;
+
+// We need access to the Enum listing all layers within the Utility namespace
+using Vortex.Layer.Utility;
+
+// Activation Kernels
+using Vortex.Activation.Kernels;
+
+// Regularization Kernels
+using Vortex.Regularization.Kernels;
+
+// Loss / Cost function Kernels
+using Vortex.Cost.Kernels;
+
+// Optimizer Functions (Only SGD working so far)
+using Vortex.Optimizer.Kernels;
+
+// Weight Initializer Kernels
+using Vortex.Initializer.Kernels;
+```
+
+Now that these are done, let us create our first Network within the main function, the architecture we want to desing is going to be a simple dense network with 4 layrs all using tanh activation with weights initiated via normal distribution of numbers between ```-0.5``` and ```0.5```. The network will use ```QuadraticCost``` as the cost function and ```Stochastic Gradient Descent``` as the optimizer function.
+
+```C#
+// Neural Network using QuadraticCost as the cost funciton and
+// Gradient Descent as the optimizer with a learning rate of 0.03
+var net = new Network(new QuadraticCost(), new GradientDescent(0.03)); 
+
+// Fully Connected (Dense) layer with 3 inputs (our input layer) using 
+// Normal distribution of [-0.5, 0.5) scaled down to 0.01
+net.CreateLayer(ELayerType.FullyConnected, 3, new Tanh(), new None(), new Normal(), 0.01);
+
+// Fully Connected (Dense) layer with 25 inputs using Normal distribution of [-0.5, 0.5) scaled down to 0.01
+net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), 0.01);
+
+// Fully Connected (Dense) layer with 25 inputs using Normal distribution of [-0.5, 0.5) scaled down to 0.01
+net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), 0.01);
+
+// Fully Connected (Dense) layer with 1 input using Normal distribution of [-0.5, 0.5) scaled down to 0.01
+net.CreateLayer(ELayerType.Output, 1, new Tanh(), new None(), new Normal(), 0.01);
+```
+
+After we're done creating our Network, we need to initialize it's weights and biases, this task is super simple as we just need to call InitNetwork() on our ```Network``` object.
+
+```C#
+net.InitNetwork();
+```
+
+We now need to create our dataset, as was stated earlier, it will be an XOR table of 3.
+
+First we need two matrix arrays holding our inputs and outputs:
+(Don't worry, Tensors are coming)
+
+```C#
+var inputs = new List<Matrix>();
+var outputs = new List<Matrix>();
+
+var m = new Matrix(3, 1);
+var n = new Matrix(1, 1);
+```
+
+Now let's create our data:
+
+```C#
+// 0 0 0    => 0
+m[0, 0] = 0; m[1, 0] = 0; m[2, 0] = 0;
+n[0, 0] = 0;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 0 0 1    => 1
+m[0, 0] = 0; m[1, 0] = 0; m[2, 0] = 1;
+n[0, 0] = 1;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 0 1 0    => 1
+m[0, 0] = 0; m[1, 0] = 1; m[2, 0] = 0;
+n[0, 0] = 1;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 0 1 1    => 0
+m[0, 0] = 0; m[1, 0] = 1; m[2, 0] = 1;
+n[0, 0] = 0;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 1 0 0    => 1
+m[0, 0] = 1; m[1, 0] = 0; m[2, 0] = 0;
+n[0, 0] = 1;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 1 0 1    => 0
+m[0, 0] = 1; m[1, 0] = 0; m[2, 0] = 1;
+n[0, 0] = 0;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 1 1 0    => 0
+m[0, 0] = 1; m[1, 0] = 1; m[2, 0] = 0;
+n[0, 0] = 0;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+
+// 1 1 1    => 1
+m[0, 0] = 1; m[1, 0] = 1; m[2, 0] = 1;
+n[0, 0] = 1;
+inputs.Add(m.Duplicate());
+outputs.Add(n.Duplicate());
+```
+
+Now, it's time to Train our network, let's do 5000 Epochs on our dataset:
+
+```C#
+for (var i = 0; i < 5000; i++)
+{
+    net.Train(inputs[i % 8], outputs[i % 8]);
+}
+```
+
+And as simple as that, our network has learnt to predict the XOR table of 3 with 100% accuracy over 1000 tries.
+
+```Output Correctness Tolerance is 0.1```
+
+```C#
+var correct = 0;
+for (var i = 0; i < 125; i++)
+{
+    correct += Math.Abs(net.Forward(inputs[0])[0, 0]) < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[1])[0, 0]) - 1 < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[2])[0, 0]) - 1 < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[3])[0, 0]) < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[4])[0, 0]) - 1 < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[5])[0, 0]) < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[6])[0, 0]) < 0.1 ? 1 : 0;
+    correct += Math.Abs(net.Forward(inputs[7])[0, 0]) - 1 < 0.1 ? 1 : 0;
+}
+var acc = correct / 1000.0 * 100.0;
+Console.WriteLine(" Acc: " + acc);
+```
+
+## Documentation
+
+The full documentation will be ready as soon as the first release.

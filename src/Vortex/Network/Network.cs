@@ -25,7 +25,7 @@ namespace Vortex.Network
         public float LastError { get; private set; }
         public Matrix Y { get; private set; }
         public List<BaseLayerKernel> Layers { get; }
-        public List<double> LayerRandomScales { get; }
+        public List<double> LayerWeightScales { get; }
         public bool IsLocked { get; private set; }
 
 
@@ -36,7 +36,7 @@ namespace Vortex.Network
         {
             IsLocked = false;
             Layers = new List<BaseLayerKernel>();
-            LayerRandomScales = new List<double>();
+            LayerWeightScales = new List<double>();
 
 
 
@@ -68,11 +68,11 @@ namespace Vortex.Network
             };
         }
 
-        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializerSettings, double randomScale = 1.0)
+        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializerSettings, double weightScale = 1.0)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 
-            LayerRandomScales.Add(randomScale);
+            LayerWeightScales.Add(weightScale);
 
             // Regularization Setup
             BaseLayerKernel layer = layerType switch
@@ -100,7 +100,7 @@ namespace Vortex.Network
                 // Weights
                 Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
                 Layers[i].Params["W"] = Layers[i].Initializer.Initialize(Layers[i].Params["W"]);
-                Layers[i].Params["W"] *= LayerRandomScales[i];
+                Layers[i].Params["W"] *= LayerWeightScales[i];
 
                 // Biases
                 Layers[i].Params["B"] = new Matrix(Layers[i + 1].NeuronCount, 1);

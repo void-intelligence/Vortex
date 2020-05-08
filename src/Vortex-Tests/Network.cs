@@ -74,56 +74,37 @@ namespace VortexTests
             var inputs = new List<Matrix>();
             var outputs = new List<Matrix>();
 
-            var m = new Matrix(3, 1);
-            var n = new Matrix(1, 1);
-
             // 0 0 0    => 0
-            m[0, 0] = 0; m[1, 0] = 0; m[2, 0] = 0;
-            n[0, 0] = 0;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 0.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 0.0 } }));
 
             // 0 0 1    => 1
-            m[0, 0] = 0; m[1, 0] = 0; m[2, 0] = 1;
-            n[0, 0] = 1;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 0.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 
             // 0 1 0    => 1
-            m[0, 0] = 0; m[1, 0] = 1; m[2, 0] = 0;
-            n[0, 0] = 1;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 1.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 
             // 0 1 1    => 0
-            m[0, 0] = 0; m[1, 0] = 1; m[2, 0] = 1;
-            n[0, 0] = 0;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 1.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 
             // 1 0 0    => 1
-            m[0, 0] = 1; m[1, 0] = 0; m[2, 0] = 0;
-            n[0, 0] = 1;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 0.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 
             // 1 0 1    => 0
-            m[0, 0] = 1; m[1, 0] = 0; m[2, 0] = 1;
-            n[0, 0] = 0;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 0.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 0.0 } }));
 
             // 1 1 0    => 0
-            m[0, 0] = 1; m[1, 0] = 1; m[2, 0] = 0;
-            n[0, 0] = 0;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 0.0 } }));
 
             // 1 1 1    => 1
-            m[0, 0] = 1; m[1, 0] = 1; m[2, 0] = 1;
-            n[0, 0] = 1;
-            inputs.Add(m.Duplicate());
-            outputs.Add(n.Duplicate());
+            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 
             for (var i = 0; i < 5000; i++)
             {

@@ -6,6 +6,7 @@ using Vortex.Optimizer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Vortex.Initializer.Utility;
+using Vortex.Mutation.Utility;
 
 namespace Vortex.Layer.Kernels
 {
@@ -18,6 +19,8 @@ namespace Vortex.Layer.Kernels
 
         public override Matrix Forward(Matrix inputs)
         {
+            Params["W"].InMap(MutationFunction.Mutate);
+
             // Calculate Regularization Value On W and B
             RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]);
 
@@ -52,8 +55,8 @@ namespace Vortex.Layer.Kernels
 
     public class Output: BaseLayer
     {
-        public Output(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer)
-            : base(neuronCount, activation, regularization, initializer)
+        public Output(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation)
+            : base(neuronCount, activation, regularization, initializer, mutation)
         {
         }
 

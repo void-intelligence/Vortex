@@ -6,12 +6,13 @@ using Vortex.Optimizer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Vortex.Initializer.Utility;
+using Vortex.Mutation.Utility;
 
 namespace Vortex.Layer.Kernels
 {
     public class DropoutKernel : BaseLayerKernel
     {
-        public float DropoutChance;
+        public float DropoutChance { get; set; }
 
         public DropoutKernel(Dropout settings, BaseOptimizerKernel optimizer)
             : base(settings, optimizer)
@@ -21,6 +22,8 @@ namespace Vortex.Layer.Kernels
 
         public override Matrix Forward(Matrix inputs)
         {
+            Params["W"].InMap(MutationFunction.Mutate);
+
             // Calculate Regularization Value On W and B
             RegularizationValue = (float) RegularizationFunction.CalculateNorm(Params["W"]);
 
@@ -60,8 +63,8 @@ namespace Vortex.Layer.Kernels
     {
         public float DropoutChance { get; set; }
 
-        public Dropout(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, float dropoutChance = 0.5f)
-            : base(neuronCount, activation, regularization, initializer)
+        public Dropout(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation, float dropoutChance)
+            : base(neuronCount, activation, regularization, initializer, mutation)
         {
             DropoutChance = dropoutChance;
         }

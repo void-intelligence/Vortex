@@ -11,6 +11,8 @@ using Vortex.Optimizer.Utility;
 using Vortex.Regularization.Kernels;
 using Vortex.Initializer.Kernels;
 using Vortex.Initializer.Utility;
+using Vortex.Mutation.Utility;
+using Vortex.Mutation.Kernels;
 
 namespace Vortex.Layer.Utility
 {
@@ -26,6 +28,7 @@ namespace Vortex.Layer.Utility
         public BaseRegularizationKernel RegularizationFunction { get; }
         public BaseOptimizerKernel OptimizerFunction { get; }
         public BaseInitializerKernel Initializer { get; }
+        public BaseMutationKernel MutationFunction { get; }
         public Dictionary<string, Matrix> Params { get; }
         public Dictionary<string, Matrix> Grads { get; }
 
@@ -42,6 +45,14 @@ namespace Vortex.Layer.Utility
             Settings = layerSettings;
 
             NeuronCount = Settings.NeuronCount;
+
+            MutationFunction = (Settings.MutationFunction.Type()) switch
+            {
+                EMutationType.DefaultMutation => new DefaultMutationKernel(),
+                EMutationType.NoMutation => new NoMutationKernel(),
+                _ => throw new ArgumentException("Mutation Type Invalid.")
+
+            };
 
             // Initializer Setup
             Initializer = (Settings.InitializerFunction.Type()) switch
@@ -115,13 +126,15 @@ namespace Vortex.Layer.Utility
         public BaseActivation ActivationFunction { get; }
         public BaseRegularization RegularizationFunction { get; }
         public BaseInitializer InitializerFunction { get; }
+        public BaseMutation MutationFunction { get; }
 
-        protected BaseLayer(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer) 
+        protected BaseLayer(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation) 
         {
             NeuronCount = neuronCount;
             ActivationFunction = activation;
             RegularizationFunction = regularization;
             InitializerFunction = initializer;
+            MutationFunction = mutation;
         }
 
         public abstract ELayerType Type();

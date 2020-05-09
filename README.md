@@ -65,19 +65,17 @@ Now that these are done, let us create our first Network within the main functio
 // Gradient Descent as the optimizer with a learning rate of 0.03
 var net = new Network(new QuadraticCost(), new GradientDescent(0.03)); 
 
-// Dropout chance of 0f for all layers (it wouldn't work either way on a Fully connected layer either way)
-// Fully Connected (Dense) layer with 3 inputs (our input layer) using 
-// Normal distribution of [-0.5, 0.5) scaled down to 0.01 
-net.CreateLayer(new FullyConnected(3, new Tanh(), new None(), new Normal(), new NoMutation()));
+// Fully Connected (Dense) layer with 3 inputs (our input layer) using Tanh activation function
+net.CreateLayer(new FullyConnected(3, new Tanh()));
 
-// Fully Connected (Dense) layer with 25 inputs using Normal distribution of [-0.5, 0.5) scaled down to 0.01
-net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
+// Fully Connected (Dense) layer with 25 inputs using Tanh activation function
+net.CreateLayer(new FullyConnected(25, new Tanh()));
 
-// Fully Connected (Dense) layer with 25 inputs using Normal distribution of [-0.5, 0.5) scaled down to 0.01
-net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
+// Fully Connected (Dense) layer with 25 inputs using Tanh activation function
+net.CreateLayer(new FullyConnected(25, new Tanh()));
 
-// Fully Connected (Dense) layer with 1 input using Normal distribution of [-0.5, 0.5) scaled down to 0.01
-net.CreateLayer(new Output(1, new Tanh(), new None(), new Normal(), new NoMutation()));
+// Output layer with 1 inputs using Tanh activation function
+net.CreateLayer(new Output(1, new Tanh()));
 ```
 
 After we're done creating our Network, we need to initialize it's weights and biases, this task is super simple as we just need to call InitNetwork() on our ```Network``` object.
@@ -132,7 +130,7 @@ inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
 outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 ```
 
-Now, it's time to Train our network, let's do 50 Epochs on our dataset:
+Now, it's time to train our network, let's do 50 tries on our dataset:
 
 ```C#
 for (var i = 0; i < 50; i++)

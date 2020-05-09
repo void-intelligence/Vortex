@@ -66,10 +66,10 @@ namespace VortexTests
         public void XorTest()
         {
             var net = new Network(new QuadraticCost(), new GradientDescent(0.03)); 
-            net.CreateLayer(ELayerType.FullyConnected, 3, new Tanh(), new None(), new Normal(), new NoMutation(), 0.01);
-            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), new NoMutation(), 0.01);
-            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), new NoMutation(), 0.01);
-            net.CreateLayer(ELayerType.Output, 1, new Tanh(), new None(), new Normal(), new NoMutation(), 0.01);
+            net.CreateLayer(ELayerType.FullyConnected, 3, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
+            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
+            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
+            net.CreateLayer(ELayerType.Output, 1, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
             net.InitNetwork();
 
             var inputs = new List<Matrix>();

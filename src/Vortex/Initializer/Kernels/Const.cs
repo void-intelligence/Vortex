@@ -28,7 +28,7 @@ namespace Vortex.Initializer.Kernels
     {
         public double Value;
 
-        public Const(double value, double scale = 1.0) : base(scale)
+        public Const(double value, double scale = 0.01) : base(scale)
         {
             Value = value;
         }

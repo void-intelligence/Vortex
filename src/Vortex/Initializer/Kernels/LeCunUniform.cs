@@ -24,7 +24,7 @@ namespace Vortex.Initializer.Kernels
 
     public class LeCunUniform : BaseInitializer
     {
-        public LeCunUniform(double min = -0.5, double max = 0.5, double scale = 1.0) : base(min, max, scale)
+        public LeCunUniform(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
         {
         }
 

@@ -31,7 +31,7 @@ namespace Vortex.Initializer.Kernels
 
     public class HeNormal : BaseInitializer
     {
-        public HeNormal(double min = -0.5, double max = 0.5, double scale = 1.0) : base(min, max, scale)
+        public HeNormal(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
         {
         }
 

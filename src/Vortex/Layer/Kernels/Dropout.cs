@@ -14,8 +14,8 @@ namespace Vortex.Layer.Kernels
     {
         public float DropoutChance { get; set; }
 
-        public DropoutKernel(Dropout settings, BaseOptimizerKernel optimizer)
-            : base(settings, optimizer)
+        public DropoutKernel(Dropout settings)
+            : base(settings)
         {
             DropoutChance = settings.DropoutChance;
         }

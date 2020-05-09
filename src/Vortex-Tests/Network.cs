@@ -14,6 +14,7 @@ using Vortex.Cost.Kernels;
 using Vortex.Optimizer.Kernels;
 using Vortex.Initializer.Kernels;
 using Vortex.Mutation.Kernels;
+using Vortex.Layer.Kernels;
 
 namespace VortexTests
 {
@@ -24,14 +25,11 @@ namespace VortexTests
         public void SequentualForwardTest()
         {
             var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
-            network.CreateLayer(ELayerType.FullyConnected, 784, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.FullyConnected, 100, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.Output, 10, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
+            network.CreateLayer(new FullyConnected(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
+            network.CreateLayer(new Output(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
             network.InitNetwork();
 
-            var x = new Matrix(784, 1);
+            var x = new Matrix(10, 1);
             x.InFlatten();
 
             var y = new Matrix(10, 1);
@@ -44,14 +42,11 @@ namespace VortexTests
         public void SequentualBackwardTest()
         {
             var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
-            network.CreateLayer(ELayerType.FullyConnected, 784, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.FullyConnected, 100, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.Dropout, 100, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
-            network.CreateLayer(ELayerType.Output, 10, new Sigmoid(), new L2(2), new Normal(), new NoMutation());
+            network.CreateLayer(new FullyConnected(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
+            network.CreateLayer(new Output(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
             network.InitNetwork();
 
-            var x = new Matrix(784, 1);
+            var x = new Matrix(10, 1);
             x.InFlatten();
 
             var y = new Matrix(10, 1);
@@ -65,11 +60,12 @@ namespace VortexTests
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new GradientDescent(0.03)); 
-            net.CreateLayer(ELayerType.FullyConnected, 3, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
-            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
-            net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
-            net.CreateLayer(ELayerType.Output, 1, new Tanh(), new None(), new Normal(), new NoMutation(), 0f, 0.01);
+            var net = new Network(new QuadraticCost(), new GradientDescent(0.03));
+            net.CreateLayer(new FullyConnected(3, new Tanh(), new None(), new Normal(), new NoMutation()));
+            net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
+            net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
+            net.CreateLayer(new Output(1, new Tanh(), new None(), new Normal(), new NoMutation()));
+
             net.InitNetwork();
 
             var inputs = new List<Matrix>();
@@ -113,7 +109,7 @@ namespace VortexTests
             }
 
             var correct = 0;
-            for (var i = 0; i < 125; i++)
+            for (var i = 0; i < 10; i++)
             {
                 correct += Math.Abs(net.Forward(inputs[0])[0, 0]) < 0.1 ? 1 : 0;
                 correct += Math.Abs(net.Forward(inputs[1])[0, 0]) - 1 < 0.1 ? 1 : 0;
@@ -124,7 +120,7 @@ namespace VortexTests
                 correct += Math.Abs(net.Forward(inputs[6])[0, 0]) < 0.1 ? 1 : 0;
                 correct += Math.Abs(net.Forward(inputs[7])[0, 0]) - 1 < 0.1 ? 1 : 0;
             }
-            var acc = correct / 1000.0 * 100.0;
+            var acc = correct / 80.0 * 100.0;
 
             Trace.WriteLine(" Acc: " + acc);
             Assert.IsTrue(acc > 80.0, "Network did not learn XOR");

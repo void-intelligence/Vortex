@@ -39,8 +39,8 @@ using Nomad.Matrix;
 // Our Main Network class
 using Vortex.Network;
 
-// We need access to the Enum listing all layers within the Utility namespace
-using Vortex.Layer.Utility;
+// We need access to the Layers since we'll be creating them
+using Vortex.Layer.Kernels;
 
 // Activation Kernels
 using Vortex.Activation.Kernels;
@@ -68,16 +68,16 @@ var net = new Network(new QuadraticCost(), new GradientDescent(0.03));
 // Dropout chance of 0f for all layers (it wouldn't work either way on a Fully connected layer either way)
 // Fully Connected (Dense) layer with 3 inputs (our input layer) using 
 // Normal distribution of [-0.5, 0.5) scaled down to 0.01 
-net.CreateLayer(ELayerType.FullyConnected, 3, new Tanh(), new None(), new Normal(), 0f, 0.01);
+net.CreateLayer(new FullyConnected(3, new Tanh(), new None(), new Normal(), new NoMutation()));
 
 // Fully Connected (Dense) layer with 25 inputs using Normal distribution of [-0.5, 0.5) scaled down to 0.01
-net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), 0f, 0.01);
+net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
 
 // Fully Connected (Dense) layer with 25 inputs using Normal distribution of [-0.5, 0.5) scaled down to 0.01
-net.CreateLayer(ELayerType.FullyConnected, 25, new Tanh(), new None(), new Normal(), 0f, 0.01);
+net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
 
 // Fully Connected (Dense) layer with 1 input using Normal distribution of [-0.5, 0.5) scaled down to 0.01
-net.CreateLayer(ELayerType.Output, 1, new Tanh(), new None(), new Normal(), 0f, 0.01);
+net.CreateLayer(new Output(1, new Tanh(), new None(), new Normal(), new NoMutation()));
 ```
 
 After we're done creating our Network, we need to initialize it's weights and biases, this task is super simple as we just need to call InitNetwork() on our ```Network``` object.
@@ -141,13 +141,13 @@ for (var i = 0; i < 50; i++)
 }
 ```
 
-And as simple as that, our network has learnt to predict the XOR table of 3 with 100% accuracy over 1000 tries.
+And as simple as that, our network has learnt to predict the XOR table of 3 with 100% accuracy over 50 tries. (6.25 epochs)
 
 ```Output Correctness Tolerance is 0.1```
 
 ```C#
 var correct = 0;
-for (var i = 0; i < 125; i++)
+for (var i = 0; i < 10; i++)
 {
     correct += Math.Abs(net.Forward(inputs[0])[0, 0]) < 0.1 ? 1 : 0;
     correct += Math.Abs(net.Forward(inputs[1])[0, 0]) - 1 < 0.1 ? 1 : 0;
@@ -158,8 +158,7 @@ for (var i = 0; i < 125; i++)
     correct += Math.Abs(net.Forward(inputs[6])[0, 0]) < 0.1 ? 1 : 0;
     correct += Math.Abs(net.Forward(inputs[7])[0, 0]) - 1 < 0.1 ? 1 : 0;
 }
-var acc = correct / 1000.0 * 100.0;
-Console.WriteLine(" Acc: " + acc);
+var acc = correct / 80.0 * 100.0;
 ```
 
 You can find the Gist of this example [here](https://gist.github.com/nirex0/77cdb951992a831ffc0343b0226b1513).

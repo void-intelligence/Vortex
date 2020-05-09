@@ -14,7 +14,7 @@ namespace Vortex.Layer.Kernels
     public class ResultKernel : BaseLayerKernel
     {
         public ResultKernel(Utility.BaseLayer settings)
-            : base(settings, new GradientDescentKernel(0.01))
+            : base(settings)
         {
         }
 

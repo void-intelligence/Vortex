@@ -12,8 +12,8 @@ namespace Vortex.Layer.Kernels
 {
     public class FullyConnectedKernel : BaseLayerKernel
     {
-        public FullyConnectedKernel(BaseLayer settings, BaseOptimizerKernel optimizer) 
-            : base(settings, optimizer)
+        public FullyConnectedKernel(BaseLayer settings) 
+            : base(settings)
         {
         }
 

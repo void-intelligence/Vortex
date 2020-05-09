@@ -12,8 +12,8 @@ namespace Vortex.Layer.Kernels
 {
     public class OutputKernel : BaseLayerKernel
     {
-        public OutputKernel(BaseLayer settings, BaseOptimizerKernel optimizer) 
-            : base(settings, optimizer)
+        public OutputKernel(BaseLayer settings) 
+            : base(settings)
         {
         }
 

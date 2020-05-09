@@ -26,17 +26,15 @@ namespace Vortex.Layer.Utility
         public int NeuronCount { get; }
         public BaseActivationKernel ActivationFunction { get; }
         public BaseRegularizationKernel RegularizationFunction { get; }
-        public BaseOptimizerKernel OptimizerFunction { get; }
+        public BaseOptimizerKernel OptimizerFunction { get; set; }
         public BaseInitializerKernel Initializer { get; }
         public BaseMutationKernel MutationFunction { get; }
         public Dictionary<string, Matrix> Params { get; }
         public Dictionary<string, Matrix> Grads { get; }
 
-        protected BaseLayerKernel(BaseLayer layerSettings, BaseOptimizerKernel optimizer)
+        protected BaseLayerKernel(BaseLayer layerSettings)
         {
             RegularizationValue = 0.0f;
-
-            OptimizerFunction = optimizer;
 
             Params = new Dictionary<string, Matrix>();
 

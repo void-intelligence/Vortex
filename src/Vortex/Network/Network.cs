@@ -69,7 +69,7 @@ namespace Vortex.Network
             };
         }
 
-        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation, double weightScale = 1.0)
+        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation, double dropoutChance = 0.5, double weightScale = 1.0)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 
@@ -79,7 +79,7 @@ namespace Vortex.Network
             BaseLayerKernel layer = layerType switch
             {
                 ELayerType.FullyConnected => new FullyConnectedKernel(new FullyConnected(neuronCount, activation, regularization, initializer, mutation), OptimizerFunction),
-                ELayerType.Dropout => new DropoutKernel(new Dropout(neuronCount, activation, regularization, initializer, mutation), OptimizerFunction),
+                ELayerType.Dropout => new DropoutKernel(new Dropout(neuronCount, activation, regularization, initializer, mutation, dropoutChance), OptimizerFunction),
                 ELayerType.Output => new OutputKernel(new Output(neuronCount, activation, regularization, initializer, mutation), OptimizerFunction),
                 _ => throw new ArgumentException("Invalid Layer Type.")
             };

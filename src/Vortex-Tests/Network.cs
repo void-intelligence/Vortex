@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Nomad.Matrix;
 using Vortex.Network;
-using Vortex.Layer.Utility;
 using Vortex.Activation.Kernels;
 using Vortex.Regularization.Kernels;
 using Vortex.Cost.Kernels;
@@ -25,8 +24,8 @@ namespace VortexTests
         public void SequentualForwardTest()
         {
             var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
-            network.CreateLayer(new FullyConnected(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
-            network.CreateLayer(new Output(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
+            network.CreateLayer(new FullyConnected(10, new Sigmoid()));
+            network.CreateLayer(new Output(10, new Sigmoid()));
             network.InitNetwork();
 
             var x = new Matrix(10, 1);
@@ -42,8 +41,8 @@ namespace VortexTests
         public void SequentualBackwardTest()
         {
             var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
-            network.CreateLayer(new FullyConnected(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
-            network.CreateLayer(new Output(10, new Sigmoid(), new L2(2), new Normal(), new NoMutation()));
+            network.CreateLayer(new FullyConnected(10, new Sigmoid()));
+            network.CreateLayer(new Output(10, new Sigmoid()));
             network.InitNetwork();
 
             var x = new Matrix(10, 1);
@@ -61,10 +60,10 @@ namespace VortexTests
         public void XorTest()
         {
             var net = new Network(new QuadraticCost(), new GradientDescent(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh(), new None(), new Normal(), new NoMutation()));
-            net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
-            net.CreateLayer(new FullyConnected(25, new Tanh(), new None(), new Normal(), new NoMutation()));
-            net.CreateLayer(new Output(1, new Tanh(), new None(), new Normal(), new NoMutation()));
+            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new FullyConnected(25, new Tanh()));
+            net.CreateLayer(new FullyConnected(25, new Tanh()));
+            net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
 

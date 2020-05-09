@@ -63,11 +63,13 @@ namespace Vortex.Layer.Kernels
     {
         public float DropoutChance { get; set; }
 
-        public Dropout(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation, float dropoutChance)
+#nullable enable
+        public Dropout(int neuronCount, float dropoutChance, BaseActivation activation, BaseRegularization? regularization = null, BaseInitializer? initializer = null, BaseMutation? mutation = null)
             : base(neuronCount, activation, regularization, initializer, mutation)
         {
             DropoutChance = dropoutChance;
         }
+#nullable disable
 
         public override ELayerType Type() => ELayerType.Dropout;
     }

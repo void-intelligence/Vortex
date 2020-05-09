@@ -126,14 +126,16 @@ namespace Vortex.Layer.Utility
         public BaseInitializer InitializerFunction { get; }
         public BaseMutation MutationFunction { get; }
 
-        protected BaseLayer(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation) 
+#nullable enable
+        protected BaseLayer(int neuronCount, BaseActivation activation, BaseRegularization? regularization, BaseInitializer? initializer, BaseMutation? mutation) 
         {
             NeuronCount = neuronCount;
             ActivationFunction = activation;
-            RegularizationFunction = regularization;
-            InitializerFunction = initializer;
-            MutationFunction = mutation;
+            RegularizationFunction = regularization ?? new None();
+            InitializerFunction = initializer ?? new Normal();
+            MutationFunction = mutation ?? new NoMutation();
         }
+#nullable disable
 
         public abstract ELayerType Type();
     }

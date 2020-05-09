@@ -55,10 +55,12 @@ namespace Vortex.Layer.Kernels
 
     public class FullyConnected : BaseLayer
     {
-        public FullyConnected(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation)
+#nullable enable
+        public FullyConnected(int neuronCount, BaseActivation activation, BaseRegularization? regularization = null, BaseInitializer? initializer = null, BaseMutation? mutation = null)
             : base(neuronCount, activation, regularization, initializer, mutation)
         {
         }
+#nullable disable
 
         public override ELayerType Type() => ELayerType.FullyConnected;
     }

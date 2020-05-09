@@ -55,10 +55,12 @@ namespace Vortex.Layer.Kernels
 
     public class Output: BaseLayer
     {
-        public Output(int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation)
+#nullable enable
+        public Output(int neuronCount, BaseActivation activation, BaseRegularization? regularization = null, BaseInitializer? initializer = null, BaseMutation? mutation = null)
             : base(neuronCount, activation, regularization, initializer, mutation)
         {
         }
+#nullable disable
 
         public override ELayerType Type() => ELayerType.Output;
     }

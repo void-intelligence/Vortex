@@ -8,7 +8,7 @@ namespace Vortex.Mutation.Utility
     {
         public Random RNG { get; }
 
-        public BaseMutationKernel(BaseMutation mutation = null)
+        public BaseMutationKernel()
         {
             RNG = new Random();
         }

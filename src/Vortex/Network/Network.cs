@@ -69,7 +69,7 @@ namespace Vortex.Network
             };
         }
 
-        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation, double dropoutChance = 0.5, double weightScale = 1.0)
+        public void CreateLayer(ELayerType layerType, int neuronCount, BaseActivation activation, BaseRegularization regularization, BaseInitializer initializer, BaseMutation mutation, float dropoutChance = 0.5f, double weightScale = 1.0)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 

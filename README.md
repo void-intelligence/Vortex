@@ -132,10 +132,10 @@ inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
 outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 ```
 
-Now, it's time to Train our network, let's do 5000 Epochs on our dataset:
+Now, it's time to Train our network, let's do 50 Epochs on our dataset:
 
 ```C#
-for (var i = 0; i < 5000; i++)
+for (var i = 0; i < 50; i++)
 {
     net.Train(inputs[i % 8], outputs[i % 8]);
 }

@@ -5,13 +5,12 @@ using Vortex.Initializer.Utility;
 
 namespace Vortex.Initializer.Kernels
 {
-    public sealed class ConstKernel : BaseInitializerKernel
+    public sealed class Const : BaseInitializer
     {
         public double Value;
 
-        public ConstKernel(Const initializer) : base(initializer)
+        public Const(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
-            Value = initializer.Value;
         }
 
         public override Matrix Initialize(Matrix w)
@@ -20,21 +19,6 @@ namespace Vortex.Initializer.Kernels
             mat.InFill(Value);
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.Const;
-        }
-    }
-
-    public sealed class Const : BaseInitializer
-    {
-        public double Value;
-
-        public Const(double value, double scale = 0.01) : base(scale)
-        {
-            Value = value;
         }
 
         public override EInitializerType Type()

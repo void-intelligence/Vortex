@@ -2,26 +2,26 @@
 
 using Nomad.Matrix;
 using System;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class AdamKernel : BaseOptimizerKernel
+    public sealed class Adam : BaseOptimizer
     {
         public double Beta1 { get; set; }
         public double Beta2 { get; set; }
         public double T { get; set; }
         public double Epsilon { get; set; }
-        public AdamKernel(Adam settings) : base(settings)
-        {
-            Beta1 = settings.Beta1;
-            Beta2 = settings.Beta2;
-            Epsilon = settings.Epsilon;
-        }
 
-        public AdamKernel(double alpha = 0.01, double beta1 = 0.9, double beta2 = 0.999, double epsilon = 0.00001) : this(new Adam(alpha, beta1, beta2, epsilon))
+#nullable enable
+        public Adam(double alpha = 0.01, BaseDecay? decay = null, double beta1 = 0.9, double beta2 = 0.999, double epsilon = 0.00001) : base(alpha, decay)
         {
+            Beta1 = beta1;
+            Beta2 = beta2;
+            Epsilon = epsilon;
         }
+#nullable disable
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
@@ -66,24 +66,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.Adam;
-        }
-    }
-
-    public sealed class Adam : BaseOptimizer
-    {
-        public double Beta1 { get; set; }
-        public double Beta2{ get; set; }
-        public double Epsilon { get; set; }
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.Adam;
-        }
-
-        public Adam(double alpha = 0.01, double beta1 = 0.9, double beta2 = 0.999,  double epsilon = 0.00001) : base(alpha)
-        {
-            Beta1 = beta1;
-            Beta2 = beta2;
-            Epsilon = epsilon;
         }
     }
 }

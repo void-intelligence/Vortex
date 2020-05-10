@@ -1,25 +1,24 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class MomentumKernel : BaseOptimizerKernel
+    public sealed class Momentum : BaseOptimizer
     {
         /// <summary>
         /// Momentum Parameter
         /// </summary>
         public double Tao { get; set; }
 
-        public MomentumKernel(Momentum settings) : base(settings)
+#nullable enable
+        public Momentum(double alpha = 0.01, BaseDecay? decay = null, double tao = 0.9) : base(alpha, decay)
         {
-            Tao = settings.Tao;
+            Tao = tao;
         }
-
-        public MomentumKernel(double alpha = 0.01, double tao = 0.9) : base(new Momentum(alpha, tao))
-        {
-        }
+#nullable disable
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
@@ -41,20 +40,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.Momentum;
-        }
-    }
-
-    public sealed class Momentum : BaseOptimizer
-    {
-        public double Tao { get; set; }
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.Momentum;
-        }
-
-        public Momentum(double alpha = 0.01, double tao = 0.9) : base(alpha)
-        {
-            Tao = tao;
         }
     }
 }

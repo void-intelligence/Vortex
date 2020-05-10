@@ -4,7 +4,7 @@ using Vortex.Mutation.Utility;
 
 namespace Vortex.Mutation.Kernels
 {
-    public sealed class DefaultMutationKernel : BaseMutationKernel
+    public sealed class DefaultMutation : BaseMutation
     {
         public override double Mutate(double value)
         {
@@ -39,14 +39,6 @@ namespace Vortex.Mutation.Kernels
             return value;
         }
 
-        public override EMutationType Type()
-        {
-            return EMutationType.DefaultMutation;
-        }
-    }
-
-    public sealed class DefaultMutation : BaseMutation
-    {
         public override EMutationType Type()
         {
             return EMutationType.DefaultMutation;

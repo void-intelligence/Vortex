@@ -1,20 +1,25 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
+using System;
 using Nomad.Matrix;
-using Vortex.Layer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
+using Vortex.Optimizer.Utility;
 using Vortex.Initializer.Utility;
 using Vortex.Mutation.Utility;
+using Vortex.Layer.Utility;
 
 namespace Vortex.Layer.Kernels
 {
-    public class FullyConnectedKernel : BaseLayerKernel
+    public class FullyConnected : BaseLayer
     {
-        public FullyConnectedKernel(BaseLayer settings) 
-            : base(settings)
+#nullable enable
+        public FullyConnected(int neuronCount, BaseActivation activation, BaseRegularization? regularization = null,
+            BaseInitializer? initializer = null, BaseMutation? mutation = null, BaseOptimizer? optimizer = null)
+            : base(neuronCount, activation, regularization, initializer, mutation, optimizer)
         {
         }
+#nullable disable
 
         public override Matrix Forward(Matrix inputs)
         {
@@ -39,21 +44,6 @@ namespace Vortex.Layer.Kernels
             Grads["DB"] = Grads["DZ"];
             return Params["W"].T() * Grads["DZ"];
         }
-
-        public override ELayerType Type()
-        {
-            return ELayerType.FullyConnected;
-        }
-    }
-
-    public class FullyConnected : BaseLayer
-    {
-#nullable enable
-        public FullyConnected(int neuronCount, BaseActivation activation, BaseRegularization? regularization = null, BaseInitializer? initializer = null, BaseMutation? mutation = null)
-            : base(neuronCount, activation, regularization, initializer, mutation)
-        {
-        }
-#nullable disable
 
         public override ELayerType Type()
         {

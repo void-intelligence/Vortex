@@ -1,18 +1,19 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class NadamKernel : BaseOptimizerKernel
+    public sealed class Nadam : BaseOptimizer
     {
-        public NadamKernel(Nadam settings) : base(settings)
+
+#nullable enable
+        public Nadam(double alpha = 0.001, BaseDecay? decay = null) : base(alpha, decay)
         {
         }
-        public NadamKernel(double alpha = 0.001) : base(new Nadam(alpha))
-        {
-        }
+#nullable disable
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
@@ -27,18 +28,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.Nadam;
-        }
-    }
-
-    public sealed class Nadam : BaseOptimizer
-    {
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.Nadam;
-        }
-
-        public Nadam(double alpha = 0.001) : base(alpha)
-        {
         }
     }
 }

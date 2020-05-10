@@ -12,11 +12,12 @@ namespace VortexTests
     {
         [TestMethod]
         public void ArctanTest()
+        
         {
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new ArctanKernel().Forward(a);
+            a = new Arctan().Forward(a);
             b.InMap(Math.Atan);
             Assert.IsTrue(a == b, "Arctan Activation successful");
         }
@@ -27,7 +28,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new ArctanKernel().Backward(a);
+            a = new Arctan().Backward(a);
             b.InMap((x) => 1 / (1 + Math.Pow(x, 2)));
             Assert.IsTrue(a == b, "Arctan Derivative successful");
         }
@@ -38,7 +39,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new BinaryStepKernel().Forward(a);
+            a = new BinaryStep().Forward(a);
             b.InMap((x) => x < 0 ? 0 : 1);
             Assert.IsTrue(a == b, "BinaryStep Activation successful");
         }
@@ -49,7 +50,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new BinaryStepKernel().Backward(a);
+            a = new BinaryStep().Backward(a);
             b.InMap((x) => 0);
             Assert.IsTrue(a == b, "BinaryStep Derivative successful");
         }
@@ -60,7 +61,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new BipolarSigmoidKernel().Forward(a);
+            a = new BipolarSigmoid().Forward(a);
             b.InMap((x) => -1 + 2 / (1 + Math.Exp(-x)));
             Assert.IsTrue(a == b, "Bipolar Sigmoid Activation successful");
         }
@@ -71,7 +72,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new BipolarSigmoidKernel().Backward(a);
+            a = new BipolarSigmoid().Backward(a);
             b.InMap((x) => 0.5 * (1 + (-1 + 2 / (1 + Math.Exp(-x)))) * (1 - (-1 + 2 / (1 + Math.Exp(-x)))));
             Assert.IsTrue(a == b, "Bipolar Sigmoid Derivative successful");
         }
@@ -83,7 +84,7 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
             var Alpha = 0.01;
-            a = new EluKernel(new Elu()).Forward(a);
+            a = new Elu(0.01).Forward(a);
             b.InMap((x) => x >= 0 ? x : Alpha * (Math.Exp(x) - 1));
             Assert.IsTrue(a == b, "ELU Activation successful");
         }
@@ -95,7 +96,7 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
             var Alpha = 0.01;
-            a = new EluKernel(new Elu()).Backward(a);
+            a = new Elu(0.01).Backward(a);
             b.InMap((x) => x >= 0 ? 1 : Alpha * Math.Exp(x));
             Assert.IsTrue(a == b, "ELU Derivative successful");
         }
@@ -106,7 +107,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new HardSigmoidKernel().Forward(a);
+            a = new HardSigmoid().Forward(a);
             b.InMap((x) => x < 0 ? 0 : x < 1 ? x : 1);
             Assert.IsTrue(a == b, "Hard Sigmoid Activation successful");
         }
@@ -117,7 +118,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new HardSigmoidKernel().Backward(a);
+            a = new HardSigmoid().Backward(a);
             b.InMap((x) => x > 1 || x < 0 ? 0 : 1);
             Assert.IsTrue(a == b, "Hard Sigmoid Derivative successful");
         }
@@ -128,7 +129,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new HardTanhKernel().Forward(a);
+            a = new HardTanh().Forward(a);
             b.InMap((x) => x < -1 ? -1 : x > 1 ? 1 : x);
             Assert.IsTrue(a == b, "Hard Tanh Activation successful");
         }
@@ -139,7 +140,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new HardTanhKernel().Backward(a);
+            a = new HardTanh().Backward(a);
             b.InMap((x) => x < -1 ? 0 : x > 1 ? 0 : 1);
             Assert.IsTrue(a == b, "Hard Tanh Derivative successful");
         }
@@ -150,7 +151,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new IdentityKernel().Forward(a);
+            a = new Identity().Forward(a);
             b.InMap((x) => x);
             Assert.IsTrue(a == b, "Identity Activation successful");
         }
@@ -161,7 +162,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new IdentityKernel().Backward(a);
+            a = new Identity().Backward(a);
             b.InMap((x) => 1);
             Assert.IsTrue(a == b, "Identity Derivative successful");
         }
@@ -172,7 +173,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new LogitKernel().Forward(a);
+            a = new Logit().Forward(a);
             b.InMap((x) => Math.Log(x / (1 - x)));
             Assert.IsTrue(a == b, "Logit Activation successful");
         }
@@ -183,7 +184,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new LogitKernel().Backward(a);
+            a = new Logit().Backward(a);
             b.InMap((x) => -1 / Math.Pow(x, 2) - 1 / Math.Pow(1 - x, 2));
             Assert.IsTrue(a == b, "Logit Derivative successful");
         }
@@ -195,7 +196,7 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
             var Alpha = 0.01;
-            a = new LReluKernel(new LRelu()).Forward(a);
+            a = new LRelu(0.01).Forward(a);
             b.InMap((x) => Math.Max(x, Alpha));
             Assert.IsTrue(a == b, "ReLU Activation successful");
         }
@@ -207,7 +208,7 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
             var Alpha = 0.01;
-            a = new LReluKernel(new LRelu()).Backward(a);
+            a = new LRelu(0.01).Backward(a);
             b.InMap((x) => x > 0 ? 1 : Alpha);
             Assert.IsTrue(a == b, "ReLU Derivative successful");
         }
@@ -218,7 +219,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new MishKernel().Forward(a);
+            a = new Mish().Forward(a);
             b.InMap((x) => x * Math.Tanh(Math.Log(1 + Math.Exp(x))));
             Assert.IsTrue(a == b, "Mish Activation successful");
         }
@@ -229,7 +230,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new MishKernel().Backward(a);
+            a = new Mish().Backward(a);
             b.InMap((x) => Math.Exp(x) * (4 * (x + 1) + 4 * Math.Exp(2 * x) + Math.Exp(3 * x) + Math.Exp(x) * (4 * x + 6)) / Math.Pow(2 * Math.Exp(x) + Math.Exp(2 * x) + 2, 2));
             Assert.IsTrue(a == b, "Mish Derivative successful");
         }
@@ -240,7 +241,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new ReluKernel().Forward(a);
+            a = new Relu().Forward(a);
             b.InMap((x) => Math.Max(x, 0));
             Assert.IsTrue(a == b, "ReLU Activation successful");
         }
@@ -251,7 +252,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new ReluKernel().Backward(a);
+            a = new Relu().Backward(a);
             b.InMap((x) => x > 0 ? 1 : 0);
             Assert.IsTrue(a == b, "ReLU Derivative successful");
         }
@@ -264,7 +265,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SeluKernel().Forward(a);
+            a = new Selu().Forward(a);
             b.InMap((x) => x > 0 ? x : Alpha * (Math.Exp(x) - 1));
             Assert.IsTrue(a == b, "SeLU Activation successful");
         }
@@ -278,7 +279,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SeluKernel().Backward(a);
+            a = new Selu().Backward(a);
             b.InMap((x) => x > 0 ? Lambda : Lambda * Alpha * Math.Exp(x));
             Assert.IsTrue(a == b, "SeLU Derivative successful");
         }
@@ -289,7 +290,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SigmoidKernel().Forward(a);
+            a = new Sigmoid().Forward(a);
             b.InMap((x) => 1.0 / (1 + Math.Exp(-x)));
             Assert.IsTrue(a == b, "Sigmoid Activation successful");
         }
@@ -300,7 +301,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SigmoidKernel().Backward(a);
+            a = new Sigmoid().Backward(a);
             b.InMap((x) => 1.0 / (1 + Math.Exp(-x)) * (1 - 1.0 / (1 + Math.Exp(-x))));
             Assert.IsTrue(a == b, "Sigmoid Derivative successful");
         }
@@ -322,7 +323,7 @@ namespace VortexTests
             for (var j = 0; j < res.Columns; j++) res[i, j] = Math.Exp(b[i, j]) / sumExp;
 
             b = res;
-            a = new SoftmaxKernel().Forward(a);
+            a = new Softmax().Forward(a);
             Assert.IsTrue(a == b, "Softmax Activation successful");
         }
 
@@ -344,7 +345,7 @@ namespace VortexTests
 
             b = res;
 
-            var s = new SoftmaxKernel();
+            var s = new Softmax();
             a = s.Forward(a);
             a = s.Backward(a);
 
@@ -359,7 +360,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SoftplusKernel().Forward(a);
+            a = new Softplus().Forward(a);
             b.InMap((x) => Math.Log(1 + Math.Exp(x)));
             Assert.IsTrue(a == b, "Softplus Activation successful");
         }
@@ -370,7 +371,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SoftplusKernel().Backward(a);
+            a = new Softplus().Backward(a);
             b.InMap((x) => Math.Exp(x) / (1 + Math.Exp(x)));
             Assert.IsTrue(a == b, "Softplus Derivative successful");
         }
@@ -381,7 +382,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SoftsignKernel().Forward(a);
+            a = new Softsign().Forward(a);
             b.InMap((x) => x / (1 + Math.Abs(x)));
             Assert.IsTrue(a == b, "Softsign Activation successful");
         }
@@ -392,7 +393,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new SoftsignKernel().Backward(a);
+            a = new Softsign().Backward(a);
             b.InMap((x) => x / Math.Pow(1 + Math.Abs(x), 2));
             Assert.IsTrue(a == b, "Softsign Derivative successful");
         }
@@ -403,7 +404,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new TanhKernel().Forward(a);
+            a = new Tanh().Forward(a);
             b.InMap((x) => (Math.Exp(x) - Math.Exp(-x)) / (Math.Exp(x) + Math.Exp(-x)));
             Assert.IsTrue(a == b, "Tanh Activation successful");
         }
@@ -414,7 +415,7 @@ namespace VortexTests
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
-            a = new TanhKernel().Backward(a);
+            a = new Tanh().Backward(a);
             b.InMap((x) => 1 - Math.Pow((Math.Exp(x) - Math.Exp(-x)) / (Math.Exp(x) + Math.Exp(-x)), 2));
             Assert.IsTrue(a == b, "Tanh Derivative successful");
         }

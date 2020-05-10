@@ -5,9 +5,9 @@ using Vortex.Initializer.Utility;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class UniformKernel : BaseInitializerKernel
+    public sealed class Uniform : BaseInitializer
     {
-        public UniformKernel(Uniform initializer) : base(initializer)
+        public Uniform(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -17,18 +17,6 @@ namespace Vortex.Initializer.Kernels
             mat.InRandomize(Min, Max);
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.Uniform;
-        }
-    }
-
-    public class Uniform : BaseInitializer
-    {
-        public Uniform(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
-        {
         }
 
         public override EInitializerType Type()

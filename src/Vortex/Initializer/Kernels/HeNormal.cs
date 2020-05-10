@@ -7,7 +7,7 @@ using static System.Math;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class HeNormalKernel : BaseInitializerKernel
+    public sealed class HeNormal : BaseInitializer
     {
         private int _h;
         private double Method(double input)
@@ -15,10 +15,10 @@ namespace Vortex.Initializer.Kernels
             return input * Sqrt(2.0 / _h);
         }
 
-        public HeNormalKernel(HeNormal initializer) : base(initializer)
+        public HeNormal(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
-
+        
         public override Matrix Initialize(Matrix w)
         {
             _h = w.Columns;
@@ -28,18 +28,6 @@ namespace Vortex.Initializer.Kernels
             mat *= Scale;
             return mat;
         }
-        public override EInitializerType Type()
-        {
-            return EInitializerType.HeNormal;
-        }
-    }
-
-    public class HeNormal : BaseInitializer
-    {
-        public HeNormal(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
-        {
-        }
-
         public override EInitializerType Type()
         {
             return EInitializerType.HeNormal;

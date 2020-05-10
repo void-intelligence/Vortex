@@ -1,20 +1,22 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class AdamaxKernel : BaseOptimizerKernel
+    public sealed class Adamax : BaseOptimizer
     {
         public double BetaPrimary { get; set; }
         public double BetaSecondary { get; set; }
-
-        public AdamaxKernel(Adamax settings) : base(settings)
+#nullable enable
+        public Adamax(double alpha, double b1, double b2, BaseDecay? decay = null) : base(alpha, decay)
         {
-            BetaPrimary = settings.BetaPrimary;
-            BetaSecondary = settings.BetaSecondary;
+            BetaPrimary = b1;
+            BetaSecondary = b2;
         }
+#nullable disable
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
@@ -30,22 +32,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.Adamax;
-        }
-    }
-
-    public sealed class Adamax : BaseOptimizer
-    {
-        public double BetaPrimary { get; set; }
-        public double BetaSecondary { get; set; }
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.Adamax;
-        }
-
-        public Adamax(double betaPrimary, double betaSecondary, double alpha = 0.001) : base(alpha)
-        {
-            BetaPrimary = betaPrimary;
-            BetaSecondary = betaSecondary;
         }
     }
 }

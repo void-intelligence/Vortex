@@ -2,20 +2,24 @@
 
 using System;
 using Nomad.Matrix;
-using Vortex.Layer.Utility;
 using Vortex.Activation.Kernels;
-using Vortex.Regularization.Kernels;
-using Vortex.Initializer.Kernels;
-using Vortex.Mutation.Kernels;
+using Vortex.Regularization.Utility;
+using Vortex.Optimizer.Utility;
+using Vortex.Initializer.Utility;
+using Vortex.Mutation.Utility;
+using Vortex.Layer.Utility;
 
 namespace Vortex.Layer.Kernels
 {
-    public class ResultKernel : BaseLayerKernel
+    public class Result : BaseLayer
     {
-        public ResultKernel(BaseLayer settings)
-            : base(settings)
+#nullable enable
+        public Result(int neuronCount, BaseRegularization? regularization = null,
+            BaseInitializer? initializer = null, BaseMutation? mutation = null, BaseOptimizer? optimizer = null)
+            : base(neuronCount, new Identity(), regularization, initializer, mutation, optimizer)
         {
         }
+#nullable disable
 
         public override Matrix Forward(Matrix inputs)
         {
@@ -30,19 +34,6 @@ namespace Vortex.Layer.Kernels
         }
 
         public override void Optimize()
-        {
-        }
-
-        public override ELayerType Type()
-        {
-            return ELayerType.Result;
-        }
-    }
-
-    public class Result : BaseLayer
-    {
-        public Result(int neuronCount)
-            : base(neuronCount, new Identity(), new None(), new One(0,0), new NoMutation())
         {
         }
 

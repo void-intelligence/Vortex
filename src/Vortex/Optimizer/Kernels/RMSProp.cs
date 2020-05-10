@@ -2,26 +2,23 @@
 
 using System;
 using Nomad.Matrix;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class RmsPropKernel : BaseOptimizerKernel
+    public sealed class RmsProp : BaseOptimizer
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }
 
-        public RmsPropKernel(RmsProp settings) : base(settings)
-        {
-            Rho = settings.Rho;
-            Epsilon = settings.Epsilon;
-        }
-
-        public RmsPropKernel(double alpha = 0.01, double rho = 0.9, double epsilon = 0.00001) : base(new RmsProp(alpha, rho, epsilon))
+#nullable enable
+        public RmsProp(double alpha = 0.01, BaseDecay? decay = null, double rho = 0.9, double epsilon = 0.00001) : base(alpha, decay)
         {
             Rho = rho;
             Epsilon = epsilon;
         }
+#nullable disable
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
@@ -45,22 +42,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.RmsProp;
-        }
-    }
-
-    public sealed class RmsProp : BaseOptimizer
-    {
-        public double Rho { get; set; }
-        public double Epsilon { get; set; }
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.RmsProp;
-        }
-
-        public RmsProp(double alpha = 0.01, double rho = 0.9, double epsilon = 0.00001) : base(alpha)
-        {
-            Rho = rho;
-            Epsilon = epsilon;
         }
     }
 }

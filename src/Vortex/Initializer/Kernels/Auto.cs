@@ -6,9 +6,9 @@ using Vortex.Initializer.Utility;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class AutoKernel : BaseInitializerKernel
+    public sealed class Auto : BaseInitializer
     {
-        public AutoKernel(Auto initializer) : base(initializer)
+        public Auto(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -18,18 +18,6 @@ namespace Vortex.Initializer.Kernels
             mat.InRandomize(-0.5, 0.5, EDistribution.Gaussian);
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.Auto;
-        }
-    }
-
-    public class Auto : BaseInitializer
-    {
-        public Auto(double scale = 1.0) : base(-0.5, 0.5, scale)
-        {
         }
 
         public override EInitializerType Type()

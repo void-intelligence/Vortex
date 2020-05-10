@@ -7,7 +7,7 @@ using static System.Math;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class LeCunNormalKernel : BaseInitializerKernel
+    public sealed class LeCunNormal : BaseInitializer
     {
         private int _h;
         private double Method(double input)
@@ -15,7 +15,7 @@ namespace Vortex.Initializer.Kernels
             return input * Sqrt(1.0 / _h);
         }
 
-        public LeCunNormalKernel(LeCunNormal initializer) : base(initializer)
+        public LeCunNormal(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -27,18 +27,6 @@ namespace Vortex.Initializer.Kernels
             mat.InMap(Method);
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.LeCunNormal;
-        }
-    }
-
-    public class LeCunNormal : BaseInitializer
-    {
-        public LeCunNormal(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
-        {
         }
 
         public override EInitializerType Type()

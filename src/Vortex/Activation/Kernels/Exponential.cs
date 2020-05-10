@@ -6,10 +6,8 @@ using static System.Math;
 
 namespace Vortex.Activation.Kernels
 {
-    public sealed class ExponentialKernel : BaseActivationKernel
+    public sealed class Exponential : BaseActivation
     {
-        public ExponentialKernel(Exponential settings = null) : base(settings) { }
-
         public override Matrix Forward(Matrix input) => input.Map(Activate);
 
         public override Matrix Backward(Matrix input) => input.Map(Derivative);
@@ -18,11 +16,6 @@ namespace Vortex.Activation.Kernels
 
         protected override double Derivative(double input) => Exp(input);
 
-        public override EActivationType Type() => EActivationType.Exponential;
-    }
-
-    public sealed class Exponential : BaseActivation
-    {
         public override EActivationType Type() => EActivationType.Exponential;
     }
 }

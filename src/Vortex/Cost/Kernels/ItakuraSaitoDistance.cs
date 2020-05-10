@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Itakura Saito Distance" cost function
     /// </summary>
-    public class ItakuraSaitoDistanceKernel : BaseCostKernel
+    public class ItakuraSaitoDistance : BaseCost
     {
         public override double Forward(Matrix actual, Matrix expected)
         {
@@ -34,14 +34,6 @@ namespace Vortex.Cost.Kernels
             return gradMatrix;
         }
 
-        public override ECostType Type()
-        {
-            return ECostType.ItakuraSaitoDistance;
-        }
-    }
-
-    public class ItakuraSaitoDistance : BaseCost
-    {
         public override ECostType Type()
         {
             return ECostType.ItakuraSaitoDistance;

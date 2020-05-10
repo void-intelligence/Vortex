@@ -6,9 +6,9 @@ using static System.Math;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class GlorotUniformKernel : BaseInitializerKernel
+    public sealed class GlorotUniform : BaseInitializer
     {
-        public GlorotUniformKernel(GlorotUniform initializer) : base(initializer)
+        public GlorotUniform(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -18,18 +18,6 @@ namespace Vortex.Initializer.Kernels
             mat.InRandomize(Sqrt(6.0 / (w.Columns + w.Rows)));
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.GlorotUniform;
-        }
-    }
-
-    public class GlorotUniform : BaseInitializer
-    {
-        public GlorotUniform(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
-        {
         }
 
         public override EInitializerType Type()

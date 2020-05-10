@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Quadratic Cost": Also known as "Mean Squared Error" or "Maximum Likelihood" or "Sum Squared Error"
     /// </summary>
-    public sealed class QuadraticCostKernel : BaseCostKernel
+    public sealed class QuadraticCost : BaseCost
     {
         public override double Forward(Matrix actual, Matrix expected)
         {
@@ -19,9 +19,7 @@ namespace Vortex.Cost.Kernels
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
 
             error /= 2;
-
             BatchCost += error;
-
             return error;
         }
 
@@ -39,14 +37,6 @@ namespace Vortex.Cost.Kernels
             return da * (1.0 / n);
         }
 
-        public override ECostType Type()
-        {
-            return ECostType.QuadraticCost;
-        }
-    }
-
-    public class QuadraticCost : BaseCost
-    {
         public override ECostType Type()
         {
             return ECostType.QuadraticCost;

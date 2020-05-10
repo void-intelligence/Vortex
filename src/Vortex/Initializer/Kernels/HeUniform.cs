@@ -6,9 +6,9 @@ using static System.Math;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class HeUniformKernel : BaseInitializerKernel
-    {
-        public HeUniformKernel(HeUniform initializer) : base(initializer)
+    public sealed class HeUniform : BaseInitializer
+    { 
+        public HeUniform(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -18,18 +18,6 @@ namespace Vortex.Initializer.Kernels
             mat.InRandomize(Sqrt(6.0 / w.Columns));
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.HeUniform;
-        }
-    }
-
-    public class HeUniform : BaseInitializer
-    {
-        public HeUniform(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
-        {
         }
 
         public override EInitializerType Type()

@@ -1,19 +1,19 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class GradientDescentKernel : BaseOptimizerKernel
+    public sealed class GradientDescent : BaseOptimizer
     {
-        public GradientDescentKernel(GradientDescent settings) : base(settings)
-        {
-        }
 
-        public GradientDescentKernel(double alpha = 0.001) : base(new GradientDescent(alpha))
+#nullable enable
+        public GradientDescent(double alpha = 0.001, BaseDecay? decay = null) : base(alpha, decay)
         {
         }
+#nullable disable
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
@@ -30,18 +30,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.GradientDescent;
-        }
-    }
-
-    public sealed class GradientDescent : BaseOptimizer
-    {
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.GradientDescent;
-        }
-
-        public GradientDescent(double alpha = 0.001) : base(alpha)
-        {
         }
     }
 }

@@ -1,21 +1,24 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
+using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class AdaDeltaKernel : BaseOptimizerKernel
+    public sealed class AdaDelta : BaseOptimizer
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }
 
-        public AdaDeltaKernel(AdaDelta settings) : base(settings)
+#nullable enable
+        public AdaDelta(double alpha, double rho, BaseDecay? decay = null, double epsilon = 0.00001) : base(alpha, decay)
         {
-            Rho = settings.Rho;
-            Epsilon = settings.Epsilon;
+            Rho = rho;
+            Epsilon = epsilon;
         }
-        
+#nullable disable
+
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
             if (dJdX.Cache.Count == 0)
@@ -30,22 +33,6 @@ namespace Vortex.Optimizer.Kernels
         public override EOptimizerType Type()
         {
             return EOptimizerType.AdaDelta;
-        }
-    }
-
-    public sealed class AdaDelta : BaseOptimizer
-    {
-        public double Rho { get; set; }
-        public double Epsilon { get; set; }
-        public override EOptimizerType Type()
-        {
-            return EOptimizerType.AdaDelta;
-        }
-
-        public AdaDelta(double rho, double epsilon, double alpha = 0.001) : base(alpha)
-        {
-            Rho = rho;
-            Epsilon = epsilon;
         }
     }
 }

@@ -9,13 +9,13 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Exponential Cost"
     /// </summary>
-    public class ExponentialCostKernel : BaseCostKernel
+    public class ExponentialCost : BaseCost
     {
         public double Tao { get; set; }
 
-        public ExponentialCostKernel(ExponentialCost settings)
+        public ExponentialCost(double tao)
         {
-            Tao = settings.Tao;
+            Tao = tao;
         }
 
         public override double Forward(Matrix actual, Matrix expected)
@@ -26,13 +26,9 @@ namespace Vortex.Cost.Kernels
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
 
             error /= Tao;
-
             error = Math.Exp(error);
-
             error *= Tao;
-
             BatchCost += error;
-
             return error;
         }
 
@@ -44,9 +40,7 @@ namespace Vortex.Cost.Kernels
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
 
             error /= Tao;
-
             error = Math.Exp(error);
-
             error *= Tao;
             
             var gradMatrix = actual.Duplicate();
@@ -55,18 +49,6 @@ namespace Vortex.Cost.Kernels
 
             return gradMatrix;
         }
-
-        public override ECostType Type()
-        {
-            return ECostType.ExponentionalCost;
-        }
-    }
-
-    public class ExponentialCost : BaseCost
-    {
-        public double Tao { get; set; }
-
-        public ExponentialCost(double tao) { Tao = tao; }
 
         public override ECostType Type()
         {

@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Hellinger Distance": needs to have positive values, and ideally values between 0 and 1. The same is true for the following divergences.
     /// </summary>
-    public sealed class HellingerDistanceKernel : BaseCostKernel
+    public sealed class HellingerDistance : BaseCost
     {
         public override double Forward(Matrix actual, Matrix expected)
         {
@@ -19,9 +19,7 @@ namespace Vortex.Cost.Kernels
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(Math.Sqrt(actual[i, j]) - Math.Sqrt(expected[i, j]), 2);
 
             error *= 1 / Math.Sqrt(2);
-            
             BatchCost += error;
-
             return error;
         }
 
@@ -37,14 +35,6 @@ namespace Vortex.Cost.Kernels
             return gradMatrix;
         }
 
-        public override ECostType Type()
-        {
-            return ECostType.HellingerDistance;
-        }
-    }
-
-    public class HellingerDistance : BaseCost 
-    {
         public override ECostType Type()
         {
             return ECostType.HellingerDistance;

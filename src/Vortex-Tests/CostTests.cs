@@ -22,7 +22,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) error += -expected[i, j] * Math.Log(actual[i, j]) + (1.0 - expected[i, j]) * Math.Log(1 - actual[i, j]);
 
-            var cost = new CrossEntropyCostKernel();
+            var cost = new CrossEntropyCost();
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Cross Entropy Cost successful");
@@ -41,7 +41,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / ((1 - actual[i, j]) * actual[i, j]);
 
-            var cost = new CrossEntropyCostKernel();
+            var cost = new CrossEntropyCost();
             var calculatedMatrix = cost.Backward(actual, expected);
             
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Cross Entropy Cost Derivative successful");
@@ -65,7 +65,7 @@ namespace VortexTests
             error = Math.Exp(error);
             error *= tao;
 
-            var cost = new ExponentialCostKernel(new ExponentialCost(tao));
+            var cost = new ExponentialCost(tao);
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Exponential Cost successful");
@@ -93,7 +93,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) * error;
 
-            var cost = new ExponentialCostKernel(new ExponentialCost(tao));
+            var cost = new ExponentialCost(tao);
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Exponential Cost Derivative successful");
@@ -112,7 +112,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) error += expected[i, j] * Math.Log(expected[i, j] / actual[i, j]) - expected[i, j] + actual[i, j];
 
-            var cost = new GeneralizedKullbackLeiblerDivergenceKernel();
+            var cost = new GeneralizedKullbackLeiblerDivergence();
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Generalized Kullback Leibler Divergence successful");
@@ -131,7 +131,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / actual[i, j];
 
-            var cost = new GeneralizedKullbackLeiblerDivergenceKernel();
+            var cost = new GeneralizedKullbackLeiblerDivergence();
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Generalized Kullback Leibler Divergence Derivative successful");
@@ -150,7 +150,7 @@ namespace VortexTests
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(Math.Sqrt(actual[i, j]) - Math.Sqrt(expected[i, j]), 2);
             error *= 1 / Math.Sqrt(2);
 
-            var cost = new HellingerDistanceKernel();
+            var cost = new HellingerDistance();
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Hellinger Distance successful");
@@ -169,7 +169,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (Math.Sqrt(actual[i, j]) - Math.Sqrt(expected[i, j])) / (Math.Sqrt(2) * Math.Sqrt(actual[i, j]));
 
-            var cost = new HellingerDistanceKernel();
+            var cost = new HellingerDistance();
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Hellinger Distance Derivative successful");
@@ -188,7 +188,7 @@ namespace VortexTests
             for (var j = 0; j < actual.Columns; j++) error += expected[i, j] / actual[i, j] - Math.Log(expected[i, j] - actual[i, j]) - 1;
             if (double.IsNaN(error)) error = 0;
 
-            var cost = new ItakuraSaitoDistanceKernel();
+            var cost = new ItakuraSaitoDistance();
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Itakura Saito Distance successful");
@@ -207,7 +207,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / Math.Pow(actual[i, j], 2);
 
-            var cost = new ItakuraSaitoDistanceKernel();
+            var cost = new ItakuraSaitoDistance();
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Itakura Saito Distance Derivative successful");
@@ -225,7 +225,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) error += expected[i, j] * Math.Log(expected[i, j] / actual[i, j]);
 
-            var cost = new KullbackLeiblerDivergenceKernel();
+            var cost = new KullbackLeiblerDivergence();
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Kullback Leibler Divergence Cost successful");
@@ -244,7 +244,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = -(expected[i, j] / actual[i, j]);
 
-            var cost = new KullbackLeiblerDivergenceKernel();
+            var cost = new KullbackLeiblerDivergence();
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Kullback Leibler Divergence Derivative successful");
@@ -264,7 +264,7 @@ namespace VortexTests
 
             error /= 2;
 
-            var cost = new QuadraticCostKernel();
+            var cost = new QuadraticCost();
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Quadratic Cost successful");
@@ -290,7 +290,7 @@ namespace VortexTests
             var gradMatrix = da * (1.0 / n);
 
 
-            var cost = new QuadraticCostKernel();
+            var cost = new QuadraticCost();
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Quadratic Cost Derivative successful");

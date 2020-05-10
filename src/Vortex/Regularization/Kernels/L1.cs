@@ -8,9 +8,11 @@ namespace Vortex.Regularization.Kernels
     /// <summary>
     /// Lasso Regularization
     /// </summary>
-    public sealed class L1Kernel : BaseRegularizationKernel
+    public sealed class L1 : BaseRegularization
     {
-        public L1Kernel(L1 settings) : base(settings) { Lambda = settings.Lambda; }
+        public L1(double lambda = 1) : base(lambda)
+        {
+        }
 
         public override double CalculateNorm(Matrix input)
         {
@@ -21,21 +23,6 @@ namespace Vortex.Regularization.Kernels
         {
             return ERegularizationType.L1;
         }
-    }
-
-    public sealed class L1 : BaseRegularization
-    {
-        public L1(double lambda)
-        {
-            Lambda = lambda;
-        }
-
-        public override ERegularizationType Type()
-        {
-            return ERegularizationType.L1;
-        }
-
-        public double Lambda { get; set; }
     }
 
 }

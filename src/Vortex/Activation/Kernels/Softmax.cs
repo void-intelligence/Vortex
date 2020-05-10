@@ -6,53 +6,48 @@ using static System.Math;
 
 namespace Vortex.Activation.Kernels
 {
-    public sealed class SoftmaxKernel : BaseActivationKernel
+    public sealed class Softmax : BaseActivation
     {
-        public SoftmaxKernel(Softmax settings = null) : base(settings) { }
-
         public double SumExp { get; private set; }
 
-        public SoftmaxKernel() : base(null)
+        public Softmax()
         {
             SumExp = 0.0;
         }
 
         public override Matrix Forward(Matrix input)
         {
-            Matrix res = input.Duplicate();
+            var res = input.Duplicate();
             SumExp = 0.0;
 
-            for (int i = 0; i < res.Rows; i++)
-            {
-                for (int j = 0; j < res.Columns; j++)
-                {
-                    SumExp += Exp(input[i, j]);
-                }
-            }
+            for (var i = 0; i < res.Rows; i++)
+            for (var j = 0; j < res.Columns; j++) SumExp += Exp(input[i, j]);
 
-            for (int i = 0; i < res.Rows; i++)
-            {
-                for (int j = 0; j < res.Columns; j++)
-                {
-                    res[i, j] = Exp(input[i, j]) / SumExp;
-                }
-            }
+            for (var i = 0; i < res.Rows; i++)
+            for (var j = 0; j < res.Columns; j++) res[i, j] = Exp(input[i, j]) / SumExp;
 
 
             return res;
         }
 
-        public override Matrix Backward(Matrix input) => input.Map(Derivative);
+        public override Matrix Backward(Matrix input)
+        {
+            return input.Map(Derivative);
+        }
 
-        protected override double Activate(double input) => 0;
+        protected override double Activate(double input)
+        {
+            return 0;
+        }
 
-        protected override double Derivative(double input) => Exp(input) / SumExp * (1 - Exp(input) / SumExp);
+        protected override double Derivative(double input)
+        {
+            return Exp(input) / SumExp * (1 - Exp(input) / SumExp);
+        }
 
-        public override EActivationType Type() => EActivationType.Softmax;
-    }
-
-    public sealed class Softmax : BaseActivation
-    {
-        public override EActivationType Type() => EActivationType.Softmax;
+        public override EActivationType Type()
+        {
+            return EActivationType.Softmax;
+        }
     }
 }

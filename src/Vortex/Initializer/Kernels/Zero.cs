@@ -5,9 +5,9 @@ using Vortex.Initializer.Utility;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class ZeroKernel : BaseInitializerKernel
+    public sealed class Zero : BaseInitializer
     {
-        public ZeroKernel(Zero initializer) : base(initializer)
+        public Zero(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -19,18 +19,6 @@ namespace Vortex.Initializer.Kernels
             return mat;
         }
 
-        public override EInitializerType Type()
-        {
-            return EInitializerType.Zero;
-        }
-    }
-
-    public class Zero : BaseInitializer
-    {
-        public Zero(double min = -0.5, double max = 0.5, double scale = 1.0) : base(min, max, scale)
-        {
-        }
-    
         public override EInitializerType Type()
         {
             return EInitializerType.Zero;

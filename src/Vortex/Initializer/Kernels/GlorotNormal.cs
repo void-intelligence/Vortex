@@ -7,7 +7,7 @@ using static System.Math;
 
 namespace Vortex.Initializer.Kernels
 {
-    public class GlorotNormalKernel : BaseInitializerKernel
+    public sealed class GlorotNormal : BaseInitializer
     {
         private int _denom;
         private double Method(double input)
@@ -15,7 +15,7 @@ namespace Vortex.Initializer.Kernels
             return input * Sqrt(2.0 / _denom);
         }
 
-        public GlorotNormalKernel(GlorotNormal initializer) : base(initializer)
+        public GlorotNormal(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
         {
         }
 
@@ -28,18 +28,6 @@ namespace Vortex.Initializer.Kernels
             mat.InMap(Method);
             mat *= Scale;
             return mat;
-        }
-
-        public override EInitializerType Type()
-        {
-            return EInitializerType.GlorotNormal;
-        }
-    }
-
-    public class GlorotNormal : BaseInitializer
-    {
-        public GlorotNormal(double min = -0.5, double max = 0.5, double scale = 0.01) : base(min, max, scale)
-        {
         }
 
         public override EInitializerType Type()

@@ -12,7 +12,7 @@ namespace VortexTests
         [TestMethod]
         public void SgdTest()
         {
-            var gd = new GradientDescentKernel();
+            var gd = new GradientDescent();
             var x = new Matrix(10, 10);
             var dJdX = new Matrix(10, 10);
 
@@ -29,7 +29,7 @@ namespace VortexTests
         [TestMethod]
         public void MomentumTest()
         {
-            var momentum = new MomentumKernel();
+            var momentum = new Momentum();
             var x = new Matrix(10, 10);
             var dJdX = new Matrix(10, 10);
 
@@ -46,7 +46,7 @@ namespace VortexTests
         [TestMethod]
         public void RmsPropTest()
         {
-            var rms = new RmsPropKernel();
+            var rms = new RmsProp();
             var x = new Matrix(10, 10);
             var dJdX = new Matrix(10, 10);
 

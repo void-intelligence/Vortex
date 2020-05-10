@@ -9,7 +9,7 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Kullback Leibler Divergence" Also known as "Information Divergence", "Information Gain", "Relative entropy", "KLIC", or "KL Divergence".
     /// </summary>
-    public sealed class KullbackLeiblerDivergenceKernel : BaseCostKernel
+    public sealed class KullbackLeiblerDivergence : BaseCost
     {
         public override double Forward(Matrix actual, Matrix expected)
         {
@@ -33,14 +33,6 @@ namespace Vortex.Cost.Kernels
             return gradMatrix;
         }
 
-        public override ECostType Type()
-        {
-            return ECostType.KullbackLeiblerDivergence;
-        }
-    }
-
-    public class KullbackLeiblerDivergence : BaseCost 
-    {
         public override ECostType Type()
         {
             return ECostType.KullbackLeiblerDivergence;

@@ -6,15 +6,22 @@ using static System.Math;
 
 namespace Vortex.Activation.Kernels
 {
-    public sealed class MishKernel : BaseActivationKernel
+    public sealed class Mish : BaseActivation
     {
-        public MishKernel(Mish settings = null) : base(settings) { }
+        public override Matrix Forward(Matrix input)
+        {
+            return input.Map(Activate);
+        }
 
-        public override Matrix Forward(Matrix input) => input.Map(Activate);
+        public override Matrix Backward(Matrix input)
+        {
+            return input.Map(Derivative);
+        }
 
-        public override Matrix Backward(Matrix input) => input.Map(Derivative);
-
-        protected override double Activate(double input) => input * Tanh(Log(1 + Exp(input)));
+        protected override double Activate(double input)
+        {
+            return input * Tanh(Log(1 + Exp(input)));
+        }
 
         protected override double Derivative(double input)
         {
@@ -25,11 +32,9 @@ namespace Vortex.Activation.Kernels
             return Exp(input) * omega / Pow(epsilon, 2);
         }
 
-        public override EActivationType Type() => EActivationType.Mish;
-    }
-
-    public sealed class Mish : BaseActivation
-    {
-        public override EActivationType Type() => EActivationType.Mish;
+        public override EActivationType Type()
+        {
+            return EActivationType.Mish;
+        }
     }
 }

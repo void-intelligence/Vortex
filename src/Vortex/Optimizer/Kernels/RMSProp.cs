@@ -8,44 +8,32 @@ namespace Vortex.Optimizer.Kernels
 {
     public sealed class RmsPropKernel : BaseOptimizerKernel
     {
-        private bool _initw;
-        private Matrix _sDw;
-        private bool _initb;
-        private Matrix _sDb;
-
         public double Rho { get; set; }
         public double Epsilon { get; set; }
 
         public RmsPropKernel(RmsProp settings) : base(settings)
         {
-            _initw = true;
-            _initb = true;
             Rho = settings.Rho;
             Epsilon = settings.Epsilon;
         }
 
-        public RmsPropKernel(double rho = 0.9, double epsilon = 0.0001, double alpha = 0.001) : base(new RmsProp(rho, epsilon, alpha))
+        public RmsPropKernel(double alpha = 0.01, double rho = 0.9, double epsilon = 0.00001) : base(new RmsProp(alpha, rho, epsilon))
         {
-            _initw = true;
-            _initb = true;
             Rho = rho;
             Epsilon = epsilon;
         }
 
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
-            if (_initw)
+            if (dJdX.Cache.Count == 0)
             {
-                _initw = false;
-                _sDw = (Alpha * (x.Hadamard(dJdX)));
+                dJdX.Cache.Add(dJdX.Fill(0));
             }
-            _sDw = (Rho * _sDw) + (1 - Rho) * dJdX.Hadamard(dJdX);
-            Matrix mat = _sDw.Map(Math.Sqrt);
-            Matrix epsilonMatrix = mat.Fill(Epsilon);
-            mat.InAdd(epsilonMatrix);
-            mat.InOneOver();
-            mat.InHadamard(dJdX);
-            return Alpha * mat;
+
+            dJdX.Cache[0] = Rho * dJdX.Cache[0] + ((1.0 - Rho) * (dJdX.Hadamard(dJdX)));
+            Matrix oneover = (dJdX.Cache[0].Map(Math.Sqrt) + dJdX.Cache[0].Fill(Epsilon)).OneOver();
+            return x - Alpha * dJdX.Hadamard(oneover);
+
         }
 
         public override EOptimizerType Type() => EOptimizerType.RmsProp;
@@ -57,7 +45,7 @@ namespace Vortex.Optimizer.Kernels
         public double Epsilon { get; set; }
         public override EOptimizerType Type() => EOptimizerType.RmsProp;
 
-        public RmsProp(double rho = 0.9, double epsilon = 0.0001, double alpha = 0.001) : base(alpha)
+        public RmsProp(double alpha = 0.01, double rho = 0.9, double epsilon = 0.00001) : base(alpha)
         {
             Rho = rho;
             Epsilon = epsilon;

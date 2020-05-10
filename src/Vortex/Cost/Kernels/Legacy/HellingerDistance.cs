@@ -4,7 +4,7 @@ using System;
 using Vortex.Cost.Utility;
 using Nomad.Matrix;
 
-namespace Vortex.Cost.Kernels
+namespace Vortex.Cost.Kernels.Legacy
 {
     /// <summary>
     /// "Hellinger Distance": needs to have positive values, and ideally values between 0 and 1. The same is true for the following divergences.
@@ -37,7 +37,7 @@ namespace Vortex.Cost.Kernels
 
         public override ECostType Type()
         {
-            return ECostType.HellingerDistance;
+            return ECostType.LegacyHellingerDistance;
         }
     }
 }

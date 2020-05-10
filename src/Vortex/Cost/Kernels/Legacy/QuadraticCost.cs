@@ -4,7 +4,7 @@ using System;
 using Vortex.Cost.Utility;
 using Nomad.Matrix;
 
-namespace Vortex.Cost.Kernels
+namespace Vortex.Cost.Kernels.Legacy
 {
     /// <summary>
     /// "Quadratic Cost": Also known as "Mean Squared Error" or "Maximum Likelihood" or "Sum Squared Error"
@@ -39,7 +39,7 @@ namespace Vortex.Cost.Kernels
 
         public override ECostType Type()
         {
-            return ECostType.QuadraticCost;
+            return ECostType.LegacyQuadraticCost;
         }
     }
 }

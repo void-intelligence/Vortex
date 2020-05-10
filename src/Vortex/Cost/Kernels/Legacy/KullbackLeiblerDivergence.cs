@@ -4,7 +4,7 @@ using System;
 using Vortex.Cost.Utility;
 using Nomad.Matrix;
 
-namespace Vortex.Cost.Kernels
+namespace Vortex.Cost.Kernels.Legacy
 {
     /// <summary>
     /// "Kullback Leibler Divergence" Also known as "Information Divergence", "Information Gain", "Relative entropy", "KLIC", or "KL Divergence".
@@ -35,7 +35,7 @@ namespace Vortex.Cost.Kernels
 
         public override ECostType Type()
         {
-            return ECostType.KullbackLeiblerDivergence;
+            return ECostType.LegacyKullbackLeiblerDivergance;
         }
     }
 }

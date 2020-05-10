@@ -4,21 +4,23 @@ using System;
 using Vortex.Cost.Utility;
 using Nomad.Matrix;
 
-namespace Vortex.Cost.Kernels
+namespace Vortex.Cost.Kernels.Legacy
 {
     /// <summary>
-    /// "Cross Entropy Cost": Also known as "Bernoulli negative log-likelihood" and "Binary Cross-Entropy"
+    /// "Itakura Saito Distance" function
     /// </summary>
-    public class CrossEntropyCost : BaseCost
+    public class ItakuraSaitoDistance : BaseCost
     {
         public override double Forward(Matrix actual, Matrix expected)
         {
             var error = 0.0;
 
             for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) error += -expected[i, j] * Math.Log(actual[i, j]) + (1.0 - expected[i, j]) * Math.Log(1 - actual[i, j]);
+            for (var j = 0; j < actual.Columns; j++) error += expected[i, j] / actual[i, j] - Math.Log(expected[i, j] - actual[i, j]) - 1;
+            if (double.IsNaN(error)) error = 0;
 
             BatchCost += error;
+
             return error;
         }
 
@@ -27,14 +29,14 @@ namespace Vortex.Cost.Kernels
             var gradMatrix = actual.Duplicate();
 
             for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / ((1 - actual[i, j]) * actual[i, j]);
+            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / Math.Pow(actual[i, j], 2);
 
             return gradMatrix;
         }
 
         public override ECostType Type()
         {
-            return ECostType.CrossEntropyCost;
+            return ECostType.LegacyItakuraSaitoDistance;
         }
     }
 }

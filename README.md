@@ -51,7 +51,7 @@ using Vortex.Regularization.Kernels;
 // Loss / Cost function Kernels
 using Vortex.Cost.Kernels;
 
-// Optimizer Functions (Only SGD working so far)
+// Optimizer Functions
 using Vortex.Optimizer.Kernels;
 
 // Weight Initializer Kernels
@@ -61,9 +61,9 @@ using Vortex.Initializer.Kernels;
 Now that these are done, let us create our first Network within the main function, the architecture we want to desing is going to be a simple dense network with 4 layrs all using tanh activation with weights initiated via normal distribution of numbers between ```-0.5``` and ```0.5```. The network will use ```QuadraticCost``` as the cost function and ```Stochastic Gradient Descent``` as the optimizer function.
 
 ```C#
-// Neural Network using QuadraticCost as the cost funciton and Momentum as the
-// optimizer algorithm with a learning rate of 0.03 and a batch size of 1
-var net = new Network(new QuadraticCost(), new Momentum(0.03), 1);
+// Neural Network using QuadraticCost as the cost funciton and Adam as the
+// optimizer algorithm with a learning rate of 0.03
+var net = new Network(new QuadraticCost(), new Adam(0.03));
 
 // Fully Connected (Dense) layer with 3 inputs (our input layer) using Tanh activation function
 net.CreateLayer(new FullyConnected(3, new Tanh()));

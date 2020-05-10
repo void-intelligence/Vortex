@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
-using Vortex.Decay.Kernels;
 using Vortex.Decay.Utility;
 
 namespace Vortex.Optimizer.Utility

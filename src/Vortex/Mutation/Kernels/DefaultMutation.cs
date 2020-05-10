@@ -10,31 +10,25 @@ namespace Vortex.Mutation.Kernels
         {
             var randomNumber = Rng.Next(0, 100);
 
-            if (randomNumber <= 2f)
+            if (randomNumber <= 2)
             {
-                //if 1
-                //flip sign of weight
-                value *= -1f;
+                // Flip sign of weight
+                value *= -1;
             }
             else if (randomNumber <= 4f)
             {
-                //if 2
-                // random value between -1 and 1
-                value = ((float)Rng.NextDouble() - 0.5) * 2;
+                // Between -1 and 1
+                value = (Rng.NextDouble() - 0.5) * 2;
             }
-            else if (randomNumber <= 6f)
+            else if (randomNumber <= 6)
             {
-                //if 3
-                //randomly increase by 0% to 100%
-                var factor = (float)Rng.NextDouble() + 1f;
-                value *= factor;
+                // Increase by 0% to 100%
+                value *= (Rng.NextDouble() + 1.0);
             }
-            else if (randomNumber <= 8f)
+            else if (randomNumber <= 8)
             {
-                //if 4
-                //randomly decrease by 0% to 100%
-                var factor = (float)Rng.NextDouble();
-                value *= factor;
+                // Decrease by 0% to 100%
+                value *= Rng.NextDouble();
             }
             return value;
         }

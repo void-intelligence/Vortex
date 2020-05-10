@@ -41,15 +41,6 @@ namespace Vortex.Layer.Kernels
             return Grads["DZ"];
         }
 
-        public override void Optimize()
-        {
-            Matrix deltaW = OptimizerFunction.CalculateDeltaW(Params["W"], Grads["DW"]);
-            Matrix deltaB = OptimizerFunction.CalculateDeltaB(Params["B"], Grads["DB"]);
-
-            Params["W"] -= deltaW;
-            Params["B"] -= deltaB;
-        }
-
         public override ELayerType Type() => ELayerType.Output;
     }
 

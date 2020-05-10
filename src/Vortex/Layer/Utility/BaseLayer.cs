@@ -113,7 +113,14 @@ namespace Vortex.Layer.Utility
         public abstract Matrix Backward(Matrix dA);
 
         // All Layer Optimization Calculations
-        public abstract void Optimize();
+        public virtual void Optimize()
+        {
+            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"], Grads["DW"]);
+            Matrix deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
+
+            Params["W"] -= deltaW;
+            Params["B"] -= deltaB;
+        }
 
         public abstract ELayerType Type();
     }

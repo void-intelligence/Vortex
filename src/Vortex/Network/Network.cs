@@ -138,9 +138,10 @@ namespace Vortex.Network
             else if(_currentBatch == BatchSize)
             {
                 // Weight Decay
-                foreach (var t in Layers) t.OptimizerFunction.ApplyDecay();
 
                 Backward(expected);
+                foreach (var t in Layers) t.OptimizerFunction.ApplyDecay();
+
                 BatchError = CostFunction.BatchCost;
                 ResetBatchError();
             }

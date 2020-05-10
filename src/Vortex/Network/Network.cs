@@ -94,7 +94,21 @@ namespace Vortex.Network
             {
                 // Weights
                 Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
-                Layers[i].Params["W"] = Layers[i].Initializer.Initialize(Layers[i].Params["W"]);
+                
+                if (i == 0 && Layers[i].Initializer.Type() == EInitializerType.Auto)
+                {
+                    Layers[i].Initializer.Scale *= Math.Sqrt(2.0 / (Layers[i].NeuronCount));
+                    Layers[i].Params["W"] = Layers[i].Initializer.Initialize(Layers[i].Params["W"]);
+                }
+                else if (i != 0 && Layers[i].Initializer.Type() == EInitializerType.Auto)
+                {
+                    Layers[i].Initializer.Scale *= Math.Sqrt(2.0 / (Layers[i - 1].NeuronCount * Layers[i].NeuronCount));
+                    Layers[i].Params["W"] = Layers[i].Initializer.Initialize(Layers[i].Params["W"]);
+                }
+                else
+                {
+                    Layers[i].Params["W"] = Layers[i].Initializer.Initialize(Layers[i].Params["W"]);
+                }
 
                 // Biases
                 Layers[i].Params["B"] = new Matrix(Layers[i + 1].NeuronCount, 1);

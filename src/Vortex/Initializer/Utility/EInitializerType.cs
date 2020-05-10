@@ -4,6 +4,7 @@ namespace Vortex.Initializer.Utility
 {
     public enum EInitializerType
     {
+        Auto,
         Const,
         GlorotNormal,
         GlorotUniform,

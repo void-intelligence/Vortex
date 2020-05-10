@@ -3,7 +3,6 @@
 using System;
 using Vortex.Activation.Kernels;
 using Vortex.Activation.Utility;
-using Vortex.Regularization;
 using Vortex.Regularization.Utility;
 using Nomad.Matrix;
 using System.Collections.Generic;
@@ -132,7 +131,7 @@ namespace Vortex.Layer.Utility
             NeuronCount = neuronCount;
             ActivationFunction = activation;
             RegularizationFunction = regularization ?? new None();
-            InitializerFunction = initializer ?? new Normal();
+            InitializerFunction = initializer ?? new Auto();
             MutationFunction = mutation ?? new NoMutation();
         }
 #nullable disable

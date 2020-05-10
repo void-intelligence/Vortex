@@ -61,18 +61,18 @@ using Vortex.Initializer.Kernels;
 Now that these are done, let us create our first Network within the main function, the architecture we want to desing is going to be a simple dense network with 4 layrs all using tanh activation with weights initiated via normal distribution of numbers between ```-0.5``` and ```0.5```. The network will use ```QuadraticCost``` as the cost function and ```Stochastic Gradient Descent``` as the optimizer function.
 
 ```C#
-// Neural Network using QuadraticCost as the cost funciton and
-// Gradient Descent as the optimizer with a learning rate of 0.03
-var net = new Network(new QuadraticCost(), new GradientDescent(0.03)); 
+// Neural Network using QuadraticCost as the cost funciton and Momentum as the
+// optimizer algorithm with a learning rate of 0.03 and a batch size of 1
+var net = new Network(new QuadraticCost(), new Momentum(0.03), 1);
 
 // Fully Connected (Dense) layer with 3 inputs (our input layer) using Tanh activation function
 net.CreateLayer(new FullyConnected(3, new Tanh()));
 
-// Fully Connected (Dense) layer with 25 inputs using Tanh activation function
-net.CreateLayer(new FullyConnected(25, new Tanh()));
+// Fully Connected (Dense) layer with 3 inputs using Tanh activation function
+net.CreateLayer(new FullyConnected(3, new Tanh()));
 
-// Fully Connected (Dense) layer with 25 inputs using Tanh activation function
-net.CreateLayer(new FullyConnected(25, new Tanh()));
+// Fully Connected (Dense) layer with 3 inputs using Tanh activation function
+net.CreateLayer(new FullyConnected(3, new Tanh()));
 
 // Output layer with 1 inputs using Tanh activation function
 net.CreateLayer(new Output(1, new Tanh()));
@@ -130,16 +130,16 @@ inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
 outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 ```
 
-Now, it's time to train our network, let's do 50 tries on our dataset:
+Now, it's time to train our network, let's do 8 tries on our dataset:
 
 ```C#
-for (var i = 0; i < 50; i++)
+for (var i = 0; i < 8; i++)
 {
     net.Train(inputs[i % 8], outputs[i % 8]);
 }
 ```
 
-And as simple as that, our network has learnt to predict the XOR table of 3 with 100% accuracy over 50 tries. (6.25 epochs)
+And as simple as that, our network has learnt to predict the XOR table of 3 with 100% accuracy over 8 tries. (1 epoch)
 
 ```Output Correctness Tolerance is 0.1```
 

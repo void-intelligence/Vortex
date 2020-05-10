@@ -8,11 +8,6 @@ namespace Vortex.Optimizer.Kernels
 {
     public sealed class MomentumKernel : BaseOptimizerKernel
     {
-        private bool _initw;
-        private Matrix _vDw;
-        private bool _initb;
-        private Matrix _vDb;
-
         /// <summary>
         /// Momentum Parameter
         /// </summary>
@@ -20,44 +15,33 @@ namespace Vortex.Optimizer.Kernels
 
         public MomentumKernel(Momentum settings) : base(settings)
         {
-            _initw = true;
-            _initb = true;
-
             Tao = settings.Tao;
         }
 
-        public MomentumKernel(double tao = 0.9, double alpha = 0.001) : base(new Momentum(tao, alpha))
+        public MomentumKernel(double alpha = 0.01, double tao = 0.9) : base(new Momentum(alpha, tao))
         {
-            _initw = true;
-            _initb = true;
         }
 
         public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
         {
-            if (_initw)
+            if (dJdW.Cache.Count == 0)
             {
-                _initw = false;
-                _vDw = (Tao * (Alpha * (w.Hadamard(dJdW))) + ((1 - Tao) * dJdW));
+                dJdW.Cache.Add(dJdW.Fill(0));
             }
-            else
-            {
-                _vDw = (Tao * (Alpha * (w.Hadamard(dJdW))) + ((1 - Tao) * dJdW)) * _vDw;
-            }
-            return _vDw;
+
+            dJdW.Cache[0] = Tao * dJdW.Cache[0] + ((1 - Tao) * dJdW);
+            return (w - Alpha * dJdW.Cache[0]);
         }
 
         public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
         {
-            if (_initb)
+            if (dJdB.Cache.Count == 0)
             {
-                _initb = false;
-                _vDb = (Tao * (Alpha * (b.Hadamard(dJdB))) + ((1 - Tao) * dJdB));
+                dJdB.Cache.Add(dJdB.Fill(0));
             }
-            else
-            {
-                _vDb = (Tao * _vDb + ((1 - Tao) * dJdB)) * (Alpha * (b.Hadamard(dJdB)));
-            }
-            return _vDb;
+
+            dJdB.Cache[0] = Tao * dJdB.Cache[0] + ((1 - Tao) * dJdB);
+            return (b - Alpha * dJdB.Cache[0]);
         }
 
         public override EOptimizerType Type() => EOptimizerType.Momentum;
@@ -68,7 +52,7 @@ namespace Vortex.Optimizer.Kernels
         public double Tao { get; set; }
         public override EOptimizerType Type() => EOptimizerType.Momentum;
 
-        public Momentum(double tao = 0.9, double alpha = 0.001) : base(alpha)
+        public Momentum(double alpha = 0.01, double tao = 0.9) : base(alpha)
         {
             Tao = tao;
         }

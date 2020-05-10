@@ -58,10 +58,10 @@ namespace VortexTests
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new GradientDescent(0.03), 5);
+            var net = new Network(new QuadraticCost(), new Momentum(0.03), 1);
             net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(25, new Tanh()));
-            net.CreateLayer(new FullyConnected(25, new Tanh()));
+            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -101,7 +101,7 @@ namespace VortexTests
             inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
             outputs.Add(new Matrix(new double[,] { { 1.0 } }));
 
-            for (var i = 0; i < 50; i++)
+            for (var i = 0; i < 8; i++)
             {
                 net.Train(inputs[i % 8], outputs[i % 8]);
             }

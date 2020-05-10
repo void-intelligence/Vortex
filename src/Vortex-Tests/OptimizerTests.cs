@@ -6,7 +6,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
 using Vortex.Activation.Kernels;
-using Vortex.Cost.Kernels;
+using Vortex.Cost.Kernels.Legacy;
 using Vortex.Layer.Kernels;
 using Vortex.Network;
 using Vortex.Optimizer.Kernels;

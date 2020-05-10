@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
 using Vortex.Network;
 using Vortex.Activation.Kernels;
-using Vortex.Cost.Kernels;
+using Vortex.Cost.Kernels.Legacy;
 using Vortex.Optimizer.Kernels;
 using Vortex.Layer.Kernels;
 

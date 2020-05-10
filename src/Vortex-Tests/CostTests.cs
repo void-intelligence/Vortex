@@ -3,102 +3,13 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
-using Vortex.Cost.Kernels;
+using Vortex.Cost.Kernels.Legacy;
 
 namespace VortexTests
 {
     [TestClass]
     public class VortexCost
     {
-        [TestMethod]
-        public void CrossEntropyTest()
-        {
-            var error = 0.0;
-            var actual = new Matrix(4, 1);
-            actual.InRandomize();
-            var expected = new Matrix(4, 1);
-            expected.InRandomize();
-
-            for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) error += -expected[i, j] * Math.Log(actual[i, j]) + (1.0 - expected[i, j]) * Math.Log(1 - actual[i, j]);
-
-            var cost = new CrossEntropyCost();
-            var calculatedError = cost.Forward(actual, expected);
-
-            Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Cross Entropy Cost successful");
-        }
-
-        [TestMethod]
-        public void CrossEntropyPrimeTest()
-        {
-            var actual = new Matrix(4, 1);
-            actual.InRandomize();
-            var expected = new Matrix(4, 1);
-            expected.InRandomize();
-
-            var gradMatrix = actual.Duplicate();
-
-            for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / ((1 - actual[i, j]) * actual[i, j]);
-
-            var cost = new CrossEntropyCost();
-            var calculatedMatrix = cost.Backward(actual, expected);
-            
-            Assert.IsTrue(gradMatrix == calculatedMatrix, "Cross Entropy Cost Derivative successful");
-        }
-
-        [TestMethod]
-        public void ExponentialCostTest()
-        {
-            var rnd = new Random();
-            var tao = rnd.NextDouble() * 10;
-            var error = 0.0;
-            var actual = new Matrix(4, 1);
-            actual.InRandomize();
-            var expected = new Matrix(4, 1);
-            expected.InRandomize();
-
-            for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
-
-            error /= tao;
-            error = Math.Exp(error);
-            error *= tao;
-
-            var cost = new ExponentialCost(tao);
-            var calculatedError = cost.Forward(actual, expected);
-
-            Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Exponential Cost successful");
-        }
-
-        [TestMethod]
-        public void ExponentialCostPrimeTest()
-        {
-            var rnd = new Random();
-            var tao = rnd.NextDouble() * 10;
-            var error = 0.0;
-            var actual = new Matrix(4, 1);
-            actual.InRandomize();
-            var expected = new Matrix(4, 1);
-            expected.InRandomize();
-
-            for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
-
-            error /= tao;
-            error = Math.Exp(error);
-            error *= tao;
-
-            var gradMatrix = actual.Duplicate();
-            for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) * error;
-
-            var cost = new ExponentialCost(tao);
-            var calculatedMatrix = cost.Backward(actual, expected);
-
-            Assert.IsTrue(gradMatrix == calculatedMatrix, "Exponential Cost Derivative successful");
-        }
-
         [TestMethod]
         public void GeneralizedKullbackLeiblerDivergenceTest()
         {

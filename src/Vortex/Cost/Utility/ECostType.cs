@@ -4,12 +4,26 @@ namespace Vortex.Cost.Utility
 {
     public enum ECostType
     {
-        CrossEntropyCost,
-        ExponentionalCost,
-        GeneralizedKullbackLeiblerDivergence,
-        HellingerDistance,
-        ItakuraSaitoDistance,
-        KullbackLeiblerDivergence,
-        QuadraticCost
+        BinaryCrossEntropy,
+        BinaryExponential,
+        BinaryHinge,
+        BinaryHingeSquared,
+        BinaryLogit,
+        CategoricalCorssEntropy,
+        CategoricalKLD,
+        LegacyGeneralizedKullbackLeibler,
+        LegacyHellingerDistance,
+        LegacyItakuraSaitoDistance,
+        LegacyKullbackLeiblerDivergance,
+        LegacyQuadraticCost,
+        RegressionCosineProximity,
+        RegressionHuber,
+        RegressionLogCosh,
+        RegressionMae,
+        RegressionMAPE,
+        RegressionMSE,
+        RegressionMSLE,
+        RegressionPoisson,
+        RegressionQuantile
     }
 }

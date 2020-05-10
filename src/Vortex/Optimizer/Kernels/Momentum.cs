@@ -27,7 +27,13 @@ namespace Vortex.Optimizer.Kernels
             if (dJdX.Cache.Count == 0)
             {
                 dJdX.Cache.Add(dJdX.Fill(0));
+
+                // Iteration T on dJdX
+                dJdX.Cache.Add(Matrix.Zero(1));
             }
+
+            // Iteration T
+            dJdX.Cache[^1][0, 0]++;
 
             dJdX.Cache[0] = Tao * dJdX.Cache[0] + ((1 - Tao) * dJdX);
             return (x - Alpha * dJdX.Cache[0]);

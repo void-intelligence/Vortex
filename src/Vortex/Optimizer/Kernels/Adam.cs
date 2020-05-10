@@ -42,7 +42,7 @@ namespace Vortex.Optimizer.Kernels
             }
 
             // Iteration T
-            T = dJdX.Cache[4][0, 0]++;
+            T = dJdX.Cache[^1][0, 0]++;
 
             // Momentum (VDW)
             dJdX.Cache[0] = Beta1 * dJdX.Cache[0] + ((1 - Beta1) * dJdX);

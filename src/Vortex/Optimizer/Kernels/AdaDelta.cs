@@ -18,6 +18,14 @@ namespace Vortex.Optimizer.Kernels
         
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
+            if (dJdX.Cache.Count == 0)
+            {
+                // Iteration T on dJdX
+                dJdX.Cache.Add(Matrix.Zero(1));
+            }
+
+            // Iteration T
+            dJdX.Cache[^1][0, 0]++;
             return null;
         }
 

@@ -21,7 +21,7 @@ namespace VortexTests
             for (var i = 0; i < 1000; i++)
             {
                 dJdX.InRandomize();
-                var deltas = gd.CalculateDeltaW(x, dJdX);
+                var deltas = gd.CalculateDelta(x, dJdX);
                 x -= deltas;
             }
         }
@@ -38,7 +38,7 @@ namespace VortexTests
             for (var i = 0; i < 1000; i++)
             {
                 dJdX.InRandomize();
-                var deltas = momentum.CalculateDeltaW(x, dJdX);
+                var deltas = momentum.CalculateDelta(x, dJdX);
                 x -= deltas;
             }
         }
@@ -55,7 +55,7 @@ namespace VortexTests
             for (var i = 0; i < 1000; i++)
             {
                 dJdX.InRandomize(2);
-                var deltas = rms.CalculateDeltaW(x, dJdX);
+                var deltas = rms.CalculateDelta(x, dJdX);
                 x -= deltas;
             }
         }

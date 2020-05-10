@@ -32,35 +32,19 @@ namespace Vortex.Optimizer.Kernels
             Epsilon = epsilon;
         }
 
-        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
+        public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
             if (_initw)
             {
                 _initw = false;
-                _sDw = (Alpha * (w.Hadamard(dJdW)));
+                _sDw = (Alpha * (x.Hadamard(dJdX)));
             }
-            _sDw = (Rho * _sDw) + (1 - Rho) * dJdW.Hadamard(dJdW);
+            _sDw = (Rho * _sDw) + (1 - Rho) * dJdX.Hadamard(dJdX);
             Matrix mat = _sDw.Map(Math.Sqrt);
             Matrix epsilonMatrix = mat.Fill(Epsilon);
             mat.InAdd(epsilonMatrix);
             mat.InOneOver();
-            mat.InHadamard(dJdW);
-            return Alpha * mat;
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
-        {
-            if (_initb)
-            {
-                _initb = false;
-                _sDb = (Alpha * (b.Hadamard(dJdB)));
-            }
-            _sDb = (Rho * _sDb) + (1 - Rho) * dJdB.Hadamard(dJdB);
-            Matrix mat = _sDb.Map(Math.Sqrt);
-            Matrix epsilonMatrix = mat.Fill(Epsilon);
-            mat.InAdd(epsilonMatrix);
-            mat.InOneOver();
-            mat.InHadamard(dJdB);
+            mat.InHadamard(dJdX);
             return Alpha * mat;
         }
 

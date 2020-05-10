@@ -16,16 +16,10 @@ namespace Vortex.Optimizer.Kernels
             BetaSecondary = settings.BetaSecondary;
         }
 
-        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
+        public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
             return null;
         }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
-        {
-            return null;
-        }
-
 
         public override EOptimizerType Type() => EOptimizerType.Adamax;
     }

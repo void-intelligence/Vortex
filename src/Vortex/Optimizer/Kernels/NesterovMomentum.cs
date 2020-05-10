@@ -17,12 +17,7 @@ namespace Vortex.Optimizer.Kernels
         {
         }
 
-        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
-        {
-            return null;
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
+        public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
             return null;
         }

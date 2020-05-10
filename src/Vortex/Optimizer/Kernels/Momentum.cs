@@ -22,26 +22,15 @@ namespace Vortex.Optimizer.Kernels
         {
         }
 
-        public override Matrix CalculateDeltaW(Matrix w, Matrix dJdW)
+        public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
-            if (dJdW.Cache.Count == 0)
+            if (dJdX.Cache.Count == 0)
             {
-                dJdW.Cache.Add(dJdW.Fill(0));
+                dJdX.Cache.Add(dJdX.Fill(0));
             }
 
-            dJdW.Cache[0] = Tao * dJdW.Cache[0] + ((1 - Tao) * dJdW);
-            return (w - Alpha * dJdW.Cache[0]);
-        }
-
-        public override Matrix CalculateDeltaB(Matrix b, Matrix dJdB)
-        {
-            if (dJdB.Cache.Count == 0)
-            {
-                dJdB.Cache.Add(dJdB.Fill(0));
-            }
-
-            dJdB.Cache[0] = Tao * dJdB.Cache[0] + ((1 - Tao) * dJdB);
-            return (b - Alpha * dJdB.Cache[0]);
+            dJdX.Cache[0] = Tao * dJdX.Cache[0] + ((1 - Tao) * dJdX);
+            return (x - Alpha * dJdX.Cache[0]);
         }
 
         public override EOptimizerType Type() => EOptimizerType.Momentum;

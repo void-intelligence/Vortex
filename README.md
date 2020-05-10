@@ -58,7 +58,7 @@ using Vortex.Optimizer.Kernels;
 using Vortex.Initializer.Kernels;
 ```
 
-Now that these are done, let us create our first Network within the main function, the architecture we want to desing is going to be a simple dense network with 4 layrs all using tanh activation with weights initiated via normal distribution of numbers between ```-0.5``` and ```0.5```. The network will use ```QuadraticCost``` as the cost function and ```Stochastic Gradient Descent``` as the optimizer function.
+Now that these are done, let us create our first Network within the main function, the architecture we want to desing is going to be a simple dense network with 4 layrs all using tanh activation with weights initiated via normal distribution of numbers between ```-0.5``` and ```0.5```. The network will use ```QuadraticCost``` as the cost function and ```Adam``` as the optimizer function.
 
 ```C#
 // Neural Network using QuadraticCost as the cost funciton and Adam as the

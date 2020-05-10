@@ -58,7 +58,7 @@ namespace VortexTests
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new RmsProp(0.03), 1);
+            var net = new Network(new QuadraticCost(), new Adam(0.03), 1);
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));

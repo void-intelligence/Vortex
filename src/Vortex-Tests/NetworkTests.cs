@@ -51,15 +51,14 @@ namespace VortexTests
             var y = new Matrix(10, 1);
             y.InRandomize();
 
-            network.Forward(x);
-            network.Backward(y);
+            network.Train(x, y);
         }
 
 
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new GradientDescent(0.03));
+            var net = new Network(new QuadraticCost(), new GradientDescent(0.03), 5);
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(25, new Tanh()));
             net.CreateLayer(new FullyConnected(25, new Tanh()));

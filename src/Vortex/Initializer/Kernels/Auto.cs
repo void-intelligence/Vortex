@@ -8,7 +8,7 @@ namespace Vortex.Initializer.Kernels
 {
     public class AutoKernel : BaseInitializerKernel
     {
-        public AutoKernel(LeCunNormal initializer) : base(initializer)
+        public AutoKernel(Auto initializer) : base(initializer)
         {
         }
 

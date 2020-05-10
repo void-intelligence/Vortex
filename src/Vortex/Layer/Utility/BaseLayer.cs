@@ -54,6 +54,7 @@ namespace Vortex.Layer.Utility
             // Initializer Setup
             Initializer = (Settings.InitializerFunction.Type()) switch
             {
+                EInitializerType.Auto => new AutoKernel((Auto)Settings.InitializerFunction),
                 EInitializerType.Const => new ConstKernel((Const)Settings.InitializerFunction),
                 EInitializerType.GlorotNormal => new GlorotNormalKernel((GlorotNormal)Settings.InitializerFunction),
                 EInitializerType.GlorotUniform => new GlorotUniformKernel((GlorotUniform)Settings.InitializerFunction),

@@ -8,5 +8,6 @@ namespace Vortex.Regularization.Utility
         None,
         L1,
         L2,
+        L1L2
     }
 }

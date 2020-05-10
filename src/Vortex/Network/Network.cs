@@ -29,11 +29,14 @@ namespace Vortex.Network
         public bool IsLocked { get; private set; }
         public BaseOptimizerKernel OptimizerFunction { get; }
         public BaseCostKernel CostFunction { get; }
+        public int BatchSize { get; set; }
 
-        public Network(BaseCost costSettings, BaseOptimizer optimizerSettings)
+        public Network(BaseCost costSettings, BaseOptimizer optimizerSettings, int batchSize = 1)
         {
             IsLocked = false;
             Layers = new List<BaseLayerKernel>();
+            BatchSize = batchSize;
+            _currentBatch = 0;
 
             // Cost Function Setup
             CostFunction = costSettings.Type() switch
@@ -116,8 +119,10 @@ namespace Vortex.Network
             }
         }
 
-        private float _regularizationSum;
+        private int _currentBatch;
 
+        private float _regularizationSum;
+        
         private Matrix _actual;
 
         public Matrix Forward(Matrix input)
@@ -136,12 +141,9 @@ namespace Vortex.Network
             return yHat;
         }
 
-        public void Backward(Matrix expected)
+        private void Backward(Matrix expected)
         {
             Y = expected;
-            LastError = (float)CostFunction.Forward(_actual, expected);
-            LastError += _regularizationSum;
-            _regularizationSum = 0;
 
             var da = CostFunction.Backward(_actual, expected);
             da *= LastError;
@@ -153,10 +155,27 @@ namespace Vortex.Network
             foreach (var t in Layers) t.Optimize();
         }
 
-        public void Train(Matrix input, Matrix output)
+        public void Train(Matrix input, Matrix expected)
         {
-            Forward(input);
-            Backward(output);
+            if (_currentBatch < BatchSize)
+            {
+                Forward(input);
+                LastError += (float)CostFunction.Forward(_actual, expected);
+
+                if (_currentBatch == 0)
+                {
+                    LastError += _regularizationSum;
+                }
+                _currentBatch++;
+            }
+            else if(_currentBatch == BatchSize)
+            {
+                Backward(expected);
+                LastError = 0;
+                _currentBatch = 0;
+                _regularizationSum = 0;
+            }
+
         }
     }
 }

@@ -19,24 +19,28 @@ namespace Vortex.Optimizer.Kernels
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
             if (dJdX.Cache.Count == 0)
-            {
-                // Iteration T on dJdX
+            // Iteration T on dJdX
                 dJdX.Cache.Add(Matrix.Zero(1));
-            }
 
             // Iteration T
             dJdX.Cache[^1][0, 0]++;
             return null;
         }
 
-        public override EOptimizerType Type() => EOptimizerType.AdaDelta;
+        public override EOptimizerType Type()
+        {
+            return EOptimizerType.AdaDelta;
+        }
     }
 
     public sealed class AdaDelta : BaseOptimizer
     {
         public double Rho { get; set; }
         public double Epsilon { get; set; }
-        public override EOptimizerType Type() => EOptimizerType.AdaDelta;
+        public override EOptimizerType Type()
+        {
+            return EOptimizerType.AdaDelta;
+        }
 
         public AdaDelta(double rho, double epsilon, double alpha = 0.001) : base(alpha)
         {

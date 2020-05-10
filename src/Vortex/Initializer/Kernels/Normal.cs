@@ -14,13 +14,16 @@ namespace Vortex.Initializer.Kernels
 
         public override Matrix Initialize(Matrix w)
         {
-            Matrix mat = w.Duplicate();
+            var mat = w.Duplicate();
             mat.InRandomize(Min, Max, EDistribution.Gaussian);
             mat *= Scale;
             return mat;
         }
 
-        public override EInitializerType Type() => EInitializerType.Normal;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.Normal;
+        }
     }
 
     public class Normal : BaseInitializer
@@ -29,6 +32,9 @@ namespace Vortex.Initializer.Kernels
         {
         }
 
-        public override EInitializerType Type() => EInitializerType.Normal;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.Normal;
+        }
     }
 }

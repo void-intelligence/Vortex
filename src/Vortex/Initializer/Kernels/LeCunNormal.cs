@@ -22,14 +22,17 @@ namespace Vortex.Initializer.Kernels
         public override Matrix Initialize(Matrix w)
         {
             _h = w.Columns;
-            Matrix mat = w.Duplicate();
+            var mat = w.Duplicate();
             mat.InRandomize(Min, Max, EDistribution.Gaussian);
             mat.InMap(Method);
             mat *= Scale;
             return mat;
         }
 
-        public override EInitializerType Type() => EInitializerType.LeCunNormal;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.LeCunNormal;
+        }
     }
 
     public class LeCunNormal : BaseInitializer
@@ -38,6 +41,9 @@ namespace Vortex.Initializer.Kernels
         {
         }
 
-        public override EInitializerType Type() => EInitializerType.LeCunNormal;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.LeCunNormal;
+        }
     }
 }

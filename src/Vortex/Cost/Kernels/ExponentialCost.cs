@@ -13,22 +13,17 @@ namespace Vortex.Cost.Kernels
     {
         public double Tao { get; set; }
 
-        public ExponentialCostKernel(ExponentionalCost settings) : base(settings)
+        public ExponentialCostKernel(ExponentialCost settings)
         {
             Tao = settings.Tao;
         }
 
         public override double Forward(Matrix actual, Matrix expected)
         {
-            double error = 0.0;
+            var error = 0.0;
             
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    error += Math.Pow((actual[i, j] - expected[i, j]), 2);
-                }
-            }
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
 
             error /= Tao;
 
@@ -43,15 +38,10 @@ namespace Vortex.Cost.Kernels
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            double error = 0.0;
+            var error = 0.0;
 
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    error += Math.Pow((actual[i, j] - expected[i, j]), 2);
-                }
-            }
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
 
             error /= Tao;
 
@@ -59,27 +49,28 @@ namespace Vortex.Cost.Kernels
 
             error *= Tao;
             
-            Matrix gradMatrix = actual.Duplicate();
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    gradMatrix[i, j] = (actual[i, j] - expected[i, j]) * error;
-                }
-            }
+            var gradMatrix = actual.Duplicate();
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) * error;
 
             return gradMatrix;
         }
 
-        public override ECostType Type() => ECostType.ExponentionalCost;
+        public override ECostType Type()
+        {
+            return ECostType.ExponentionalCost;
+        }
     }
 
-    public class ExponentionalCost : BaseCost
+    public class ExponentialCost : BaseCost
     {
         public double Tao { get; set; }
 
-        public ExponentionalCost(double tao) { Tao = tao; }
+        public ExponentialCost(double tao) { Tao = tao; }
 
-        public override ECostType Type() => ECostType.ExponentionalCost;
+        public override ECostType Type()
+        {
+            return ECostType.ExponentionalCost;
+        }
     }
 }

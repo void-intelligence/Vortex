@@ -12,7 +12,7 @@ namespace Vortex.Initializer.Kernels
         private int _denom;
         private double Method(double input)
         {
-            return input * Sqrt(2.0 / (_denom));
+            return input * Sqrt(2.0 / _denom);
         }
 
         public GlorotNormalKernel(GlorotNormal initializer) : base(initializer)
@@ -23,14 +23,17 @@ namespace Vortex.Initializer.Kernels
         {
             _denom = w.Columns + w.Rows;
 
-            Matrix mat = w.Duplicate();
+            var mat = w.Duplicate();
             mat.InRandomize(Min,Max,EDistribution.Gaussian);
             mat.InMap(Method);
             mat *= Scale;
             return mat;
         }
 
-        public override EInitializerType Type() => EInitializerType.GlorotNormal;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.GlorotNormal;
+        }
     }
 
     public class GlorotNormal : BaseInitializer
@@ -39,6 +42,9 @@ namespace Vortex.Initializer.Kernels
         {
         }
 
-        public override EInitializerType Type() => EInitializerType.GlorotNormal;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.GlorotNormal;
+        }
     }
 }

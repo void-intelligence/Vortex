@@ -2,7 +2,6 @@
 
 using Nomad.Matrix;
 using Vortex.Layer.Utility;
-using Vortex.Optimizer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Vortex.Initializer.Utility;
@@ -19,14 +18,14 @@ namespace Vortex.Layer.Kernels
 
         public override Matrix Forward(Matrix inputs)
         {
-            Params["W"].InMap(MutationFunction.Mutate);
+            if (MutationFunction.Type() != EMutationType.NoMutation) Params["W"].InMap(MutationFunction.Mutate);
 
             // Calculate Regularization Value On W and B
             RegularizationValue = (float) RegularizationFunction.CalculateNorm(Params["W"]);
 
             // Calculate Feed Forward Operation
             Params["X"] = inputs;
-            Params["Z"] = (Params["W"] * Params["X"]) + Params["B"];
+            Params["Z"] = Params["W"] * Params["X"] + Params["B"];
             Params["A"] = ActivationFunction.Forward(Params["Z"]);
             return Params["A"];
         }
@@ -41,7 +40,10 @@ namespace Vortex.Layer.Kernels
             return Params["W"].T() * Grads["DZ"];
         }
 
-        public override ELayerType Type() => ELayerType.FullyConnected;
+        public override ELayerType Type()
+        {
+            return ELayerType.FullyConnected;
+        }
     }
 
     public class FullyConnected : BaseLayer
@@ -53,6 +55,9 @@ namespace Vortex.Layer.Kernels
         }
 #nullable disable
 
-        public override ELayerType Type() => ELayerType.FullyConnected;
+        public override ELayerType Type()
+        {
+            return ELayerType.FullyConnected;
+        }
     }
 }

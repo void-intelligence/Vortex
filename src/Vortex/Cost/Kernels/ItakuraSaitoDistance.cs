@@ -11,23 +11,13 @@ namespace Vortex.Cost.Kernels
     /// </summary>
     public class ItakuraSaitoDistanceKernel : BaseCostKernel
     {
-        public ItakuraSaitoDistanceKernel(ItakuraSaitoDistance settings = null) : base(settings) { }
-
         public override double Forward(Matrix actual, Matrix expected)
         {
-            double error = 0.0;
+            var error = 0.0;
 
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    error += (expected[i, j] / actual[i, j]) - Math.Log(expected[i, j] - actual[i, j]) - 1;
-                }
-            }
-            if (double.IsNaN(error))
-            {
-                error = 0;
-            }
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) error += expected[i, j] / actual[i, j] - Math.Log(expected[i, j] - actual[i, j]) - 1;
+            if (double.IsNaN(error)) error = 0;
 
             BatchCost += error;
 
@@ -36,24 +26,25 @@ namespace Vortex.Cost.Kernels
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            Matrix gradMatrix = actual.Duplicate();
+            var gradMatrix = actual.Duplicate();
 
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / Math.Pow(actual[i, j], 2);
-                }
-            }
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / Math.Pow(actual[i, j], 2);
 
             return gradMatrix;
         }
 
-        public override ECostType Type() => ECostType.ItakuraSaitoDistance;
+        public override ECostType Type()
+        {
+            return ECostType.ItakuraSaitoDistance;
+        }
     }
 
     public class ItakuraSaitoDistance : BaseCost
     {
-        public override ECostType Type() => ECostType.ItakuraSaitoDistance;
+        public override ECostType Type()
+        {
+            return ECostType.ItakuraSaitoDistance;
+        }
     }
 }

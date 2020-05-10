@@ -43,7 +43,7 @@ namespace Vortex.Layer.Utility
 
             NeuronCount = Settings.NeuronCount;
 
-            MutationFunction = (Settings.MutationFunction.Type()) switch
+            MutationFunction = Settings.MutationFunction.Type() switch
             {
                 EMutationType.DefaultMutation => new DefaultMutationKernel(),
                 EMutationType.NoMutation => new NoMutationKernel(),
@@ -52,7 +52,7 @@ namespace Vortex.Layer.Utility
             };
 
             // Initializer Setup
-            Initializer = (Settings.InitializerFunction.Type()) switch
+            Initializer = Settings.InitializerFunction.Type() switch
             {
                 EInitializerType.Auto => new AutoKernel((Auto)Settings.InitializerFunction),
                 EInitializerType.Const => new ConstKernel((Const)Settings.InitializerFunction),
@@ -71,7 +71,7 @@ namespace Vortex.Layer.Utility
 
 
             // Activation Setup
-            ActivationFunction = (Settings.ActivationFunction.Type()) switch
+            ActivationFunction = Settings.ActivationFunction.Type() switch
             {
                 EActivationType.Arctan => new ArctanKernel(),
                 EActivationType.BinaryStep => new BinaryStepKernel(),
@@ -93,16 +93,16 @@ namespace Vortex.Layer.Utility
                 EActivationType.Softsign => new SoftsignKernel(),
                 EActivationType.Swish => new SwishKernel(),
                 EActivationType.Tanh => new TanhKernel(),
-                _ => throw new ArgumentException("Activation Type Invalid."),
+                _ => throw new ArgumentException("Activation Type Invalid.")
             };
 
             // Regularization Setup
-            RegularizationFunction = (Settings.RegularizationFunction.Type()) switch
+            RegularizationFunction = Settings.RegularizationFunction.Type() switch
             {
                 ERegularizationType.None => new NoneKernel((None)Settings.RegularizationFunction),
                 ERegularizationType.L1 => new L1Kernel((L1)Settings.RegularizationFunction),
                 ERegularizationType.L2 => new L2Kernel((L2)Settings.RegularizationFunction),
-                _ => throw new ArgumentException("Regularization Type Invalid."),
+                _ => throw new ArgumentException("Regularization Type Invalid.")
             };
         }
 
@@ -115,8 +115,8 @@ namespace Vortex.Layer.Utility
         // All Layer Optimization Calculations
         public virtual void Optimize()
         {
-            Matrix deltaW = OptimizerFunction.CalculateDelta(Params["W"], Grads["DW"]);
-            Matrix deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
+            var deltaW = OptimizerFunction.CalculateDelta(Params["W"], Grads["DW"]);
+            var deltaB = OptimizerFunction.CalculateDelta(Params["B"], Grads["DB"]);
 
             Params["W"] -= deltaW;
             Params["B"] -= deltaB;

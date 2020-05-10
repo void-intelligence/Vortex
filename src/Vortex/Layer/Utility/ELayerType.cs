@@ -4,10 +4,9 @@ namespace Vortex.Layer.Utility
 {
     public enum ELayerType
     {
-        Invalid,
         FullyConnected,
         Dropout,
         Output,
-        Result,
+        Result
     }
 }

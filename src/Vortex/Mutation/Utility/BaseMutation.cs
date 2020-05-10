@@ -6,11 +6,11 @@ namespace Vortex.Mutation.Utility
 {
     public abstract class BaseMutationKernel
     {
-        public Random RNG { get; }
+        public Random Rng { get; }
 
-        public BaseMutationKernel()
+        protected BaseMutationKernel()
         {
-            RNG = new Random();
+            Rng = new Random();
         }
 
         public abstract double Mutate(double value);

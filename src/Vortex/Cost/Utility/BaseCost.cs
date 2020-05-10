@@ -1,8 +1,5 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using System;
-using Vortex.Regularization;
-using Vortex.Regularization.Utility;
 using Nomad.Matrix;
 
 namespace Vortex.Cost.Utility
@@ -14,15 +11,13 @@ namespace Vortex.Cost.Utility
     /// </summary>
     public abstract class BaseCostKernel
     {
-        protected BaseCostKernel(BaseCost settings) { }
-        
+        public double BatchCost { get; protected set; }
+
         public abstract double Forward(Matrix actual, Matrix expected);
 
         public abstract Matrix Backward(Matrix actual, Matrix expected);
 
         public abstract ECostType Type();
-
-        public double BatchCost { get; protected set; }
 
         public virtual void ResetCost() { BatchCost = 0; }
     }

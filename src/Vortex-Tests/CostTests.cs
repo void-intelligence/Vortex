@@ -65,7 +65,7 @@ namespace VortexTests
             error = Math.Exp(error);
             error *= tao;
 
-            var cost = new ExponentialCostKernel(new ExponentionalCost(tao));
+            var cost = new ExponentialCostKernel(new ExponentialCost(tao));
             var calculatedError = cost.Forward(actual, expected);
 
             Assert.IsTrue(Math.Abs(error - calculatedError) < 0.01f, "Exponential Cost successful");
@@ -93,7 +93,7 @@ namespace VortexTests
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) * error;
 
-            var cost = new ExponentialCostKernel(new ExponentionalCost(tao));
+            var cost = new ExponentialCostKernel(new ExponentialCost(tao));
             var calculatedMatrix = cost.Backward(actual, expected);
 
             Assert.IsTrue(gradMatrix == calculatedMatrix, "Exponential Cost Derivative successful");

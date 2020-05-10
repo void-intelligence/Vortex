@@ -12,11 +12,16 @@ namespace Vortex.Regularization.Kernels
     {
         public L2Kernel(L2 settings) : base(settings) { Lambda = settings.Lambda; }
 
-        public override double CalculateNorm(Matrix input) => (input.EuclideanNorm() * Lambda);
+        public override double CalculateNorm(Matrix input)
+        {
+            return input.EuclideanNorm() * Lambda;
+        }
 
-        public override string ToString() => Type().ToString();
 
-        public override ERegularizationType Type() => ERegularizationType.L2;
+        public override ERegularizationType Type()
+        {
+            return ERegularizationType.L2;
+        }
     }
 
     public sealed class L2 : BaseRegularization
@@ -26,7 +31,10 @@ namespace Vortex.Regularization.Kernels
             Lambda = lambda;
         }
 
-        public override ERegularizationType Type() => ERegularizationType.L2;
+        public override ERegularizationType Type()
+        {
+            return ERegularizationType.L2;
+        }
 
         public double Lambda { get; set; }
     }

@@ -4,7 +4,6 @@ using System;
 using Nomad.Matrix;
 using Vortex.Layer.Utility;
 using Vortex.Activation.Kernels;
-using Vortex.Optimizer.Kernels;
 using Vortex.Regularization.Kernels;
 using Vortex.Initializer.Kernels;
 using Vortex.Mutation.Kernels;
@@ -13,7 +12,7 @@ namespace Vortex.Layer.Kernels
 {
     public class ResultKernel : BaseLayerKernel
     {
-        public ResultKernel(Utility.BaseLayer settings)
+        public ResultKernel(BaseLayer settings)
             : base(settings)
         {
         }
@@ -34,7 +33,10 @@ namespace Vortex.Layer.Kernels
         {
         }
 
-        public override ELayerType Type() => ELayerType.Result;
+        public override ELayerType Type()
+        {
+            return ELayerType.Result;
+        }
     }
 
     public class Result : BaseLayer
@@ -44,6 +46,9 @@ namespace Vortex.Layer.Kernels
         {
         }
 
-        public override ELayerType Type() => ELayerType.Result;
+        public override ELayerType Type()
+        {
+            return ELayerType.Result;
+        }
     }
 }

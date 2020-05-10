@@ -4,7 +4,6 @@ namespace Vortex.Optimizer.Utility
 {
     public enum EOptimizerType
     {
-        Invalid,
         AdaDelta,
         AdaGrad,
         Adam,

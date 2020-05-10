@@ -5,6 +5,6 @@ namespace Vortex.Mutation.Utility
     public enum EMutationType
     {
         DefaultMutation,
-        NoMutation,
+        NoMutation
     }
 }

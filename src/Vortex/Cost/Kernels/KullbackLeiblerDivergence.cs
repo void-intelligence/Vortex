@@ -9,21 +9,14 @@ namespace Vortex.Cost.Kernels
     /// <summary>
     /// "Kullback Leibler Divergence" Also known as "Information Divergence", "Information Gain", "Relative entropy", "KLIC", or "KL Divergence".
     /// </summary>
-    public class KullbackLeiblerDivergenceKernel : BaseCostKernel
+    public sealed class KullbackLeiblerDivergenceKernel : BaseCostKernel
     {
-        public KullbackLeiblerDivergenceKernel(KullbackLeiblerDivergence settings = null) : base(settings) { }
-
         public override double Forward(Matrix actual, Matrix expected)
         {
-            double error = 0.0;
+            var error = 0.0;
 
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    error += expected[i, j] * Math.Log(expected[i, j] / actual[i, j]);
-                }
-            }
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) error += expected[i, j] * Math.Log(expected[i, j] / actual[i, j]);
 
             BatchCost += error;
 
@@ -32,24 +25,25 @@ namespace Vortex.Cost.Kernels
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            Matrix gradMatrix = actual.Duplicate();
+            var gradMatrix = actual.Duplicate();
 
-            for (int i = 0; i < actual.Rows; i++)
-            {
-                for (int j = 0; j < actual.Columns; j++)
-                {
-                    gradMatrix[i, j] = -(expected[i, j] / actual[i, j]);
-                }
-            }
+            for (var i = 0; i < actual.Rows; i++)
+            for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = -(expected[i, j] / actual[i, j]);
 
             return gradMatrix;
         }
 
-        public override ECostType Type() => ECostType.KullbackLeiblerDivergence;
+        public override ECostType Type()
+        {
+            return ECostType.KullbackLeiblerDivergence;
+        }
     }
 
     public class KullbackLeiblerDivergence : BaseCost 
     {
-        public override ECostType Type() => ECostType.KullbackLeiblerDivergence;
+        public override ECostType Type()
+        {
+            return ECostType.KullbackLeiblerDivergence;
+        }
     }
 }

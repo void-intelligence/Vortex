@@ -1,6 +1,5 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using System.Runtime.CompilerServices;
 using Nomad.Matrix;
 using Vortex.Optimizer.Utility;
 
@@ -35,17 +34,23 @@ namespace Vortex.Optimizer.Kernels
             // Iteration T
             dJdX.Cache[^1][0, 0]++;
 
-            dJdX.Cache[0] = Tao * dJdX.Cache[0] + ((1 - Tao) * dJdX);
-            return (x - Alpha * dJdX.Cache[0]);
+            dJdX.Cache[0] = Tao * dJdX.Cache[0] + (1 - Tao) * dJdX;
+            return x - Alpha * dJdX.Cache[0];
         }
 
-        public override EOptimizerType Type() => EOptimizerType.Momentum;
+        public override EOptimizerType Type()
+        {
+            return EOptimizerType.Momentum;
+        }
     }
 
-    public sealed class Momentum : Utility.BaseOptimizer
+    public sealed class Momentum : BaseOptimizer
     {
         public double Tao { get; set; }
-        public override EOptimizerType Type() => EOptimizerType.Momentum;
+        public override EOptimizerType Type()
+        {
+            return EOptimizerType.Momentum;
+        }
 
         public Momentum(double alpha = 0.01, double tao = 0.9) : base(alpha)
         {

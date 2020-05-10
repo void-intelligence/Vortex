@@ -9,15 +9,22 @@ namespace Vortex.Regularization.Kernels
     {
         public NoneKernel(None settings = null) : base(settings) { }
 
-        public override double CalculateNorm(Matrix input) => 0;
+        public override double CalculateNorm(Matrix input)
+        {
+            return 0;
+        }
 
-        public override string ToString() => Type().ToString();
-
-        public override ERegularizationType Type() => ERegularizationType.None;
+        public override ERegularizationType Type()
+        {
+            return ERegularizationType.None;
+        }
     }
 
     public sealed class None : BaseRegularization
     {
-        public override ERegularizationType Type() => ERegularizationType.None;
+        public override ERegularizationType Type()
+        {
+            return ERegularizationType.None;
+        }
     }
 }

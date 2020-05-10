@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 
 using Nomad.Matrix;
-using Nomad.Utility;
-
 using Vortex.Cost.Kernels;
 using Vortex.Cost.Utility;
 
@@ -12,12 +10,7 @@ using Vortex.Layer.Utility;
 
 using Vortex.Optimizer.Kernels;
 using Vortex.Optimizer.Utility;
-
-using Vortex.Initializer.Kernels;
 using Vortex.Initializer.Utility;
-using Vortex.Activation.Utility;
-using Vortex.Regularization.Utility;
-using Vortex.Mutation.Utility;
 
 namespace Vortex.Network
 {
@@ -31,7 +24,7 @@ namespace Vortex.Network
         public BaseCostKernel CostFunction { get; }
         public int BatchSize { get; set; }
 
-        public Network(BaseCost costSettings, BaseOptimizer optimizerSettings, int batchSize = 1)
+        public Network(BaseCost cost, BaseOptimizer optimizer, int batchSize = 1)
         {
             IsLocked = false;
             Layers = new List<BaseLayerKernel>();
@@ -39,30 +32,30 @@ namespace Vortex.Network
             _currentBatch = 0;
 
             // Cost Function Setup
-            CostFunction = costSettings.Type() switch
+            CostFunction = cost.Type() switch
             {
-                ECostType.CrossEntropyCost => new CrossEntropyCostKernel((CrossEntropyCost)costSettings),
-                ECostType.ExponentionalCost => new ExponentialCostKernel((ExponentionalCost)costSettings),
-                ECostType.GeneralizedKullbackLeiblerDivergence => new GeneralizedKullbackLeiblerDivergenceKernel((GeneralizedKullbackLeiblerDivergence)costSettings),
-                ECostType.HellingerDistance => new HellingerDistanceKernel((HellingerDistance)costSettings),
-                ECostType.ItakuraSaitoDistance => new ItakuraSaitoDistanceKernel((ItakuraSaitoDistance)costSettings),
-                ECostType.KullbackLeiblerDivergence => new KullbackLeiblerDivergenceKernel((KullbackLeiblerDivergence)costSettings),
-                ECostType.QuadraticCost => new QuadraticCostKernel((QuadraticCost)costSettings),
+                ECostType.CrossEntropyCost => new CrossEntropyCostKernel(),
+                ECostType.ExponentionalCost => new ExponentialCostKernel((ExponentialCost)cost),
+                ECostType.GeneralizedKullbackLeiblerDivergence => new GeneralizedKullbackLeiblerDivergenceKernel(),
+                ECostType.HellingerDistance => new HellingerDistanceKernel(),
+                ECostType.ItakuraSaitoDistance => new ItakuraSaitoDistanceKernel(),
+                ECostType.KullbackLeiblerDivergence => new KullbackLeiblerDivergenceKernel(),
+                ECostType.QuadraticCost => new QuadraticCostKernel(),
                 _ => throw new ArgumentException("Cost Type Invalid.")
             };
 
             // Optimizer Function Setup
-            OptimizerFunction = optimizerSettings.Type() switch
+            OptimizerFunction = optimizer.Type() switch
             {
-                EOptimizerType.AdaDelta => new AdaDeltaKernel((AdaDelta)optimizerSettings),
-                EOptimizerType.AdaGrad => new AdaGradKernel((AdaGrad)optimizerSettings),
-                EOptimizerType.Adam => new AdamKernel((Adam)optimizerSettings),
-                EOptimizerType.Adamax => new AdamaxKernel((Adamax)optimizerSettings),
-                EOptimizerType.GradientDescent => new GradientDescentKernel((GradientDescent)optimizerSettings),
-                EOptimizerType.Momentum => new MomentumKernel((Momentum)optimizerSettings),
-                EOptimizerType.Nadam => new NadamKernel((Nadam)optimizerSettings),
-                EOptimizerType.NesterovMomentum => new NesterovMomentumKernel((NesterovMomentum)optimizerSettings),
-                EOptimizerType.RmsProp => new RmsPropKernel((RmsProp)optimizerSettings),
+                EOptimizerType.AdaDelta => new AdaDeltaKernel((AdaDelta)optimizer),
+                EOptimizerType.AdaGrad => new AdaGradKernel((AdaGrad)optimizer),
+                EOptimizerType.Adam => new AdamKernel((Adam)optimizer),
+                EOptimizerType.Adamax => new AdamaxKernel((Adamax)optimizer),
+                EOptimizerType.GradientDescent => new GradientDescentKernel((GradientDescent)optimizer),
+                EOptimizerType.Momentum => new MomentumKernel((Momentum)optimizer),
+                EOptimizerType.Nadam => new NadamKernel((Nadam)optimizer),
+                EOptimizerType.NesterovMomentum => new NesterovMomentumKernel((NesterovMomentum)optimizer),
+                EOptimizerType.RmsProp => new RmsPropKernel((RmsProp)optimizer),
                 _ => throw new ArgumentException("Optimizer Type Invalid.")
             };
         }

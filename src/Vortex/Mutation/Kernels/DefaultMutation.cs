@@ -8,7 +8,7 @@ namespace Vortex.Mutation.Kernels
     {
         public override double Mutate(double value)
         {
-            var randomNumber = RNG.Next(0, 100);
+            var randomNumber = Rng.Next(0, 100);
 
             if (randomNumber <= 2f)
             {
@@ -20,30 +20,36 @@ namespace Vortex.Mutation.Kernels
             {
                 //if 2
                 // random value between -1 and 1
-                value = ((float)RNG.NextDouble() - 0.5) * 2;
+                value = ((float)Rng.NextDouble() - 0.5) * 2;
             }
             else if (randomNumber <= 6f)
             {
                 //if 3
                 //randomly increase by 0% to 100%
-                var factor = (float)RNG.NextDouble() + 1f;
+                var factor = (float)Rng.NextDouble() + 1f;
                 value *= factor;
             }
             else if (randomNumber <= 8f)
             {
                 //if 4
                 //randomly decrease by 0% to 100%
-                var factor = (float)RNG.NextDouble();
+                var factor = (float)Rng.NextDouble();
                 value *= factor;
             }
             return value;
         }
 
-        public override EMutationType Type() => EMutationType.DefaultMutation;
+        public override EMutationType Type()
+        {
+            return EMutationType.DefaultMutation;
+        }
     }
 
     public sealed class DefaultMutation : BaseMutation
     {
-        public override EMutationType Type() => EMutationType.DefaultMutation;
+        public override EMutationType Type()
+        {
+            return EMutationType.DefaultMutation;
+        }
     }
 }

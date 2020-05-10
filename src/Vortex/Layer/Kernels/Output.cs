@@ -2,7 +2,6 @@
 
 using Nomad.Matrix;
 using Vortex.Layer.Utility;
-using Vortex.Optimizer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Vortex.Initializer.Utility;
@@ -19,7 +18,7 @@ namespace Vortex.Layer.Kernels
 
         public override Matrix Forward(Matrix inputs)
         {
-            Params["W"].InMap(MutationFunction.Mutate);
+            if (MutationFunction.Type() != EMutationType.NoMutation) Params["W"].InMap(MutationFunction.Mutate);
 
             // Calculate Regularization Value On W and B
             RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]);
@@ -36,12 +35,15 @@ namespace Vortex.Layer.Kernels
             Grads["DA"] = error;
             Grads["G'"] = ActivationFunction.Backward(Params["Z"]);
             Grads["DZ"] = Grads["DA"].Hadamard(Grads["G'"]);
-            Grads["DW"] = (Grads["DZ"] * Params["X"].T());
+            Grads["DW"] = Grads["DZ"] * Params["X"].T();
             Grads["DB"] = Grads["DZ"];
             return Grads["DZ"];
         }
 
-        public override ELayerType Type() => ELayerType.Output;
+        public override ELayerType Type()
+        {
+            return ELayerType.Output;
+        }
     }
 
     public class Output: BaseLayer
@@ -53,6 +55,9 @@ namespace Vortex.Layer.Kernels
         }
 #nullable disable
 
-        public override ELayerType Type() => ELayerType.Output;
+        public override ELayerType Type()
+        {
+            return ELayerType.Output;
+        }
     }
 }

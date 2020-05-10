@@ -13,7 +13,7 @@ namespace VortexTests
         [TestMethod]
         public void L1Test()
         {
-            var lambda = 2.0;
+            const double lambda = 2.0;
             var reg = new L1Kernel(new L1(lambda));
             var mat = new Matrix(10, 10);
             mat.InRandomize();
@@ -24,7 +24,7 @@ namespace VortexTests
         [TestMethod]
         public void L2Test()
         {
-            var lambda = 2.0;
+            const double lambda = 2.0;
             var reg = new L2Kernel(new L2(lambda));
             var mat = new Matrix(10, 10);
             mat.InRandomize();

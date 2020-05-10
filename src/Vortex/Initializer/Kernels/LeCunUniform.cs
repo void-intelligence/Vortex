@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
-using Nomad.Utility;
 using Vortex.Initializer.Utility;
 using static System.Math;
 
@@ -15,13 +14,16 @@ namespace Vortex.Initializer.Kernels
 
         public override Matrix Initialize(Matrix w)
         {
-            Matrix mat = w.Duplicate();
-            mat.InRandomize(Sqrt(3.0 / (w.Columns)));
+            var mat = w.Duplicate();
+            mat.InRandomize(Sqrt(3.0 / w.Columns));
             mat *= Scale;
             return mat;
         }
 
-        public override EInitializerType Type() => EInitializerType.LeCunUniform;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.LeCunUniform;
+        }
     }
 
     public class LeCunUniform : BaseInitializer
@@ -30,6 +32,9 @@ namespace Vortex.Initializer.Kernels
         {
         }
 
-        public override EInitializerType Type() => EInitializerType.LeCunUniform;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.LeCunUniform;
+        }
     }
 }

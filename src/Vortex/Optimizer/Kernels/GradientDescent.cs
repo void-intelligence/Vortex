@@ -18,23 +18,27 @@ namespace Vortex.Optimizer.Kernels
         public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
         {
             if (dJdX.Cache.Count == 0)
-            {
-                // Iteration T on dJdX
+            // Iteration T on dJdX
                 dJdX.Cache.Add(Matrix.Zero(1));
-            }
 
             // Iteration T
             dJdX.Cache[^1][0, 0]++;
 
-            return (Alpha * (x.Hadamard(dJdX)));
+            return Alpha * x.Hadamard(dJdX);
         }
 
-        public override EOptimizerType Type() => EOptimizerType.GradientDescent;
+        public override EOptimizerType Type()
+        {
+            return EOptimizerType.GradientDescent;
+        }
     }
 
-    public sealed class GradientDescent : Utility.BaseOptimizer
+    public sealed class GradientDescent : BaseOptimizer
     {
-        public override EOptimizerType Type() => EOptimizerType.GradientDescent;
+        public override EOptimizerType Type()
+        {
+            return EOptimizerType.GradientDescent;
+        }
 
         public GradientDescent(double alpha = 0.001) : base(alpha)
         {

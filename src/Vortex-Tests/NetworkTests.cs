@@ -8,11 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
 using Vortex.Network;
 using Vortex.Activation.Kernels;
-using Vortex.Regularization.Kernels;
 using Vortex.Cost.Kernels;
 using Vortex.Optimizer.Kernels;
-using Vortex.Initializer.Kernels;
-using Vortex.Mutation.Kernels;
 using Vortex.Layer.Kernels;
 
 namespace VortexTests
@@ -58,7 +55,7 @@ namespace VortexTests
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new Adam(0.03), 1);
+            var net = new Network(new QuadraticCost(), new Adam(0.03));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
@@ -70,41 +67,38 @@ namespace VortexTests
             var outputs = new List<Matrix>();
 
             // 0 0 0    => 0
-            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 0.0 }, { 0.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 0.0 } }));
+            inputs.Add(new Matrix(new[,] { { 0.0 }, { 0.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new[,] { { 0.0 } }));
 
             // 0 0 1    => 1
-            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 0.0 }, { 1.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
+            inputs.Add(new Matrix(new[,] { { 0.0 }, { 0.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
             // 0 1 0    => 1
-            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 1.0 }, { 0.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
+            inputs.Add(new Matrix(new[,] { { 0.0 }, { 1.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
             // 0 1 1    => 0
-            inputs.Add(new Matrix(new double[,] { { 0.0 }, { 1.0 }, { 1.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
+            inputs.Add(new Matrix(new[,] { { 0.0 }, { 1.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
             // 1 0 0    => 1
-            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 0.0 }, { 0.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
+            inputs.Add(new Matrix(new[,] { { 1.0 }, { 0.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
             // 1 0 1    => 0
-            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 0.0 }, { 1.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 0.0 } }));
+            inputs.Add(new Matrix(new[,] { { 1.0 }, { 0.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new[,] { { 0.0 } }));
 
             // 1 1 0    => 0
-            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 0.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 0.0 } }));
+            inputs.Add(new Matrix(new[,] { { 1.0 }, { 1.0 }, { 0.0 } }));
+            outputs.Add(new Matrix(new[,] { { 0.0 } }));
 
             // 1 1 1    => 1
-            inputs.Add(new Matrix(new double[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
-            outputs.Add(new Matrix(new double[,] { { 1.0 } }));
+            inputs.Add(new Matrix(new[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
+            outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
-            for (var i = 0; i < 8; i++)
-            {
-                net.Train(inputs[i % 8], outputs[i % 8]);
-            }
+            for (var i = 0; i < 8; i++) net.Train(inputs[i % 8], outputs[i % 8]);
 
             var correct = 0;
             for (var i = 0; i < 10; i++)

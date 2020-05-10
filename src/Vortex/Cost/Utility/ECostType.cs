@@ -4,7 +4,6 @@ namespace Vortex.Cost.Utility
 {
     public enum ECostType
     {
-        Invalid,
         CrossEntropyCost,
         ExponentionalCost,
         GeneralizedKullbackLeiblerDivergence,

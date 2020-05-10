@@ -1,6 +1,5 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using System;
 using Nomad.Matrix;
 using Vortex.Initializer.Utility;
 
@@ -17,13 +16,16 @@ namespace Vortex.Initializer.Kernels
 
         public override Matrix Initialize(Matrix w)
         {
-            Matrix mat = w.Duplicate();
+            var mat = w.Duplicate();
             mat.InFill(Value);
             mat *= Scale;
             return mat;
         }
 
-        public override EInitializerType Type() => EInitializerType.Const;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.Const;
+        }
     }
 
     public sealed class Const : BaseInitializer
@@ -35,6 +37,9 @@ namespace Vortex.Initializer.Kernels
             Value = value;
         }
 
-        public override EInitializerType Type() => EInitializerType.Const;
+        public override EInitializerType Type()
+        {
+            return EInitializerType.Const;
+        }
     }
 }

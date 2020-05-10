@@ -2,7 +2,6 @@
 
 using Nomad.Matrix;
 using Vortex.Layer.Utility;
-using Vortex.Optimizer.Utility;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Vortex.Initializer.Utility;
@@ -22,7 +21,7 @@ namespace Vortex.Layer.Kernels
 
         public override Matrix Forward(Matrix inputs)
         {
-            Params["W"].InMap(MutationFunction.Mutate);
+            if (MutationFunction.Type() != EMutationType.NoMutation) Params["W"].InMap(MutationFunction.Mutate);
 
             // Calculate Regularization Value On W and B
             RegularizationValue = (float) RegularizationFunction.CalculateNorm(Params["W"]);
@@ -47,7 +46,10 @@ namespace Vortex.Layer.Kernels
             return Params["W"].T() * Grads["DZ"];
         }
 
-        public override ELayerType Type() => ELayerType.Dropout;
+        public override ELayerType Type()
+        {
+            return ELayerType.Dropout;
+        }
     }
 
     public class Dropout : BaseLayer
@@ -62,6 +64,9 @@ namespace Vortex.Layer.Kernels
         }
 #nullable disable
 
-        public override ELayerType Type() => ELayerType.Dropout;
+        public override ELayerType Type()
+        {
+            return ELayerType.Dropout;
+        }
     }
 }

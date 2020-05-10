@@ -11,11 +11,17 @@ namespace Vortex.Mutation.Kernels
             return value;
         }
 
-        public override EMutationType Type() => EMutationType.NoMutation;
+        public override EMutationType Type()
+        {
+            return EMutationType.NoMutation;
+        }
     }
 
     public sealed class NoMutation : BaseMutation
     {
-        public override EMutationType Type() => EMutationType.NoMutation;
+        public override EMutationType Type()
+        {
+            return EMutationType.NoMutation;
+        }
     }
 }

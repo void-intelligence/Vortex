@@ -46,7 +46,7 @@ namespace Vortex.Layer.Utility
             RegularizationFunction = regularization ?? new None();
             InitializerFunction = initializer ?? new Auto();
             MutationFunction = mutation ?? new NoMutation();
-            OptimizerFunction = optimizer ?? new GradientDescent();
+            OptimizerFunction = optimizer ?? new DefaultOptimizer();
 
             Params = new Dictionary<string, Matrix>();
             Grads = new Dictionary<string, Matrix>();

@@ -11,7 +11,7 @@ namespace Vortex.Cost.Utility
     /// </summary>
     public abstract class BaseCost
     {
-        public double BatchCost { get; protected set; }
+        public double BatchCost { get; set; }
 
         public abstract double Forward(Matrix actual, Matrix expected);
 

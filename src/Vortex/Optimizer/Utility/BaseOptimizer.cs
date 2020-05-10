@@ -18,6 +18,13 @@ namespace Vortex.Optimizer.Utility
             Decay = decay ?? new None();
         }
 #nullable disable
+
+        public void ApplyDecay()
+        {
+            Decay.IncrementEpoch();
+            Alpha = Decay.CalculateAlpha(Alpha);
+        }
+
         public abstract Matrix CalculateDelta(Matrix x, Matrix dJdX);
         public abstract EOptimizerType Type();
     }

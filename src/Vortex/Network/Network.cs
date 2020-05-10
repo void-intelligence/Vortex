@@ -1,22 +1,23 @@
-﻿using System;
+﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
+
+using System;
 using System.Collections.Generic;
 
 using Nomad.Matrix;
-using Vortex.Cost.Kernels;
 using Vortex.Cost.Utility;
 
 using Vortex.Layer.Kernels;
 using Vortex.Layer.Utility;
-
-using Vortex.Optimizer.Kernels;
 using Vortex.Optimizer.Utility;
 using Vortex.Initializer.Utility;
+using Vortex.Optimizer.Kernels;
 
 namespace Vortex.Network
 {
     public class Network
     {
-        public float LastError { get; private set; }
+        public double BatchError { get; set; }
+        public double LastError { get; private set; }
         public Matrix Y { get; private set; }
         public List<BaseLayer> Layers { get; }
         public bool IsLocked { get; private set; }
@@ -26,20 +27,23 @@ namespace Vortex.Network
 
         public Network(BaseCost cost, BaseOptimizer optimizer, int batchSize = 1)
         {
+            // If Optimizer is set to default use Adam
+            OptimizerFunction = optimizer.Type() == EOptimizerType.Default ? new Adam(optimizer.Alpha, optimizer.Decay) : optimizer;
+
             IsLocked = false;
             Layers = new List<BaseLayer>();
             BatchSize = batchSize;
             _currentBatch = 0;
 
             CostFunction  = cost;
-            OptimizerFunction = optimizer;
         }
 
         public void CreateLayer(BaseLayer layer)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 
-            layer.OptimizerFunction = OptimizerFunction;
+            if (layer.OptimizerFunction.Type() == EOptimizerType.Default) layer.OptimizerFunction = OptimizerFunction;
+
             Layers.Add(layer);
         }
 
@@ -59,7 +63,7 @@ namespace Vortex.Network
                 
                 if (i == 0 && Layers[i].InitializerFunction.Type() == EInitializerType.Auto)
                 {
-                    Layers[i].InitializerFunction.Scale *= Math.Sqrt(2.0 / (Layers[i].NeuronCount));
+                    Layers[i].InitializerFunction.Scale *= Math.Sqrt(2.0 / Layers[i].NeuronCount);
                     Layers[i].Params["W"] = Layers[i].InitializerFunction.Initialize(Layers[i].Params["W"]);
                 }
                 else if (i != 0 && Layers[i].InitializerFunction.Type() == EInitializerType.Auto)
@@ -100,12 +104,17 @@ namespace Vortex.Network
             return yHat;
         }
 
+        private void ResetBatchError()
+        {
+            CostFunction.BatchCost = 0;
+        }
+
         private void Backward(Matrix expected)
         {
             Y = expected;
 
             var da = CostFunction.Backward(_actual, expected);
-            da *= LastError;
+            da *= BatchError + _regularizationSum;
 
             // Calculate da for all layers
             for (var i = Layers.Count - 2; i >= 0; i--) da = Layers[i].Backward(da);
@@ -119,20 +128,21 @@ namespace Vortex.Network
             if (_currentBatch < BatchSize)
             {
                 Forward(input);
-                LastError += (float)CostFunction.Forward(_actual, expected);
+                
+                LastError = (float)CostFunction.Forward(_actual, expected);
+                LastError += _regularizationSum;
+                _regularizationSum = 0;
 
-                if (_currentBatch == 0)
-                {
-                    LastError += _regularizationSum;
-                }
                 _currentBatch++;
             }
             else if(_currentBatch == BatchSize)
             {
+                // Weight Decay
+                foreach (var t in Layers) t.OptimizerFunction.ApplyDecay();
+
                 Backward(expected);
-                LastError = 0;
-                _currentBatch = 0;
-                _regularizationSum = 0;
+                BatchError = CostFunction.BatchCost;
+                ResetBatchError();
             }
 
         }

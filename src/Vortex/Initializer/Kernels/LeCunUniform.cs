@@ -1,4 +1,6 @@
-﻿using Nomad.Matrix;
+﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
+
+using Nomad.Matrix;
 using Nomad.Utility;
 using Vortex.Initializer.Utility;
 using static System.Math;

@@ -11,12 +11,13 @@ namespace Vortex.Optimizer.Kernels
     {
         public double Beta1 { get; set; }
         public double Beta2 { get; set; }
-        public double T { get; set; }
+        public double T { get; private set; }
         public double Epsilon { get; set; }
 
 #nullable enable
         public Adam(double alpha = 0.01, BaseDecay? decay = null, double beta1 = 0.9, double beta2 = 0.999, double epsilon = 0.00001) : base(alpha, decay)
         {
+            T = 0;
             Beta1 = beta1;
             Beta2 = beta2;
             Epsilon = epsilon;
@@ -45,7 +46,7 @@ namespace Vortex.Optimizer.Kernels
             T = dJdX.Cache[^1][0, 0]++;
 
             // Momentum (VDW)
-            dJdX.Cache[0] = Beta1 * dJdX.Cache[0] + (1 - Beta1) * dJdX;
+            dJdX.Cache[0] = Beta1 * dJdX.Cache[0] + (1.0 - Beta1) * dJdX;
 
             // Momentum Corrected (VDW C)
             var tt1 = Math.Pow(1.0 - Beta1, T);

@@ -17,45 +17,11 @@ namespace VortexTests
     [TestClass]
     public class VortexNetwork
     {
-        [TestMethod]
-        public void SequentualForwardTest()
-        {
-            var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
-            network.CreateLayer(new FullyConnected(10, new Sigmoid()));
-            network.CreateLayer(new Output(10, new Sigmoid()));
-            network.InitNetwork();
-
-            var x = new Matrix(10, 1);
-            x.InFlatten();
-
-            var y = new Matrix(10, 1);
-            y.InRandomize();
-
-            network.Forward(x);
-        }
-
-        [TestMethod]
-        public void SequentualBackwardTest()
-        {
-            var network = new Network(new CrossEntropyCost(), new GradientDescent(0.1));
-            network.CreateLayer(new FullyConnected(10, new Sigmoid()));
-            network.CreateLayer(new Output(10, new Sigmoid()));
-            network.InitNetwork();
-
-            var x = new Matrix(10, 1);
-            x.InFlatten();
-
-            var y = new Matrix(10, 1);
-            y.InRandomize();
-
-            network.Train(x, y);
-        }
-
 
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new Adam(0.03));
+            var net = new Network(new QuadraticCost(), new NesterovMomentum(0.03));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));

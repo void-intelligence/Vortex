@@ -36,7 +36,6 @@ namespace Vortex.Optimizer.Kernels
             dJdX.Cache[0] = Rho * dJdX.Cache[0] + (1.0 - Rho) * dJdX.Hadamard(dJdX);
             var oneover = (dJdX.Cache[0].Map(Math.Sqrt) + dJdX.Cache[0].Fill(Epsilon)).OneOver();
             return x - Alpha * dJdX.Hadamard(oneover);
-
         }
 
         public override EOptimizerType Type()

@@ -17,7 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="VI-Nomad" Version="1.3.0" />
+    <PackageReference Include="VI-Nomad" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>

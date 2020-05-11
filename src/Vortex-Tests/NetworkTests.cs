@@ -21,7 +21,7 @@ namespace VortexTests
         [TestMethod]
         public void XorTest()
         {
-            var net = new Network(new QuadraticCost(), new NesterovMomentum(0.03));
+            var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));

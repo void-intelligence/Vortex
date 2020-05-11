@@ -14,7 +14,7 @@ using Vortex.Optimizer.Kernels;
 
 namespace Vortex.Network
 {
-    public class Network
+    public class Sequential
     {
         public double BatchError { get; set; }
         public double LastError { get; private set; }
@@ -25,7 +25,7 @@ namespace Vortex.Network
         public BaseCost CostFunction { get; }
         public int BatchSize { get; set; }
 
-        public Network(BaseCost cost, BaseOptimizer optimizer, int batchSize = 1)
+        public Sequential(BaseCost cost, BaseOptimizer optimizer, int batchSize = 1)
         {
             // If Optimizer is set to default use Adam
             OptimizerFunction = optimizer.Type() == EOptimizerType.Default ? new Adam(optimizer.Alpha, optimizer.Decay) : optimizer;

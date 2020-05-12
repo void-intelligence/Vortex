@@ -63,7 +63,7 @@ namespace VortexTests
             inputs.Add(new Matrix(new[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
             outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
-            for (var i = 0; i < 8; i++) net.Train(inputs[i % 8], outputs[i % 8]);
+            for (var i = 0; i < 16; i++) net.Train(inputs[i % 8], outputs[i % 8]);
 
             var correct = 0;
             for (var i = 0; i < 10; i++)

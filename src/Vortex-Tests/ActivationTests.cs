@@ -334,22 +334,17 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
 
-            var res = b.Duplicate();
             var sumExp = 0.0;
 
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) sumExp += Math.Exp(b[i, j]);
+            for (var i = 0; i < b.Rows; i++)
+            for (var j = 0; j < b.Columns; j++) sumExp += Math.Exp(a[i, j]);
 
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) res[i, j] = Math.Exp(b[i, j]) / sumExp;
-
-            b = res;
-
+            for (var i = 0; i < b.Rows; i++)
+            for (var j = 0; j < b.Columns; j++)
+                b[i, j] = Math.Exp(a[i, j]) / sumExp * (1.0 - Math.Exp(a[i, j]) / sumExp);
+            
             var s = new Softmax();
-            a = s.Forward(a);
             a = s.Backward(a);
-
-            b.InMap((x) => Math.Exp(x) / sumExp * (1 - Math.Exp(x) / sumExp));
 
             Assert.IsTrue(a == b, "Softmax Derivative successful");
         }

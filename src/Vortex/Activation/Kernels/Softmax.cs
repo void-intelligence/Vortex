@@ -26,13 +26,22 @@ namespace Vortex.Activation.Kernels
             for (var i = 0; i < res.Rows; i++)
             for (var j = 0; j < res.Columns; j++) res[i, j] = Exp(input[i, j]) / SumExp;
 
-
             return res;
         }
 
         public override Matrix Backward(Matrix input)
         {
-            return input.Map(Derivative);
+            var res = input.Duplicate();
+            SumExp = 0.0;
+
+            for (var i = 0; i < res.Rows; i++)
+            for (var j = 0; j < res.Columns; j++) SumExp += Exp(input[i, j]);
+
+            for (var i = 0; i < res.Rows; i++)
+            for (var j = 0; j < res.Columns; j++)
+                res[i, j] = Exp(input[i, j]) / SumExp * (1.0 - Exp(input[i, j]) / SumExp);
+
+            return res;
         }
 
         protected override double Activate(double input)
@@ -42,7 +51,7 @@ namespace Vortex.Activation.Kernels
 
         protected override double Derivative(double input)
         {
-            return Exp(input) / SumExp * (1 - Exp(input) / SumExp);
+            return 0;
         }
 
         public override EActivationType Type()

@@ -1,5 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
+using System;
 using Nomad.Matrix;
 using Vortex.Activation.Utility;
 using static System.Math;
@@ -44,14 +45,14 @@ namespace Vortex.Activation.Kernels
             return res;
         }
 
-        protected override double Activate(double input)
+        public override double Activate(double input)
         {
-            return 0;
+            throw new InvalidOperationException("Cannot operate softmax on a single value!");
         }
 
-        protected override double Derivative(double input)
+        public override double Derivative(double input)
         {
-            return 0;
+            throw new InvalidOperationException("Cannot operate softmax derivative on a single value!");
         }
 
         public override EActivationType Type()

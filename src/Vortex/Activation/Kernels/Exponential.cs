@@ -12,9 +12,9 @@ namespace Vortex.Activation.Kernels
 
         public override Matrix Backward(Matrix input) => input.Map(Derivative);
 
-        protected override double Activate(double input) => Exp(input);
+        public override double Activate(double input) => Exp(input);
 
-        protected override double Derivative(double input) => Exp(input);
+        public override double Derivative(double input) => Exp(input);
 
         public override EActivationType Type() => EActivationType.Exponential;
     }

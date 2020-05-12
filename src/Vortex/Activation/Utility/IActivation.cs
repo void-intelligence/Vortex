@@ -10,9 +10,9 @@ namespace Vortex.Activation.Utility
 
         public Matrix Backward(Matrix input);
 
-        protected double Activate(double input);
+        public double Activate(double input);
 
-        protected double Derivative(double input);
+        public double Derivative(double input);
 
         public EActivationType Type();
     }

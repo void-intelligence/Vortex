@@ -18,12 +18,12 @@ namespace Vortex.Activation.Kernels
             return input.Map(Derivative);
         }
 
-        protected override double Activate(double input)
+        public override double Activate(double input)
         {
             return (Exp(input) - Exp(-input)) / (Exp(input) + Exp(-input));
         }
 
-        protected override double Derivative(double input)
+        public override double Derivative(double input)
         {
             return 1 - Pow((Exp(input) - Exp(-input)) / (Exp(input) + Exp(-input)), 2);
         }

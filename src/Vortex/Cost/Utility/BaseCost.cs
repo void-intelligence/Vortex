@@ -1,6 +1,7 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Nomad.Matrix;
+using Vortex.Metrics.Utility;
 
 namespace Vortex.Cost.Utility
 {
@@ -9,9 +10,11 @@ namespace Vortex.Cost.Utility
     /// It also may depend on variables such as weights and biases.
     /// A cost function is a single value, not a vector, because it rates how good the neural network did as a whole.
     /// </summary>
-    public abstract class BaseCost
+    public abstract class BaseCost : IMetrics, ICost
     {
         public double BatchCost { get; set; }
+
+        public abstract double Evaluate(Matrix actual, Matrix expected);
 
         public abstract double Forward(Matrix actual, Matrix expected);
 

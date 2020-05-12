@@ -8,6 +8,11 @@ namespace Vortex.Cost.Kernels.Regression
 {
     public class MSE : BaseCost
     {
+        public override double Evaluate(Matrix actual, Matrix expected)
+        {
+            return Forward(actual, expected);
+        }
+
         public override double Forward(Matrix actual, Matrix expected)
         {
             var error = 0.0;

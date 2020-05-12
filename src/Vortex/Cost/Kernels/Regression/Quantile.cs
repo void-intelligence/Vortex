@@ -8,6 +8,11 @@ namespace Vortex.Cost.Kernels.Regression
 {
     public class Quantile : BaseCost
     {
+        public override double Evaluate(Matrix actual, Matrix expected)
+        {
+            return Forward(actual, expected);
+        }
+
         public double Tau { get; set; }
 
         public Quantile(double tau = 2.0 * Math.PI)

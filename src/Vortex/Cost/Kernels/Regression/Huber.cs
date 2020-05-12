@@ -15,6 +15,11 @@ namespace Vortex.Cost.Kernels.Regression
             Margin = margin;
         }
 
+        public override double Evaluate(Matrix actual, Matrix expected)
+        {
+            return Forward(actual, expected);
+        }
+
         public override double Forward(Matrix actual, Matrix expected)
         {
             var error = 0.0;

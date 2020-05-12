@@ -7,6 +7,11 @@ namespace Vortex.Cost.Kernels.Regression
 {
     public class CosineProximity : BaseCost
     {
+        public override double Evaluate(Matrix actual, Matrix expected)
+        {
+            return Forward(actual, expected);
+        }
+
         public override double Forward(Matrix actual, Matrix expected)
         {
             var dotProd = 0.0;

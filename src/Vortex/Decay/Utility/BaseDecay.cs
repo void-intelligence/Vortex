@@ -2,7 +2,7 @@
 
 namespace Vortex.Decay.Utility
 {
-    public abstract class BaseDecay
+    public abstract class BaseDecay : IDecay
     {
         public int Epoch { get; private set; }
         public double Decay { get; set; }

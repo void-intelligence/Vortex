@@ -6,7 +6,7 @@ using Vortex.Decay.Utility;
 
 namespace Vortex.Optimizer.Utility
 {
-    public abstract class BaseOptimizer
+    public abstract class BaseOptimizer : IOptimizer
     {
         public BaseDecay Decay { get; }
 

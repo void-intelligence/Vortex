@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Initializer.Utility
 {
-    public abstract class BaseInitializer
+    public abstract class BaseInitializer : IInitializer
     {
         public double Scale { get; set; }
         public double Min { get; set; }

@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Metrics.Utility
 {
-    public abstract class BaseMetrics
+    public abstract class BaseMetrics : IMetrics
     {
         public double Threshold { get; set; }
 

@@ -4,17 +4,18 @@ using System;
 
 namespace Vortex.Mutation.Utility
 {
-    public abstract class BaseMutation
+    public abstract class BaseMutation : IMutation
+
     {
-        public Random Rng { get; }
+    public Random Rng { get; }
 
-        protected BaseMutation()
-        {
-            Rng = new Random();
-        }
+    protected BaseMutation()
+    {
+        Rng = new Random();
+    }
 
-        public abstract double Mutate(double value);
+    public abstract double Mutate(double value);
 
-        public abstract EMutationType Type();
+    public abstract EMutationType Type();
     }
 }

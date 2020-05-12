@@ -14,12 +14,12 @@ using Vortex.Mutation.Utility;
 using Vortex.Mutation.Kernels;
 using Vortex.Optimizer.Kernels;
 
-namespace Vortex.Layer.Utility
+namespace Vortex.Layer.Utility 
 {
     /// <summary>
     /// Base of all Layer classes
     /// </summary>
-    public abstract class BaseLayer
+    public abstract class BaseLayer : ILayer
     {
         public float RegularizationValue { get; protected set; }
         public int NeuronCount { get; }
@@ -53,13 +53,9 @@ namespace Vortex.Layer.Utility
         }
 #nullable disable
 
-        // All Layer Forward Calculations
         public abstract Matrix Forward(Matrix inputs);
-
-        // All Layer Backward Calculations
         public abstract Matrix Backward(Matrix dA);
 
-        // All Layer Optimization Calculations
         public virtual void Optimize()
         {
             var deltaW = OptimizerFunction.CalculateDelta(Params["W"], Grads["DW"]);

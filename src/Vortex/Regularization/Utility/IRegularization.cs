@@ -9,6 +9,5 @@ namespace Vortex.Regularization.Utility
         public double CalculateNorm(Matrix input);
 
         public ERegularizationType Type();
-
     }
 }

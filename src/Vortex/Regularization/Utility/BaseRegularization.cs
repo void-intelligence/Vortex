@@ -4,7 +4,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Regularization.Utility
 {
-    public abstract class BaseRegularization
+    public abstract class BaseRegularization : IRegularization
     {
         public double Lambda { get; set; }
 

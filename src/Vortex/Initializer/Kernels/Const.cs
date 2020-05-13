@@ -7,10 +7,11 @@ namespace Vortex.Initializer.Kernels
 {
     public sealed class Const : BaseInitializer
     {
-        public double Value;
+        public double Value { get; set; }
 
-        public Const(double scale = 1.0, double min = -0.5, double max = 0.5) : base(scale, min, max)
+        public Const(double value = 1.0, double scale = 1.0) : base(scale, 0, 1)
         {
+            Value = value;
         }
 
         public override Matrix Initialize(Matrix w)

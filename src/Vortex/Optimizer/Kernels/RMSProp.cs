@@ -13,7 +13,7 @@ namespace Vortex.Optimizer.Kernels
         public double Epsilon { get; set; }
 
 #nullable enable
-        public RmsProp(double alpha = 0.01, BaseDecay? decay = null, double rho = 0.9, double epsilon = 0.00001) : base(alpha, decay)
+        public RmsProp(double alpha = 0.01, IDecay? decay = null, double rho = 0.9, double epsilon = 0.00001) : base(alpha, decay)
         {
             Rho = rho;
             Epsilon = epsilon;

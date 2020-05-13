@@ -8,20 +8,20 @@ namespace Vortex.Optimizer.Utility
 {
     public abstract class BaseOptimizer : IOptimizer
     {
-        public BaseDecay Decay { get; }
+        public IDecay Decay { get; }
 
         public double Alpha { get; set; }
 #nullable enable
-        protected BaseOptimizer(double alpha, BaseDecay? decay = null)
+        protected BaseOptimizer(double alpha, IDecay? decay = null)
         {
             Alpha = alpha;
             Decay = decay ?? new None();
         }
 #nullable disable
 
-        public void ApplyDecay()
+        public virtual void ApplyDecay()
         {
-            Decay.IncrementEpoch();
+            ((BaseDecay)Decay).IncrementEpoch();
             Alpha = Decay.CalculateAlpha(Alpha);
         }
 

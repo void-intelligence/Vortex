@@ -14,7 +14,7 @@ namespace Vortex.Optimizer.Kernels
         public double Tao { get; set; }
 
 #nullable enable
-        public Momentum(double alpha = 0.01, BaseDecay? decay = null, double tao = 0.9) : base(alpha, decay)
+        public Momentum(double alpha = 0.01, IDecay? decay = null, double tao = 0.9) : base(alpha, decay)
         {
             Tao = tao;
         }

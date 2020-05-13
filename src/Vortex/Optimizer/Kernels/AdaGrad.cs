@@ -12,7 +12,7 @@ namespace Vortex.Optimizer.Kernels
         public double Epsilon { get; set; }
 
 #nullable enable
-        public AdaGrad(double alpha = 0.01, BaseDecay? decay = null, double epsilon = 0.00001) : base(alpha, decay)
+        public AdaGrad(double alpha = 0.01, IDecay? decay = null, double epsilon = 0.00001) : base(alpha, decay)
         {
             Epsilon = epsilon;
         }

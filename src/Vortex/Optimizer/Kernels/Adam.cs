@@ -15,7 +15,7 @@ namespace Vortex.Optimizer.Kernels
         public double Epsilon { get; set; }
 
 #nullable enable
-        public Adam(double alpha = 0.01, BaseDecay? decay = null, double beta1 = 0.9, double beta2 = 0.999, double epsilon = 0.00001) : base(alpha, decay)
+        public Adam(double alpha = 0.01, IDecay? decay = null, double beta1 = 0.9, double beta2 = 0.999, double epsilon = 0.00001) : base(alpha, decay)
         {
             T = 0;
             Beta1 = beta1;

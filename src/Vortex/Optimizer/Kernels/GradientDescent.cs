@@ -10,7 +10,7 @@ namespace Vortex.Optimizer.Kernels
     {
 
 #nullable enable
-        public GradientDescent(double alpha = 0.001, BaseDecay? decay = null) : base(alpha, decay)
+        public GradientDescent(double alpha = 0.001, IDecay? decay = null) : base(alpha, decay)
         {
         }
 #nullable disable

@@ -15,7 +15,7 @@ namespace Vortex.Optimizer.Kernels
         public double T { get; private set; }
 
 #nullable enable
-        public AdaMax(double alpha = 0.01, BaseDecay? decay = null, double b1 = 0.9, double b2 = 0.999, double epsilon = 0.00001) : base(alpha, decay)
+        public AdaMax(double alpha = 0.01, IDecay? decay = null, double b1 = 0.9, double b2 = 0.999, double epsilon = 0.00001) : base(alpha, decay)
         {
             T = 0;
             Epsilon = epsilon;

@@ -14,7 +14,7 @@ namespace Vortex.Optimizer.Kernels
         public double Tao { get; set; }
 
 #nullable enable
-        public NesterovMomentum(double alpha = 0.001, BaseDecay? decay = null, double tao = 0.9) : base(alpha, decay)
+        public NesterovMomentum(double alpha = 0.001, IDecay? decay = null, double tao = 0.9) : base(alpha, decay)
         {
             Tao = tao;
         }
@@ -41,7 +41,6 @@ namespace Vortex.Optimizer.Kernels
             dJdX.Cache[0] = -Alpha * dJdX + Tao * dJdX.Cache[0];
             return x - (1.0 + Tao) * dJdX.Cache[0] - Tao * dJdX.Cache[1];
         }
-
 
         public override EOptimizerType Type()
         {

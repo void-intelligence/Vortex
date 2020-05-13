@@ -26,6 +26,7 @@ namespace Vortex.Metrics.Kernels
             }
 
             val /= div;
+            if (double.IsNaN(val)) val = 0.0;
             return val;
         }
 

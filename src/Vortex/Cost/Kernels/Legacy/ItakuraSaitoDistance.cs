@@ -21,9 +21,10 @@ namespace Vortex.Cost.Kernels.Legacy
             var error = 0.0;
 
             for (var i = 0; i < actual.Rows; i++)
-            for (var j = 0; j < actual.Columns; j++) error += expected[i, j] / actual[i, j] - Math.Log(expected[i, j] - actual[i, j]) - 1;
+            for (var j = 0; j < actual.Columns; j++) error += expected[i, j] / (actual[i, j] + double.Epsilon) - Math.Log(expected[i, j] - actual[i, j]) - 1;
             if (double.IsNaN(error)) error = 0;
 
+            error /= actual.Rows * actual.Columns;
             BatchCost += error;
 
             return error;
@@ -31,7 +32,7 @@ namespace Vortex.Cost.Kernels.Legacy
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            var gradMatrix = actual.Duplicate();
+            var gradMatrix = new Matrix(actual.Rows, actual.Columns);
 
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (actual[i, j] - expected[i, j]) / Math.Pow(actual[i, j], 2);

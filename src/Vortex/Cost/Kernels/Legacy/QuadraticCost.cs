@@ -24,22 +24,20 @@ namespace Vortex.Cost.Kernels.Legacy
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(actual[i, j] - expected[i, j], 2);
 
             error /= 2;
+            error /= actual.Rows * actual.Columns;
             BatchCost += error;
             return error;
         }
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            var n = 0;
-            var da = actual.Duplicate();
+            var gradMatrix = new Matrix(actual.Rows, actual.Columns);
+
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++)
-            {
-                n++;
-                da[i, j] = Math.Pow(expected[i, j] - actual[i, j], 2);
-            }
+                gradMatrix[i, j] = Math.Pow(expected[i, j] - actual[i, j], 2);
 
-            return da * (1.0 / n);
+            return gradMatrix * (1.0 / actual.Rows * actual.Columns);
         }
 
         public override ECostType Type()

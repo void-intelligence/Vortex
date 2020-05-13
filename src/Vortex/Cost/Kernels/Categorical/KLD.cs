@@ -5,7 +5,11 @@ using Vortex.Cost.Utility;
 using Nomad.Matrix;
 
 namespace Vortex.Cost.Kernels.Categorical
-{
+{   
+    /// <summary>
+    /// "Kullback Leibler Divergence" Also known as "Information Divergence", "Information Gain", "Relative entropy", "KLIC", or "KL Divergence".
+    /// </summary>
+
     public class KLD : BaseCost
     {
         public override double Evaluate(Matrix actual, Matrix expected)
@@ -34,7 +38,7 @@ namespace Vortex.Cost.Kernels.Categorical
 
         public override ECostType Type()
         {
-            return ECostType.CategoricalKLD;
+            return ECostType.CategoricalKullbackLeiblerDivergance;
         }
     }
 }

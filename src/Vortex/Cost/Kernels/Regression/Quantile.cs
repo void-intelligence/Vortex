@@ -37,7 +37,6 @@ namespace Vortex.Cost.Kernels.Regression
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            // O - T >= 0.0 ? 1.0 - Tau : -Tau);
             var gradMatrix = new Matrix(actual.Rows, actual.Columns);
 
             for (var i = 0; i < actual.Rows; i++)

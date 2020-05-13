@@ -32,8 +32,7 @@ namespace Vortex.Cost.Kernels.Regression
 
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++)
-                gradMatrix[i, j] = -2.0 * Math.Log((expected[i, j] + 1.0) / (actual[i, j] + 1.0)) /
-                                   (actual[i, j] + 1.0);
+                gradMatrix[i, j] = -2.0 * Math.Log((expected[i, j] + 1.0) / (actual[i, j] + 1.0)) / (actual[i, j] + 1.0);
 
             return gradMatrix;
         }

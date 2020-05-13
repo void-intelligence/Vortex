@@ -24,6 +24,7 @@ namespace Vortex.Cost.Kernels.Legacy
             for (var j = 0; j < actual.Columns; j++) error += Math.Pow(Math.Sqrt(actual[i, j]) - Math.Sqrt(expected[i, j]), 2);
 
             error *= 1 / Math.Sqrt(2);
+            error /= actual.Rows * actual.Columns;
             BatchCost += error;
             return error;
         }
@@ -32,7 +33,7 @@ namespace Vortex.Cost.Kernels.Legacy
         {
             if (actual.Rows != expected.Rows || actual.Columns != expected.Columns) throw new ArgumentException("Actual Matrix does not have the same size as The Expected Matrix");
 
-            var gradMatrix = actual.Duplicate();
+            var gradMatrix = new Matrix(actual.Rows, actual.Columns);
 
             for (var i = 0; i < actual.Rows; i++)
             for (var j = 0; j < actual.Columns; j++) gradMatrix[i, j] = (Math.Sqrt(actual[i, j]) - Math.Sqrt(expected[i, j])) / (Math.Sqrt(2) * Math.Sqrt(actual[i, j]));

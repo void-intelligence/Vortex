@@ -10,26 +10,38 @@ using Vortex.Layer.Kernels;
 using Vortex.Layer.Utility;
 using Vortex.Optimizer.Utility;
 using Vortex.Initializer.Utility;
+using Vortex.Metrics.Kernels;
+using Vortex.Metrics.Utility;
 using Vortex.Optimizer.Kernels;
 
 namespace Vortex.Network
 {
     public class Sequential
     {
-        public double BatchError { get; set; }
+        // Helpers
+        public double BatchError { get; private set; }
         public double LastError { get; private set; }
         public Matrix Y { get; private set; }
         public bool IsLocked { get; private set; }
         public int BatchSize { get; set; }
 
+        // Component Properties
         public List<BaseLayer> Layers { get; }
+        public IMetrics MetricsFunction { get; private set; }
         public IOptimizer OptimizerFunction { get; }
         public ICost CostFunction { get; }
 
-        public Sequential(ICost cost, IOptimizer optimizer, int batchSize = 1)
+        // Train Utility
+        public Matrix LastOutput { get; private set; }
+        public float LastRegularizationSum { get; private set; }
+
+
+#nullable enable
+        public Sequential(ICost cost, IOptimizer optimizer, IMetrics? metrics = null, int batchSize = 1)
         {
             // If Optimizer is set to default use Adam
             OptimizerFunction = optimizer.Type() == EOptimizerType.Default ? new Adam(((BaseOptimizer)optimizer).Alpha, ((BaseOptimizer)optimizer).Decay) : optimizer;
+            MetricsFunction = metrics ?? new Accuracy();
 
             IsLocked = false;
             Layers = new List<BaseLayer>();
@@ -38,6 +50,7 @@ namespace Vortex.Network
 
             CostFunction  = cost;
         }
+#nullable disable
 
         public void CreateLayer(ILayer layer)
         {
@@ -85,68 +98,85 @@ namespace Vortex.Network
 
         private int _currentBatch;
 
-        private float _regularizationSum;
-        
-        private Matrix _actual;
 
         public Matrix Forward(Matrix input)
         {
-            _regularizationSum = 0.0f;
+            LastRegularizationSum = 0.0f;
 
             var yHat = input;
             foreach (var t in Layers)
             {
                 yHat = t.Forward(yHat);
-                _regularizationSum += t.RegularizationValue;
+                LastRegularizationSum += t.RegularizationValue;
             }
 
-            // Save data
-            _actual = yHat;
+            // Save yHat (last output)
+            LastOutput = yHat;
             return yHat;
         }
 
-        private void ResetBatchError()
+#nullable enable
+        public double Train(Matrix input, Matrix expected, IMetrics? metrics = null)
         {
-            ((BaseCost)CostFunction).BatchCost = 0;
-        }
+            if (metrics != null)
+            {
+                MetricsFunction = metrics;
+            }
 
-        private void Backward(Matrix expected)
-        {
-            Y = expected;
-
-            var da = CostFunction.Backward(_actual, expected);
-            da *= BatchError + _regularizationSum;
-
-            // Calculate da for all layers
-            for (var i = Layers.Count - 2; i >= 0; i--) da = Layers[i].Backward(da);
-
-            // Optimize
-            foreach (var t in Layers) t.Optimize();
-        }
-
-        public void Train(Matrix input, Matrix expected)
-        {
+            var yHat = input;
             if (_currentBatch < BatchSize)
             {
-                Forward(input);
-                
-                LastError = (float)CostFunction.Forward(_actual, expected);
-                LastError += _regularizationSum;
-                _regularizationSum = 0;
+                #region Feed Forward
+                // Forward
+                LastRegularizationSum = 0.0f;
+                foreach (var t in Layers)
+                {
+                    yHat = t.Forward(yHat);
+                    LastRegularizationSum += t.RegularizationValue;
+                }
+                LastOutput = yHat;
 
+                // Error Calculation
+                LastError = (float)CostFunction.Forward(LastOutput, expected);
+                LastError += LastRegularizationSum;
+                LastRegularizationSum = 0;
                 _currentBatch++;
+                #endregion
             }
             else if(_currentBatch == BatchSize)
             {
-                // Weight Decay
+                // Save Y
+                Y = expected;
 
-                Backward(expected);
+                #region Backprop
+
+                // Calculate Final Layer dA (derivative of Cost * J)
+                var da = CostFunction.Backward(LastOutput, expected);
+                da *= BatchError + LastRegularizationSum;
+
+                // Calculate da dw db for all layers
+                for (var i = Layers.Count - 2; i >= 0; i--) da = Layers[i].Backward(da);
+
+                #endregion
+
+                #region Optimization
+
+                // Optimize all layers
+                foreach (var t in Layers) t.Optimize();
+
+                // Weight Decay
                 foreach (var t in Layers) ((BaseOptimizer)t.OptimizerFunction).ApplyDecay();
 
+                #endregion
+                
+                // Reset Error for the next Batch
                 BatchError = ((BaseCost)CostFunction).BatchCost;
-                ResetBatchError();
+                ((BaseCost)CostFunction).BatchCost = 0;
             }
 
+            // Metrics
+            return MetricsFunction.Evaluate(LastOutput, expected);
         }
+#nullable disable
     }
 }

@@ -19,6 +19,28 @@ namespace VortexTests
     public class Network
     {
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Network is Locked.")]
+        public void NetworkLockedExceptionInit()
+        {
+            var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
+            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Output(1, new Tanh()));
+            net.InitNetwork();
+            net.InitNetwork();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Network is Locked.")]
+        public void NetworkLockedExceptionLayer()
+        {
+            var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
+            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Output(1, new Tanh()));
+            net.InitNetwork();
+            net.CreateLayer(new FullyConnected(3, new Tanh()));
+        }
+
+        [TestMethod]
         public void SequentialXor()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
@@ -26,27 +48,9 @@ namespace VortexTests
             net.CreateLayer(new FullyConnected(3, new Tanh(), null,new HeUniform()));
             net.CreateLayer(new FullyConnected(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
-
-            _ = net.Y;
-
             net.InitNetwork();
 
-            try
-            {
-                net.InitNetwork();
-            }
-            catch
-            {
-                // ignored
-            }
-            try
-            {
-                net.CreateLayer(new FullyConnected(3, new Tanh()));
-            }
-            catch
-            {
-                // ignored
-            }
+            _ = net.Y;
 
             var inputs = new List<Matrix>();
             var outputs = new List<Matrix>();

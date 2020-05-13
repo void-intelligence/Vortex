@@ -19,21 +19,19 @@ namespace VortexTests
     public class LayerTests
     {
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Backprop should not be called on the result layer!")]
+        public void ResultBackwardException()
+        {
+            new Result(3).Backward(new Matrix(2, 3));
+        }
+
+        [TestMethod]
         public void LayerTypes()
         {
             _ = new FullyConnected(3).Type();
             _ = new Dropout(3, 0.5f).Type();
             _ = new Output(3).Type();
             _ = new Result(3).Type();
-
-            try
-            {
-                new Result(3).Backward(new Matrix(2,3));
-            }
-            catch 
-            {
-                // ignored
-            }
         }
 
         [TestMethod]
@@ -44,27 +42,8 @@ namespace VortexTests
             net.CreateLayer(new Dropout(3, 0.5f, new Tanh(), null, new HeUniform(), new DefaultMutation()));
             net.CreateLayer(new FullyConnected(3, new Tanh(), null, null, new DefaultMutation()));
             net.CreateLayer(new Output(1, new Tanh(), null, null, new DefaultMutation()));
-
-            _ = net.Y;
-
             net.InitNetwork();
-
-            try
-            {
-                net.InitNetwork();
-            }
-            catch
-            {
-                // ignored
-            }
-            try
-            {
-                net.CreateLayer(new FullyConnected(3, new Tanh()));
-            }
-            catch
-            {
-                // ignored
-            }
+            _ = net.Y;
 
             var inputs = new List<Matrix>();
             var outputs = new List<Matrix>();

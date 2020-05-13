@@ -12,14 +12,15 @@ namespace VortexTests
     {
         [TestMethod]
         public void ArctanTest()
-        
+
         {
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
             a = new Arctan().Forward(a);
             b.InMap(Math.Atan);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Arctan().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Arctan().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -30,7 +31,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Arctan().Backward(a);
             b.InMap((x) => 1 / (1 + Math.Pow(x, 2)));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Arctan().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Arctan().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -41,7 +43,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new BinaryStep().Forward(a);
             b.InMap((x) => x < 0 ? 0 : 1);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new BinaryStep().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new BinaryStep().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -52,7 +55,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new BinaryStep().Backward(a);
             b.InMap((x) => 0);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new BinaryStep().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new BinaryStep().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -63,7 +67,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new BipolarSigmoid().Forward(a);
             b.InMap((x) => -1 + 2 / (1 + Math.Exp(-x)));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new BipolarSigmoid().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new BipolarSigmoid().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -74,7 +79,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new BipolarSigmoid().Backward(a);
             b.InMap((x) => 0.5 * (1 + (-1 + 2 / (1 + Math.Exp(-x)))) * (1 - (-1 + 2 / (1 + Math.Exp(-x)))));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new BipolarSigmoid().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new BipolarSigmoid().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -89,7 +95,8 @@ namespace VortexTests
             const double alpha = 0.01;
             a = new Elu(0.01).Forward(a);
             b.InMap((x) => x >= 0 ? x : alpha * (Math.Exp(x) - 1));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Elu(0.01).Type().ToString() + "ELU Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Elu(0.01).Type().ToString() + "ELU Activation.");
         }
 
         [TestMethod]
@@ -101,7 +108,8 @@ namespace VortexTests
             const double alpha = 0.01;
             a = new Elu(0.01).Backward(a);
             b.InMap((x) => x >= 0 ? 1 : alpha * Math.Exp(x));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Elu(0.01).Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Elu(0.01).Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -112,7 +120,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Exponential().Forward(a);
             b.InMap(Math.Exp);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Exponential().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Exponential().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -123,7 +132,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Exponential().Backward(a);
             b.InMap(Math.Exp);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Exponential().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Exponential().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -134,7 +144,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new HardSigmoid().Forward(a);
             b.InMap((x) => x < 0 ? 0 : x < 1 ? x : 1);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new HardSigmoid().Type().ToString() + "  Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new HardSigmoid().Type().ToString() + "  Activation.");
         }
 
         [TestMethod]
@@ -145,7 +156,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new HardSigmoid().Backward(a);
             b.InMap((x) => x > 1 || x < 0 ? 0 : 1);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new HardSigmoid().Type().ToString() + "  Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new HardSigmoid().Type().ToString() + "  Derivative.");
         }
 
         [TestMethod]
@@ -156,7 +168,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new HardTanh().Forward(a);
             b.InMap((x) => x < -1 ? -1 : x > 1 ? 1 : x);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new HardTanh().Type().ToString() + "  Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new HardTanh().Type().ToString() + "  Activation.");
         }
 
         [TestMethod]
@@ -167,7 +180,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new HardTanh().Backward(a);
             b.InMap((x) => x < -1 ? 0 : x > 1 ? 0 : 1);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new HardTanh().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new HardTanh().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -178,7 +192,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Identity().Forward(a);
             b.InMap((x) => x);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Identity().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Identity().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -189,7 +204,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Identity().Backward(a);
             b.InMap((x) => 1);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Identity().Type().ToString() + "  Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Identity().Type().ToString() + "  Derivative.");
         }
 
         [TestMethod]
@@ -200,7 +216,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Loggy().Forward(a);
             b.InMap((x) => Math.Tanh(x / 2.0));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Loggy().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Loggy().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -211,7 +228,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Loggy().Backward(a);
             b.InMap((x) => 1.0 / (Math.Cosh(x) + 1.0));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Loggy().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Loggy().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -222,7 +240,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Logit().Forward(a);
             b.InMap((x) => Math.Log(x / (1 - x)));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Logit().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Logit().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -233,7 +252,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Logit().Backward(a);
             b.InMap((x) => -1 / Math.Pow(x, 2) - 1 / Math.Pow(1 - x, 2));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Logit().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Logit().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -245,7 +265,8 @@ namespace VortexTests
             var Alpha = 0.01;
             a = new LRelu(0.01).Forward(a);
             b.InMap((x) => Math.Max(x, Alpha));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new LRelu(0.01).Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new LRelu(0.01).Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -257,7 +278,8 @@ namespace VortexTests
             var Alpha = 0.01;
             a = new LRelu(0.01).Backward(a);
             b.InMap((x) => x > 0 ? 1 : Alpha);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new LRelu(0.01).Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new LRelu(0.01).Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -268,7 +290,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Mish().Forward(a);
             b.InMap((x) => x * Math.Tanh(Math.Log(1 + Math.Exp(x))));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Mish().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Mish().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -278,8 +301,11 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
             a = new Mish().Backward(a);
-            b.InMap((x) => Math.Exp(x) * (4 * (x + 1) + 4 * Math.Exp(2 * x) + Math.Exp(3 * x) + Math.Exp(x) * (4 * x + 6)) / Math.Pow(2 * Math.Exp(x) + Math.Exp(2 * x) + 2, 2));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Mish().Type().ToString() + " Derivative.");
+            b.InMap((x) =>
+                Math.Exp(x) * (4 * (x + 1) + 4 * Math.Exp(2 * x) + Math.Exp(3 * x) + Math.Exp(x) * (4 * x + 6)) /
+                Math.Pow(2 * Math.Exp(x) + Math.Exp(2 * x) + 2, 2));
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Mish().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -290,7 +316,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Relu().Forward(a);
             b.InMap((x) => Math.Max(x, 0));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Relu().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Relu().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -301,7 +328,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Relu().Backward(a);
             b.InMap((x) => x > 0 ? 1 : 0);
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Relu().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Relu().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -314,7 +342,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Selu().Forward(a);
             b.InMap((x) => x > 0 ? x : Alpha * (Math.Exp(x) - 1));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Selu().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Selu().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -328,7 +357,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Selu().Backward(a);
             b.InMap((x) => x > 0 ? Lambda : Lambda * Alpha * Math.Exp(x));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Selu().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Selu().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -339,7 +369,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Sigmoid().Forward(a);
             b.InMap((x) => 1.0 / (1 + Math.Exp(-x)));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Sigmoid().Type().ToString() + " Activation.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Sigmoid().Type().ToString() + " Activation.");
         }
 
         [TestMethod]
@@ -350,7 +381,8 @@ namespace VortexTests
             var b = a.Duplicate();
             a = new Sigmoid().Backward(a);
             b.InMap((x) => 1.0 / (1 + Math.Exp(-x)) * (1 - 1.0 / (1 + Math.Exp(-x))));
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Sigmoid().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1,
+                new Sigmoid().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]
@@ -364,29 +396,30 @@ namespace VortexTests
             var sumExp = 0.0;
 
             for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) sumExp += Math.Exp(b[i, j]);
+            for (var j = 0; j < res.Columns; j++)
+                sumExp += Math.Exp(b[i, j]);
 
             for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) res[i, j] = Math.Exp(b[i, j]) / sumExp;
+            for (var j = 0; j < res.Columns; j++)
+                res[i, j] = Math.Exp(b[i, j]) / sumExp;
 
-            b = res;
-            a = new Softmax().Forward(a);
-        
-            try
-            {
-                new Softmax().Activate(2);
-            }
-            catch 
-            {
-                try
-                {
-                    new Softmax().Derivative(2);
-                }
-                catch
-                {
-                    Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Activation.");
-                }
-            }
+            _ = res;
+            _ = new Softmax().Forward(a);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Cannot operate softmax on a single value!")]
+        public void SoftMaxException()
+        {
+            new Softmax().Activate(2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Cannot operate softmax derivative on a single value!")]
+        public void SoftMaxDerivativeException()
+        {
+            new Softmax().Derivative(2);
         }
 
         [TestMethod]

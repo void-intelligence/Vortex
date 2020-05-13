@@ -150,7 +150,6 @@ namespace VortexTests
             }
 
             val /= div;
-            if (double.IsNaN(val)) val = 0.0;
 
             Assert.IsTrue(Math.Abs(e - val) < 0.01, metric.Type().ToString() + " Evaluate.");
 

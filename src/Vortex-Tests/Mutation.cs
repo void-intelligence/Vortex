@@ -18,7 +18,7 @@ namespace VortexTests
             var mutation = new DefaultMutation();
             for (var i = 0; i < 100; i++) mutated.InMap(mutation.Mutate);
 
-            Assert.IsTrue(Math.Abs(original.FrobeniusNorm() - mutated.FrobeniusNorm()) > 0.01, "Default Mutation!");
+            Assert.IsTrue(Math.Abs(original.FrobeniusNorm() - mutated.FrobeniusNorm()) > 0.01, mutation.Type().ToString() + " Mutation!");
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace VortexTests
             var mutation = new NoMutation();
             for (var i = 0; i < 100; i++) mutated.InMap(mutation.Mutate);
 
-            Assert.IsTrue(Math.Abs(original.FrobeniusNorm() - mutated.FrobeniusNorm()) < 0.01, "No Mutation!");
+            Assert.IsTrue(Math.Abs(original.FrobeniusNorm() - mutated.FrobeniusNorm()) < 0.01, mutation.Type().ToString() + " Mutation!");
         }
     }
 }

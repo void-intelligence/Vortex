@@ -15,7 +15,7 @@ namespace VortexTests
         {
             var init = new Auto();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "Auto Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -23,7 +23,7 @@ namespace VortexTests
         {
             var init = new Const();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "Const Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace VortexTests
         {
             var init = new GlorotNormal();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "GlorotNormal Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace VortexTests
         {
             var init = new GlorotUniform();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "GlorotUniform Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace VortexTests
         {
             var init = new HeNormal();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "HeNormal Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
 
@@ -56,7 +56,7 @@ namespace VortexTests
         {
             var init = new HeUniform();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "HeUniform Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
 
@@ -65,7 +65,7 @@ namespace VortexTests
         {
             var init = new LeCunNormal();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "LeCunNormal Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -73,7 +73,7 @@ namespace VortexTests
         {
             var init = new LeCunUniform();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "LeCunUniform Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace VortexTests
         {
             var init = new Normal();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "Normal Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace VortexTests
         {
             var init = new One();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "One Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -97,7 +97,7 @@ namespace VortexTests
         {
             var init = new Uniform();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, "Uniform Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) > 0.01, init.Type().ToString() + " Initializer.");
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace VortexTests
         {
             var init = new Zero();
             var m = init.Initialize(new Matrix(2, 2));
-            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) < 0.01, "Zero Initializer.");
+            Assert.IsTrue(Math.Abs(m.FrobeniusNorm()) < 0.01, init.Type().ToString() + " Initializer.");
         }
     }
 }

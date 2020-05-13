@@ -12,10 +12,10 @@ namespace VortexTests
         [TestMethod]
         public void AccuracyTest()
         {
-            var actual = new Matrix(4, 1);
-            var expected = new Matrix(4, 1);
-            actual.InRandomize();
-            expected.InRandomize();
+            var actual = new Matrix(100, 1);
+            var expected = new Matrix(100, 1);
+            actual.InRandomize(0.25, 0.75);
+            expected.InRandomize(0.25, 0.75);
 
             var metric = new Accuracy();
             var e = metric.Evaluate(actual, expected);
@@ -27,16 +27,16 @@ namespace VortexTests
 
             val /= actual.Rows * actual.Columns;
 
-            Assert.IsTrue(Math.Abs(e - val) < 0.01, "Accuracy Metric Evaluate.");
+            Assert.IsTrue(Math.Abs(e - val) < 0.01, metric.Type().ToString() + " Evaluate.");
         }
 
         [TestMethod]
         public void ArgMaxAccuracyTest()
         {
-            var actual = new Matrix(4, 1);
-            var expected = new Matrix(4, 1);
-            actual.InRandomize();
-            expected.InRandomize();
+            var actual = new Matrix(100, 1);
+            var expected = new Matrix(100, 1);
+            actual.InRandomize(0.25,0.75);
+            expected.InRandomize(0.25, 0.75);
 
             var metric = new ArgMaxAccuracy();
             var e = metric.Evaluate(actual, expected);
@@ -59,16 +59,16 @@ namespace VortexTests
             for (var j = 0; j < actual.Columns; j++)
                 val += Math.Abs(actual[i, j] - expected[i, j]) < 0.5 ? 0 : 1;
 
-            Assert.IsTrue(Math.Abs(e - val) < 0.01, "ArgMax Accuracy Metric Evaluate.");
+            Assert.IsTrue(Math.Abs(e - val) < 0.01, metric.Type().ToString() + " Evaluate.");
         }
 
         [TestMethod]
         public void F1ScoreTest()
         {
-            var actual = new Matrix(4, 1);
-            var expected = new Matrix(4, 1);
-            actual.InRandomize();
-            expected.InRandomize();
+            var actual = new Matrix(100, 1);
+            var expected = new Matrix(100, 1);
+            actual.InRandomize(0.25, 0.75);
+            expected.InRandomize(0.25, 0.75);
 
             var metric = new F1Score();
             var e = metric.Evaluate(actual, expected);
@@ -93,16 +93,16 @@ namespace VortexTests
 
             val /= div;
 
-            Assert.IsTrue(Math.Abs(e - val) < 0.01, "F1Score Metric Evaluate.");
+            Assert.IsTrue(Math.Abs(e - val) < 0.01, metric.Type().ToString() + " Evaluate.");
         }
 
         [TestMethod]
         public void PrecisionTest()
         {
-            var actual = new Matrix(4, 1);
-            var expected = new Matrix(4, 1);
-            actual.InRandomize();
-            expected.InRandomize();
+            var actual = new Matrix(100, 1);
+            var expected = new Matrix(100, 1);
+            actual.InRandomize(0.25, 0.75);
+            expected.InFill(1);
 
             var metric = new Precision();
             var e = metric.Evaluate(actual, expected);
@@ -120,16 +120,20 @@ namespace VortexTests
 
             val /= div;
 
-            Assert.IsTrue(Math.Abs(e - val) < 0.01, "Precision Metric Evaluate.");
+            Assert.IsTrue(Math.Abs(e - val) < 0.01, metric.Type().ToString() + " Evaluate.");
+
+            // Precision 0-1 test
+            new Precision().Evaluate(actual.Fill(0), actual.Fill(1));
+
         }
 
         [TestMethod]
         public void RecallTest()
         {
-            var actual = new Matrix(4, 1);
-            var expected = new Matrix(4, 1);
-            actual.InRandomize();
-            expected.InRandomize();
+            var actual = new Matrix(100, 1);
+            var expected = new Matrix(100, 1);
+            actual.InRandomize(0.5, 1.25);
+            expected.InRandomize(0.5, 1.25);
 
             var metric = new Recall();
             var e = metric.Evaluate(actual, expected);
@@ -148,8 +152,10 @@ namespace VortexTests
             val /= div;
             if (double.IsNaN(val)) val = 0.0;
 
-            Assert.IsTrue(Math.Abs(e - val) < 0.01, "Recall Metric Evaluate.");
-        }
+            Assert.IsTrue(Math.Abs(e - val) < 0.01, metric.Type().ToString() + " Evaluate.");
 
+            // Recall NaN test
+            new Recall().Evaluate(actual.Fill(double.NaN), actual.Fill(double.NaN));
+        }
     }
 }

@@ -4,28 +4,46 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using Nomad.Matrix;
-using Vortex.Network;
 using Vortex.Activation.Kernels;
 using Vortex.Cost.Kernels.Legacy;
 using Vortex.Initializer.Kernels;
-using Vortex.Optimizer.Kernels;
 using Vortex.Layer.Kernels;
+using Vortex.Mutation.Kernels;
+using Vortex.Network;
+using Vortex.Optimizer.Kernels;
 
 namespace VortexTests
 {
     [TestClass]
-    public class Network
+    public class LayerTests
     {
         [TestMethod]
-        public void SequentialXor()
+        public void LayerTypes()
+        {
+            _ = new FullyConnected(3).Type();
+            _ = new Dropout(3, 0.5f).Type();
+            _ = new Output(3).Type();
+            _ = new Result(3).Type();
+
+            try
+            {
+                new Result(3).Backward(new Matrix(2,3));
+            }
+            catch 
+            {
+                // ignored
+            }
+        }
+
+        [TestMethod]
+        public void LayersTest()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh(), null,new HeUniform()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new Output(1, new Tanh()));
+            net.CreateLayer(new FullyConnected(3, new Tanh(), null, null, new DefaultMutation()));
+            net.CreateLayer(new Dropout(3, 0.5f, new Tanh(), null, new HeUniform(), new DefaultMutation()));
+            net.CreateLayer(new FullyConnected(3, new Tanh(), null, null, new DefaultMutation()));
+            net.CreateLayer(new Output(1, new Tanh(), null, null, new DefaultMutation()));
 
             _ = net.Y;
 

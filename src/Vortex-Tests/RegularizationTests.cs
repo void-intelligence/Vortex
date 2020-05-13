@@ -11,6 +11,17 @@ namespace VortexTests
     public class Regularization
     {
         [TestMethod]
+        public void NoneTest()
+        {
+            var reg = new None();
+            var mat = new Matrix(10, 10);
+            mat.InFill(0);
+
+            Assert.IsTrue(Math.Abs(mat.AbsoluteNorm() - reg.CalculateNorm(mat)) < 0.1, reg.Type().ToString() + " Regularization.");
+        }
+
+
+        [TestMethod]
         public void L1Test()
         {
             const double lambda = 1.0;
@@ -18,7 +29,7 @@ namespace VortexTests
             var mat = new Matrix(10, 10);
             mat.InRandomize();
 
-            Assert.IsTrue(Math.Abs(mat.AbsoluteNorm() * lambda - reg.CalculateNorm(mat)) < 0.1, "L1 Norm calculation successful");
+            Assert.IsTrue(Math.Abs(mat.AbsoluteNorm() * lambda - reg.CalculateNorm(mat)) < 0.1, reg.Type().ToString() + " Regularization.");
         }
 
         [TestMethod]
@@ -29,7 +40,7 @@ namespace VortexTests
             var mat = new Matrix(10, 10);
             mat.InRandomize();
 
-            Assert.IsTrue(Math.Abs(mat.FrobeniusNorm() * lambda - reg.CalculateNorm(mat)) < 0.1, "L1 Norm calculation successful");
+            Assert.IsTrue(Math.Abs(mat.FrobeniusNorm() * lambda - reg.CalculateNorm(mat)) < 0.1, reg.Type().ToString() + " Regularization.");
         }
 
         [TestMethod]
@@ -40,7 +51,7 @@ namespace VortexTests
             var mat = new Matrix(10, 10);
             mat.InRandomize();
 
-            Assert.IsTrue(Math.Abs((mat.AbsoluteNorm() + mat.FrobeniusNorm()) * lambda - reg.CalculateNorm(mat)) < 0.1, "L1 Norm calculation successful");
+            Assert.IsTrue(Math.Abs((mat.AbsoluteNorm() + mat.FrobeniusNorm()) * lambda - reg.CalculateNorm(mat)) < 0.1, reg.Type().ToString() + " Regularization.");
         }
     }
 }

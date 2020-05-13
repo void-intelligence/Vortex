@@ -15,7 +15,7 @@ namespace VortexTests
             var e = new Exponential(1);
             e.IncrementEpoch();
             var x = e.CalculateAlpha(0.3);
-            Assert.IsTrue(Math.Abs(x - 0.110) < 0.001, "Exponential decay failed!");
+            Assert.IsTrue(Math.Abs(x - 0.110) < 0.001, e.Type().ToString() + " Decay.");
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace VortexTests
             var e = new IterationBased(1);
             e.IncrementEpoch();
             var x = e.CalculateAlpha(0.3);
-            Assert.IsTrue(Math.Abs(x - 0.15) < 0.001, "Iteration Based decay failed!");
+            Assert.IsTrue(Math.Abs(x - 0.15) < 0.001, e.Type().ToString() + " Decay.");
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace VortexTests
             var e = new Multiplication(1, 2, 2);
             e.IncrementEpoch();
             var x = e.CalculateAlpha(0.3);
-            Assert.IsTrue(Math.Abs(x - 0.4242) < 0.001, "Multiplication decay failed!");
+            Assert.IsTrue(Math.Abs(x - 0.4242) < 0.001, e.Type().ToString() + " Decay.");
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace VortexTests
             var e = new None();
             e.IncrementEpoch();
             var x = e.CalculateAlpha(0.3);
-            Assert.IsTrue(Math.Abs(x - 0.3) < 0.001, "No decay failed!");
+            Assert.IsTrue(Math.Abs(x - 0.3) < 0.001, e.Type().ToString() + " Decay.");
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace VortexTests
             var e = new Subtraction(0.1,2);
             e.IncrementEpoch();
             var x = e.CalculateAlpha(0.3);
-            Assert.IsTrue(Math.Abs(x - 0.25) < 0.001, "No decay failed!");
+            Assert.IsTrue(Math.Abs(x - 0.25) < 0.001, e.Type().ToString() + " Decay.");
         }
     }
 }

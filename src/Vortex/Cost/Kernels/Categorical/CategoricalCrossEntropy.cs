@@ -6,7 +6,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Cost.Kernels.Categorical
 {
-    public class CrossEntropy : BaseCost
+    public class CategoricalCrossEntropy : BaseCost
     {
         public override double Evaluate(Matrix actual, Matrix expected)
         {

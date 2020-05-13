@@ -1,18 +1,16 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using System;
-using Vortex.Activation.Kernels;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Nomad.Matrix;
 using System.Collections.Generic;
+using Vortex.Activation.Kernels;
 using Vortex.Optimizer.Utility;
 using Vortex.Regularization.Kernels;
 using Vortex.Initializer.Kernels;
 using Vortex.Initializer.Utility;
 using Vortex.Mutation.Utility;
 using Vortex.Mutation.Kernels;
-using Vortex.Optimizer.Kernels;
 
 namespace Vortex.Layer.Utility 
 {
@@ -25,24 +23,24 @@ namespace Vortex.Layer.Utility
         public int NeuronCount { get; }
 
 
-        public BaseActivation ActivationFunction { get; }
-        public BaseRegularization RegularizationFunction { get; }
-        public BaseOptimizer OptimizerFunction { get; set; }
-        public BaseInitializer InitializerFunction { get; }
-        public BaseMutation MutationFunction { get; }
+        public IActivation ActivationFunction { get; }
+        public IRegularization RegularizationFunction { get; }
+        public IOptimizer OptimizerFunction { get; set; }
+        public IInitializer InitializerFunction { get; }
+        public IMutation MutationFunction { get; }
 
 
         public Dictionary<string, Matrix> Params { get; }
         public Dictionary<string, Matrix> Grads { get; }
 
 #nullable enable
-        protected BaseLayer(int neuronCount, BaseActivation activation, BaseRegularization? regularization = null,
-            BaseInitializer? initializer = null, BaseMutation? mutation = null, BaseOptimizer? optimizer = null)
+        protected BaseLayer(int neuronCount, IActivation? activation = null, IRegularization? regularization = null,
+            IInitializer? initializer = null, IMutation? mutation = null, IOptimizer? optimizer = null)
         {
             RegularizationValue = 0.0f;
             NeuronCount = neuronCount;
 
-            ActivationFunction = activation;
+            ActivationFunction = activation ?? new Identity();
             RegularizationFunction = regularization ?? new None();
             InitializerFunction = initializer ?? new Auto();
             MutationFunction = mutation ?? new NoMutation();

@@ -1,6 +1,5 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using System;
 using Nomad.Matrix;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
@@ -15,8 +14,8 @@ namespace Vortex.Layer.Kernels
     {
         public float DropoutChance { get; set; }
 #nullable enable
-        public Dropout(int neuronCount, float dropoutChance, BaseActivation activation, BaseRegularization? regularization = null,
-            BaseInitializer? initializer = null, BaseMutation? mutation = null, BaseOptimizer? optimizer = null)
+        public Dropout(int neuronCount, float dropoutChance, IActivation? activation = null, IRegularization? regularization = null,
+            IInitializer? initializer = null, IMutation? mutation = null, IOptimizer? optimizer = null)
             : base(neuronCount, activation, regularization, initializer, mutation, optimizer)
         {
             DropoutChance = dropoutChance;
@@ -27,8 +26,8 @@ namespace Vortex.Layer.Kernels
         {
             if (MutationFunction.Type() != EMutationType.NoMutation) Params["W"].InMap(MutationFunction.Mutate);
 
-            // Calculate Regularization Value On W and B
-            RegularizationValue = (float) RegularizationFunction.CalculateNorm(Params["W"]);
+            // Calculate Regularization Value On W
+            RegularizationValue = (float)RegularizationFunction.CalculateNorm(Params["W"]);
 
             // Calculate Feed Forward Operation
             Params["X"] = inputs;

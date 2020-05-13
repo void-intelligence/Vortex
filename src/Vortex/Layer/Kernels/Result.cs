@@ -2,11 +2,6 @@
 
 using System;
 using Nomad.Matrix;
-using Vortex.Activation.Kernels;
-using Vortex.Regularization.Utility;
-using Vortex.Optimizer.Utility;
-using Vortex.Initializer.Utility;
-using Vortex.Mutation.Utility;
 using Vortex.Layer.Utility;
 
 namespace Vortex.Layer.Kernels
@@ -14,9 +9,8 @@ namespace Vortex.Layer.Kernels
     public class Result : BaseLayer
     {
 #nullable enable
-        public Result(int neuronCount, BaseRegularization? regularization = null,
-            BaseInitializer? initializer = null, BaseMutation? mutation = null, BaseOptimizer? optimizer = null)
-            : base(neuronCount, new Identity(), regularization, initializer, mutation, optimizer)
+        public Result(int neuronCount)
+            : base(neuronCount)
         {
         }
 #nullable disable

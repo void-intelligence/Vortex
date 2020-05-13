@@ -19,16 +19,17 @@ namespace Vortex.Network
         public double BatchError { get; set; }
         public double LastError { get; private set; }
         public Matrix Y { get; private set; }
-        public List<BaseLayer> Layers { get; }
         public bool IsLocked { get; private set; }
-        public BaseOptimizer OptimizerFunction { get; }
-        public BaseCost CostFunction { get; }
         public int BatchSize { get; set; }
 
-        public Sequential(BaseCost cost, BaseOptimizer optimizer, int batchSize = 1)
+        public List<BaseLayer> Layers { get; }
+        public IOptimizer OptimizerFunction { get; }
+        public ICost CostFunction { get; }
+
+        public Sequential(ICost cost, IOptimizer optimizer, int batchSize = 1)
         {
             // If Optimizer is set to default use Adam
-            OptimizerFunction = optimizer.Type() == EOptimizerType.Default ? new Adam(optimizer.Alpha, optimizer.Decay) : optimizer;
+            OptimizerFunction = optimizer.Type() == EOptimizerType.Default ? new Adam(((BaseOptimizer)optimizer).Alpha, ((BaseOptimizer)optimizer).Decay) : optimizer;
 
             IsLocked = false;
             Layers = new List<BaseLayer>();
@@ -38,13 +39,13 @@ namespace Vortex.Network
             CostFunction  = cost;
         }
 
-        public void CreateLayer(BaseLayer layer)
+        public void CreateLayer(ILayer layer)
         {
             if (IsLocked) throw new InvalidOperationException("Network is Locked.");
 
-            if (layer.OptimizerFunction.Type() == EOptimizerType.Default) layer.OptimizerFunction = OptimizerFunction;
+            if (((BaseLayer)layer).OptimizerFunction.Type() == EOptimizerType.Default) ((BaseLayer)layer).OptimizerFunction = OptimizerFunction;
 
-            Layers.Add(layer);
+            Layers.Add(((BaseLayer)layer));
         }
 
         public void InitNetwork()
@@ -61,14 +62,14 @@ namespace Vortex.Network
                 // Weights
                 Layers[i].Params["W"] = new Matrix(Layers[i + 1].NeuronCount, Layers[i].NeuronCount);
                 
-                if (i == 0 && Layers[i].InitializerFunction.Type() == EInitializerType.Auto)
+                if (i == 0 && ((BaseInitializer)Layers[i].InitializerFunction).Type() == EInitializerType.Auto)
                 {
-                    Layers[i].InitializerFunction.Scale *= Math.Sqrt(2.0 / Layers[i].NeuronCount);
+                    ((BaseInitializer)Layers[i].InitializerFunction).Scale *= Math.Sqrt(2.0 / Layers[i].NeuronCount);
                     Layers[i].Params["W"] = Layers[i].InitializerFunction.Initialize(Layers[i].Params["W"]);
                 }
                 else if (i != 0 && Layers[i].InitializerFunction.Type() == EInitializerType.Auto)
                 {
-                    Layers[i].InitializerFunction.Scale *= Math.Sqrt(2.0 / (Layers[i - 1].NeuronCount * Layers[i].NeuronCount));
+                    ((BaseInitializer)Layers[i].InitializerFunction).Scale *= Math.Sqrt(2.0 / (Layers[i - 1].NeuronCount * Layers[i].NeuronCount));
                     Layers[i].Params["W"] = Layers[i].InitializerFunction.Initialize(Layers[i].Params["W"]);
                 }
                 else
@@ -106,7 +107,7 @@ namespace Vortex.Network
 
         private void ResetBatchError()
         {
-            CostFunction.BatchCost = 0;
+            ((BaseCost)CostFunction).BatchCost = 0;
         }
 
         private void Backward(Matrix expected)
@@ -140,9 +141,9 @@ namespace Vortex.Network
                 // Weight Decay
 
                 Backward(expected);
-                foreach (var t in Layers) t.OptimizerFunction.ApplyDecay();
+                foreach (var t in Layers) ((BaseOptimizer)t.OptimizerFunction).ApplyDecay();
 
-                BatchError = CostFunction.BatchCost;
+                BatchError = ((BaseCost)CostFunction).BatchCost;
                 ResetBatchError();
             }
 

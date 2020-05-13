@@ -2,28 +2,17 @@
 
 using Nomad.Matrix;
 using Vortex.Decay.Utility;
+using Vortex.Optimizer.Kernels;
 
 namespace Vortex.Optimizer.Utility
 {
-    public sealed class DefaultOptimizer : BaseOptimizer
+    public sealed class DefaultOptimizer : GradientDescent
     {
 #nullable enable
-        public DefaultOptimizer(double alpha = 0.01, BaseDecay? decay = null) : base(alpha, decay)
+        public DefaultOptimizer(double alpha = 0.01, IDecay? decay = null) : base(alpha, decay)
         {
         }
 #nullable disable
-
-        public override Matrix CalculateDelta(Matrix x, Matrix dJdX)
-        {
-            if (dJdX.Cache.Count == 0)
-                // Iteration T on dJdX
-                dJdX.Cache.Add(Matrix.Zero(1));
-
-            // Iteration T
-            dJdX.Cache[^1][0, 0]++;
-
-            return Alpha * x.Hadamard(dJdX);
-        }
 
         public override EOptimizerType Type()
         {

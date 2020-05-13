@@ -6,7 +6,7 @@ using Vortex.Optimizer.Utility;
 
 namespace Vortex.Optimizer.Kernels
 {
-    public sealed class GradientDescent : BaseOptimizer
+    public class GradientDescent : BaseOptimizer
     {
 
 #nullable enable

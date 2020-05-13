@@ -31,8 +31,6 @@ namespace Vortex.Cost.Kernels.Legacy
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            if (actual.Rows != expected.Rows || actual.Columns != expected.Columns) throw new ArgumentException("Actual Matrix does not have the same size as The Expected Matrix");
-
             var gradMatrix = new Matrix(actual.Rows, actual.Columns);
 
             for (var i = 0; i < actual.Rows; i++)

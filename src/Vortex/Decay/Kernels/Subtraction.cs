@@ -10,7 +10,7 @@ namespace Vortex.Decay.Kernels
 
         public Subtraction(double decay, double interval) : base(decay)
         {
-            Interval = Interval;
+            Interval = interval;
         }
 
         public override double CalculateAlpha(double alpha)

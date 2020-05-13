@@ -1,7 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Description>Lightweight Deep learning / Neural Netowkrs library</Description>
+    <RepositoryUrl>https://github.com/void-intelligence/Vortex</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>Vortex, Deep Learning, Neural Network</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <PackageProjectUrl>void-intelligence.github.io</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Copyright>(C) Void-Intelligence Under Apache 2.0 License</Copyright>
+    <Company>Void-Intelligence</Company>
+    <Authors>Void-Intelligence</Authors>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

@@ -12,6 +12,7 @@ using Vortex.Cost.Kernels.Legacy;
 using Vortex.Initializer.Kernels;
 using Vortex.Optimizer.Kernels;
 using Vortex.Layer.Kernels;
+using Vortex.Metrics.Kernels.Categorical;
 
 namespace VortexTests
 {
@@ -87,7 +88,8 @@ namespace VortexTests
             inputs.Add(new Matrix(new[,] { { 1.0 }, { 1.0 }, { 1.0 } }));
             outputs.Add(new Matrix(new[,] { { 1.0 } }));
 
-            for (var i = 0; i < 8; i++) net.Train(inputs[i % 8], outputs[i % 8]);
+            var accx = 0.0;
+            for (var i = 0; i < 8; i++) accx = net.Train(inputs[i % 8], outputs[i % 8], new Accuracy());
 
             var correct = 0;
             for (var i = 0; i < 10; i++)
@@ -104,6 +106,7 @@ namespace VortexTests
             var acc = correct / 80.0 * 100.0;
 
             Trace.WriteLine(" Acc: " + acc);
+            Trace.WriteLine(" Metrics Accuracy: " + accx);
             Assert.IsTrue(acc > 80.0, "Network did not learn XOR");
         }
     }

@@ -79,6 +79,7 @@ namespace Vortex.Network
                 {
                     ((BaseInitializer)Layers[i].InitializerFunction).Scale *= Math.Sqrt(2.0 / Layers[i].NeuronCount);
                     Layers[i].Params["W"] = Layers[i].InitializerFunction.Initialize(Layers[i].Params["W"]);
+  
                 }
                 else if (i != 0 && Layers[i].InitializerFunction.Type() == EInitializerType.Auto)
                 {

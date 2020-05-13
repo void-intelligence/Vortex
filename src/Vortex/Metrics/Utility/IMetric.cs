@@ -1,6 +1,5 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-
 using Nomad.Matrix;
 
 namespace Vortex.Metrics.Utility

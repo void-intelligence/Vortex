@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 namespace Vortex.Normalization.Utility
 {
-    class ENormalizationType
+    public enum ENormalizationType
     {
+        NoNorm
     }
 }

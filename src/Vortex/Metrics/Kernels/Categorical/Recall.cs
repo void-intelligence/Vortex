@@ -4,7 +4,7 @@ using System;
 using Nomad.Matrix;
 using Vortex.Metrics.Utility;
 
-namespace Vortex.Metrics.Kernels
+namespace Vortex.Metrics.Kernels.Categorical
 {
     public sealed class Recall : BaseMetrics
     {
@@ -32,7 +32,7 @@ namespace Vortex.Metrics.Kernels
 
         public override EMetricsType Type()
         {
-            return EMetricsType.Recall;
+            return EMetricsType.CategoricalRecall;
         }
     }
 }

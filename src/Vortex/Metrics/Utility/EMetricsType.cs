@@ -4,10 +4,13 @@ namespace Vortex.Metrics.Utility
 {
     public enum EMetricsType
     {
-        Accuracy,
-        ArgMaxAccuracy,
-        F1Score,
-        Precision,
-        Recall
+        CategoricalAccuracy,
+        CategoricalArgMaxAccuracy,
+        CategoricalF1Score,
+        CategoricalPrecision,
+        CategoricalRecall,
+        RegressionRMSE,
+        RegressionRMSLE,
+        RegressionRSquared
     }
 }

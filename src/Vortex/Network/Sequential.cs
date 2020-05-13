@@ -10,7 +10,7 @@ using Vortex.Layer.Kernels;
 using Vortex.Layer.Utility;
 using Vortex.Optimizer.Utility;
 using Vortex.Initializer.Utility;
-using Vortex.Metrics.Kernels;
+using Vortex.Metrics.Kernels.Categorical;
 using Vortex.Metrics.Utility;
 using Vortex.Optimizer.Kernels;
 

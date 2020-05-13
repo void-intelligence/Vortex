@@ -4,7 +4,7 @@ using System;
 using Nomad.Matrix;
 using Vortex.Metrics.Utility;
 
-namespace Vortex.Metrics.Kernels
+namespace Vortex.Metrics.Kernels.Categorical
 {
     public sealed class Accuracy : BaseMetrics
     {
@@ -25,7 +25,7 @@ namespace Vortex.Metrics.Kernels
 
         public override EMetricsType Type()
         {
-            return EMetricsType.Accuracy;
+            return EMetricsType.CategoricalAccuracy;
         }
     }
 }

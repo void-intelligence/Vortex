@@ -15,11 +15,10 @@ using Vortex.Layer.Kernels;
 namespace VortexTests
 {
     [TestClass]
-    public class VortexNetwork
+    public class Network
     {
-
         [TestMethod]
-        public void XorTest()
+        public void SequentialXor()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
             net.CreateLayer(new FullyConnected(3, new Tanh()));

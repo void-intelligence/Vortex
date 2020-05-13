@@ -10,7 +10,7 @@ using Vortex.Metrics.Kernels.Regression;
 namespace VortexTests
 {
     [TestClass]
-    public class Metrics
+    public class Metric
     {
         [TestClass]
         public class Categorical

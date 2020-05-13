@@ -5,7 +5,7 @@ using Nomad.Matrix;
 
 namespace Vortex.Metrics.Utility
 {
-    public interface IMetrics
+    public interface IMetric
     {
         public double Evaluate(Matrix actual, Matrix expected);
     }

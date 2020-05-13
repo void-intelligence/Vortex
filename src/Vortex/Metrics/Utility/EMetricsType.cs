@@ -2,7 +2,7 @@
 
 namespace Vortex.Metrics.Utility
 {
-    public enum EMetricsType
+    public enum EMetricType
     {
         CategoricalAccuracy,
         CategoricalArgMaxAccuracy,

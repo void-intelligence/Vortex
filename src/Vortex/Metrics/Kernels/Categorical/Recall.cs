@@ -6,7 +6,7 @@ using Vortex.Metrics.Utility;
 
 namespace Vortex.Metrics.Kernels.Categorical
 {
-    public sealed class Recall : BaseMetrics
+    public sealed class Recall : BaseMetric
     {
         public Recall(double threshold = 0.5) : base(threshold)
         {
@@ -30,9 +30,9 @@ namespace Vortex.Metrics.Kernels.Categorical
             return val;
         }
 
-        public override EMetricsType Type()
+        public override EMetricType Type()
         {
-            return EMetricsType.CategoricalRecall;
+            return EMetricType.CategoricalRecall;
         }
     }
 }

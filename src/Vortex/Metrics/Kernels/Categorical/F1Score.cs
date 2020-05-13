@@ -6,7 +6,7 @@ using Vortex.Metrics.Utility;
 
 namespace Vortex.Metrics.Kernels.Categorical
 {
-    public sealed class F1Score : BaseMetrics
+    public sealed class F1Score : BaseMetric
     {
         public F1Score(double threshold = 0.5) : base(threshold)
         {
@@ -36,9 +36,9 @@ namespace Vortex.Metrics.Kernels.Categorical
             return val;
         }
 
-        public override EMetricsType Type()
+        public override EMetricType Type()
         {
-            return EMetricsType.CategoricalF1Score;
+            return EMetricType.CategoricalF1Score;
         }
     }
 }

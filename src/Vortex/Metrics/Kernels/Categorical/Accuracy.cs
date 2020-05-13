@@ -6,7 +6,7 @@ using Vortex.Metrics.Utility;
 
 namespace Vortex.Metrics.Kernels.Categorical
 {
-    public sealed class Accuracy : BaseMetrics
+    public sealed class Accuracy : BaseMetric
     {
         public Accuracy(double threshold = 0.5) : base(threshold)
         {
@@ -23,9 +23,9 @@ namespace Vortex.Metrics.Kernels.Categorical
             return val;
         }
 
-        public override EMetricsType Type()
+        public override EMetricType Type()
         {
-            return EMetricsType.CategoricalAccuracy;
+            return EMetricType.CategoricalAccuracy;
         }
     }
 }

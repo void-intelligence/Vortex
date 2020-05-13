@@ -7,7 +7,7 @@ using Vortex.Cost.Kernels.Regression;
 
 namespace Vortex.Metrics.Kernels.Regression
 {
-    public sealed class RMSLE : BaseMetrics
+    public sealed class RMSLE : BaseMetric
     {
         public RMSLE() : base(0.0)
         {
@@ -18,9 +18,9 @@ namespace Vortex.Metrics.Kernels.Regression
             return Math.Sqrt(new MSLE().Evaluate(actual, expected));
         }
 
-        public override EMetricsType Type()
+        public override EMetricType Type()
         {
-            return EMetricsType.RegressionRMSE;
+            return EMetricType.RegressionRMSE;
         }
     }
 }

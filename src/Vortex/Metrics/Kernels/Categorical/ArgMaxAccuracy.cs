@@ -6,7 +6,7 @@ using Vortex.Metrics.Utility;
 
 namespace Vortex.Metrics.Kernels.Categorical
 {
-    public sealed class ArgMaxAccuracy : BaseMetrics
+    public sealed class ArgMaxAccuracy : BaseMetric
     {
         public ArgMaxAccuracy(double threshold = 0.5) : base(threshold)
         {
@@ -35,9 +35,9 @@ namespace Vortex.Metrics.Kernels.Categorical
             return val;
         }
 
-        public override EMetricsType Type()
+        public override EMetricType Type()
         {
-            return EMetricsType.CategoricalArgMaxAccuracy;
+            return EMetricType.CategoricalArgMaxAccuracy;
         }
     }
 }

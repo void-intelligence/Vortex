@@ -27,7 +27,7 @@ namespace Vortex.Network
 
         // Component Properties
         public List<BaseLayer> Layers { get; }
-        public IMetrics MetricsFunction { get; private set; }
+        public IMetric MetricsFunction { get; private set; }
         public IOptimizer OptimizerFunction { get; }
         public ICost CostFunction { get; }
 
@@ -37,7 +37,7 @@ namespace Vortex.Network
 
 
 #nullable enable
-        public Sequential(ICost cost, IOptimizer optimizer, IMetrics? metrics = null, int batchSize = 1)
+        public Sequential(ICost cost, IOptimizer optimizer, IMetric? metrics = null, int batchSize = 1)
         {
             // If Optimizer is set to default use Adam
             OptimizerFunction = optimizer.Type() == EOptimizerType.Default ? new Adam(((BaseOptimizer)optimizer).Alpha, ((BaseOptimizer)optimizer).Decay) : optimizer;
@@ -116,7 +116,7 @@ namespace Vortex.Network
         }
 
 #nullable enable
-        public double Train(Matrix input, Matrix expected, IMetrics? metrics = null)
+        public double Train(Matrix input, Matrix expected, IMetric? metrics = null)
         {
             if (metrics != null)
             {

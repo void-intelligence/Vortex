@@ -16,7 +16,7 @@ using Vortex.Optimizer.Kernels;
 namespace VortexTests
 {
     [TestClass]
-    public class LayerTests
+    public class Layer
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException), "Backprop should not be called on the result layer!")]

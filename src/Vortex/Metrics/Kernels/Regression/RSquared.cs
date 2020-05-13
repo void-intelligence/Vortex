@@ -7,7 +7,7 @@ using Vortex.Cost.Kernels.Regression;
 
 namespace Vortex.Metrics.Kernels.Regression
 {
-    public sealed class RSquared : BaseMetrics
+    public sealed class RSquared : BaseMetric
     {
         public RSquared() : base(0.0)
         {
@@ -28,9 +28,9 @@ namespace Vortex.Metrics.Kernels.Regression
             return num / (denom + double.Epsilon);
         }
 
-        public override EMetricsType Type()
+        public override EMetricType Type()
         {
-            return EMetricsType.RegressionRSquared;
+            return EMetricType.RegressionRSquared;
         }
     }
 }

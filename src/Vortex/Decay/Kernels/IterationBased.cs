@@ -4,9 +4,9 @@ using Vortex.Decay.Utility;
 
 namespace Vortex.Decay.Kernels
 {
-    public class IterationBasedKernel : BaseDecay
+    public class IterationBased : BaseDecay
     {
-        public IterationBasedKernel(double decay) : base(decay)
+        public IterationBased(double decay) : base(decay)
         {
         }
 

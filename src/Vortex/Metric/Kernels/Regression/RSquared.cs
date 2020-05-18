@@ -5,7 +5,7 @@ using Nomad.Matrix;
 using Vortex.Metrics.Utility;
 using Vortex.Cost.Kernels.Regression;
 
-namespace Vortex.Metrics.Kernels.Regression
+namespace Vortex.Metric.Kernels.Regression
 {
     public sealed class RSquared : BaseMetric
     {

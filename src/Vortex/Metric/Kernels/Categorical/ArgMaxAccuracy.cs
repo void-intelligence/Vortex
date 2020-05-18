@@ -4,7 +4,7 @@ using System;
 using Nomad.Matrix;
 using Vortex.Metrics.Utility;
 
-namespace Vortex.Metrics.Kernels.Categorical
+namespace Vortex.Metric.Kernels.Categorical
 {
     public sealed class ArgMaxAccuracy : BaseMetric
     {

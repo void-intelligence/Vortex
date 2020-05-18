@@ -3,9 +3,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nomad.Matrix;
 using Vortex.Cost.Kernels.Regression;
-using Vortex.Metrics.Kernels;
-using Vortex.Metrics.Kernels.Categorical;
-using Vortex.Metrics.Kernels.Regression;
+using Vortex.Metric.Kernels.Categorical;
+using Vortex.Metric.Kernels;
+using Vortex.Metric.Kernels.Regression;
 
 namespace VortexTests
 {

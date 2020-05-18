@@ -28,7 +28,7 @@ namespace VortexTests
         [TestMethod]
         public void LayerTypes()
         {
-            _ = new FullyConnected(3).Type();
+            _ = new Dense(3).Type();
             _ = new Dropout(3, 0.5f).Type();
             _ = new Output(3).Type();
             _ = new Result(3).Type();
@@ -38,9 +38,9 @@ namespace VortexTests
         public void LayersTest()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh(), null, null, new DefaultMutation()));
+            net.CreateLayer(new Dense(3, new Tanh(), null, null, new DefaultMutation()));
             net.CreateLayer(new Dropout(3, 0.5f, new Tanh(), null, new HeUniform(), new DefaultMutation()));
-            net.CreateLayer(new FullyConnected(3, new Tanh(), null, null, new DefaultMutation()));
+            net.CreateLayer(new Dense(3, new Tanh(), null, null, new DefaultMutation()));
             net.CreateLayer(new Output(1, new Tanh(), null, null, new DefaultMutation()));
             net.InitNetwork();
             _ = net.Y;

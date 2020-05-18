@@ -4,9 +4,10 @@ namespace Vortex.Layer.Utility
 {
     public enum ELayerType
     {
-        FullyConnected,
+        Convolutional,
+        Dense,
         Dropout,
         Output,
-        Result
+        Result,
     }
 }

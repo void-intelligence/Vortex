@@ -10,10 +10,10 @@ using Vortex.Layer.Utility;
 
 namespace Vortex.Layer.Kernels
 {
-    public class FullyConnected : BaseLayer
+    public class Dense : BaseLayer
     {
 #nullable enable
-        public FullyConnected(int neuronCount, IActivation? activation = null, IRegularization? regularization = null,
+        public Dense(int neuronCount, IActivation? activation = null, IRegularization? regularization = null,
             IInitializer? initializer = null, IMutation? mutation = null, IOptimizer? optimizer = null)
             : base(neuronCount, activation, regularization, initializer, mutation, optimizer)
         {
@@ -46,7 +46,7 @@ namespace Vortex.Layer.Kernels
 
         public override ELayerType Type()
         {
-            return ELayerType.FullyConnected;
+            return ELayerType.Dense;
         }
     }
 }

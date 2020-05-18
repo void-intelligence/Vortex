@@ -21,9 +21,9 @@ namespace VortexTests
         public void DefaultTest()
         {
             var net = new Sequential(new QuadraticCost(), new DefaultOptimizer(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -87,9 +87,9 @@ namespace VortexTests
         public void SgdTest()
         {
             var net = new Sequential(new QuadraticCost(), new GradientDescent(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -154,9 +154,9 @@ namespace VortexTests
         public void AdamTest()
         {
             var net = new Sequential(new QuadraticCost(), new Adam(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -221,9 +221,9 @@ namespace VortexTests
         public void MomentumTest()
         {
             var net = new Sequential(new QuadraticCost(), new Momentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -288,9 +288,9 @@ namespace VortexTests
         public void NesterovMomentum()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -355,9 +355,9 @@ namespace VortexTests
         public void RmsPropTest()
         {
             var net = new Sequential(new QuadraticCost(), new RmsProp(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -422,9 +422,9 @@ namespace VortexTests
         public void AdaMaxTest()
         {
             var net = new Sequential(new QuadraticCost(), new AdaMax(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -488,9 +488,9 @@ namespace VortexTests
         public void NadamTest()
         {
             var net = new Sequential(new QuadraticCost(), new Nadam(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -554,9 +554,9 @@ namespace VortexTests
         public void AdaGradTest()
         {
             var net = new Sequential(new QuadraticCost(), new AdaGrad(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();
@@ -620,9 +620,9 @@ namespace VortexTests
         public void AdaDeltaTest()
         {
             var net = new Sequential(new QuadraticCost(), new AdaDelta(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
 
             net.InitNetwork();

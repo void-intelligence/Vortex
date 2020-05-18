@@ -18,12 +18,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Metrics\Kernels\Regression\RSquared.cs~RF5f703330.TMP" />
+    <None Remove="Metric\Kernels\Regression\RSquared.cs~RF5f703330.TMP" />
     <None Remove="Optimizer\Kernels\AdaDelta.cs~RF12757067.TMP" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="VI-Nomad" Version="1.4.1" />
+    <PackageReference Include="VI-Nomad" Version="1.4.3" />
   </ItemGroup>
 
 </Project>

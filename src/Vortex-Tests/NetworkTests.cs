@@ -3,16 +3,20 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Nomad.Matrix;
 using Vortex.Network;
 using Vortex.Activation.Kernels;
+using Vortex.Cost.Kernels.Categorical;
 using Vortex.Cost.Kernels.Legacy;
 using Vortex.Initializer.Kernels;
 using Vortex.Optimizer.Kernels;
 using Vortex.Layer.Kernels;
-using Vortex.Metrics.Kernels.Categorical;
+using Vortex.Metric.Kernels.Categorical;
+using Vortex.Pooler.Kernels;
 
 namespace VortexTests
 {
@@ -24,7 +28,7 @@ namespace VortexTests
         public void NetworkLockedExceptionInit()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
             net.InitNetwork();
             net.InitNetwork();
@@ -35,19 +39,19 @@ namespace VortexTests
         public void NetworkLockedExceptionLayer()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
             net.InitNetwork();
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
         }
 
         [TestMethod]
         public void SequentialXor()
         {
             var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
-            net.CreateLayer(new FullyConnected(3, new Tanh(), null,new HeUniform()));
-            net.CreateLayer(new FullyConnected(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh()));
+            net.CreateLayer(new Dense(3, new Tanh(), null, new HeUniform()));
+            net.CreateLayer(new Dense(3, new Tanh()));
             net.CreateLayer(new Output(1, new Tanh()));
             net.InitNetwork();
 
@@ -108,6 +112,91 @@ namespace VortexTests
             Trace.WriteLine(" Acc: " + acc);
             Trace.WriteLine(" Metrics Accuracy: " + accx);
             Assert.IsTrue(acc > 80.0, "Network did not learn XOR");
+        }
+
+        [TestMethod]
+        public void DenseMnist()
+        {
+            // Load Data
+            var lines = File.ReadAllLines("..\\..\\..\\..\\..\\datasets\\mnist_train.csv").ToList();
+
+            var mnistLables = new List<Matrix>();
+            var mnistData = new List<Matrix>();
+
+            for (var j = 1; j < lines.Count; j++)
+            {
+                var t = lines[j];
+                var data = t.Split(',').ToList();
+                mnistLables.Add(new Matrix(10, 1).Fill(0));
+                mnistLables[j - 1][int.Parse(data[0]), 0] = 1.0;
+
+                var mnist = new Matrix(784, 1);
+                for (var i = 1; i < data.Count; i++)
+                {
+                    mnist[i - 1, 0] = double.Parse(data[i]);
+                }
+
+                mnistData.Add(mnist);
+            }
+
+            // Create Network
+            var net = new Sequential(new CategoricalCrossEntropy(), new GradientDescent(0.3), null, 128);
+            net.CreateLayer(new Dense(784, new Sigmoid()));
+            net.CreateLayer(new Dense(128, new Sigmoid()));
+            net.CreateLayer(new Dense(64, new Sigmoid()));
+            net.CreateLayer(new Dense(32, new Sigmoid()));
+            net.CreateLayer(new Output(10, new Softmax()));
+            net.InitNetwork();
+
+            // Train Network
+            var acc = 0.0;
+            for (var i = 0; i < mnistData.Count * 5; i++)
+            {
+                acc = net.Train(mnistData[i % mnistData.Count], mnistLables[i % mnistData.Count]);
+            }
+        }
+
+        [TestMethod]
+        public void ConvolutionalMnist()
+        {
+            // Load Data
+            var lines = File.ReadAllLines("..\\..\\..\\..\\..\\datasets\\mnist_train.csv").ToList();
+
+            var mnistLables = new List<Matrix>();
+            var mnistData = new List<Matrix>();
+
+            for (var j = 1; j < lines.Count; j++)
+            {
+                var t = lines[j];
+                var data = t.Split(',').ToList();
+                mnistLables.Add(new Matrix(1, 1).Fill(int.Parse(data[0])));
+
+                var mnist = new Matrix(784, 1);
+                for (var i = 1; i < data.Count; i++)
+                {
+                    mnist[i - 1, 0] = double.Parse(data[i]);
+                }
+
+                mnistData.Add(mnist);
+            }
+
+            // Create Network
+            var net = new Sequential(new QuadraticCost(), new NesterovMomentum(0.03));
+            net.CreateLayer(new Convolutional(784, new Average(), new Tanh()));
+            net.CreateLayer(new Convolutional(100, new Average(), new Tanh()));
+            net.CreateLayer(new Dense(100, new Tanh()));
+            net.CreateLayer(new Output(10, new Softmax()));
+            net.InitNetwork();
+
+            // Train Network
+            var acc = 0.0;
+            for (var i = 0; i < 800; i++)
+            {
+                acc = net.Train(mnistData[i % mnistData.Count], mnistLables[i % mnistData.Count], new Accuracy());
+            }
+        
+            // Write Acc Result
+            Trace.WriteLine(" Metrics Accuracy: " + acc);
         }
     }
 }

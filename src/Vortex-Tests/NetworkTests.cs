@@ -154,6 +154,8 @@ namespace VortexTests
             {
                 acc = net.Train(mnistData[i % mnistData.Count], mnistLables[i % mnistData.Count]);
             }
+            Trace.WriteLine(" Metrics Accuracy: " + acc);
+            Assert.IsTrue(acc > 80.0, "Network did not learn MNIST");
         }
 
         [TestMethod]
@@ -197,6 +199,7 @@ namespace VortexTests
         
             // Write Acc Result
             Trace.WriteLine(" Metrics Accuracy: " + acc);
+            Assert.IsTrue(acc > 80.0, "Network did not learn MNIST");
         }
     }
 }

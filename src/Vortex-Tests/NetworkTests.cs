@@ -117,7 +117,7 @@ namespace VortexTests
         [TestMethod]
         public void DenseMnist()
         {
-            // Load Data
+            // Load Train Data
             var lines = File.ReadAllLines("..\\..\\..\\..\\..\\datasets\\mnist_train.csv").ToList();
 
             var mnistLables = new List<Matrix>();
@@ -139,21 +139,49 @@ namespace VortexTests
                 mnistData.Add(mnist);
             }
 
+            // Load Test Data
+            var testlines = File.ReadAllLines("..\\..\\..\\..\\..\\datasets\\mnist_test.csv").ToList();
+
+            var mnistTestLables = new List<Matrix>();
+            var mnistTestData = new List<Matrix>();
+
+            for (var j = 1; j < testlines.Count; j++)
+            {
+                var t = testlines[j];
+                var data = t.Split(',').ToList();
+                mnistTestLables.Add(new Matrix(10, 1).Fill(0));
+                mnistTestLables[j - 1][int.Parse(data[0]), 0] = 1.0;
+
+                var mnist = new Matrix(784, 1);
+                for (var i = 1; i < data.Count; i++)
+                {
+                    mnist[i - 1, 0] = double.Parse(data[i]);
+                }
+
+                mnistTestData.Add(mnist);
+            }
+
             // Create Network
-            var net = new Sequential(new CategoricalCrossEntropy(), new GradientDescent(0.3), null, 128);
-            net.CreateLayer(new Dense(784, new Sigmoid()));
-            net.CreateLayer(new Dense(128, new Sigmoid()));
-            net.CreateLayer(new Dense(64, new Sigmoid()));
-            net.CreateLayer(new Dense(32, new Sigmoid()));
+            var net = new Sequential(new CategoricalCrossEntropy(), new Adam(0.3), null, 128);
+            net.CreateLayer(new Dense(784, new Relu()));
+            net.CreateLayer(new Dropout(128,0.2f, new Relu()));
             net.CreateLayer(new Output(10, new Softmax()));
             net.InitNetwork();
 
             // Train Network
             var acc = 0.0;
-            for (var i = 0; i < mnistData.Count * 5; i++)
+            for (var i = 0; i < mnistData.Count / 100; i++)
             {
                 acc = net.Train(mnistData[i % mnistData.Count], mnistLables[i % mnistData.Count]);
             }
+
+            // Test Network
+            for (var i = 0; i < mnistTestData.Count / 100; i++)
+            {
+                var mat = net.Forward(mnistTestData[i % mnistTestData.Count]);
+                var matx = mnistTestLables[i % mnistTestData.Count];
+            }
+
             Trace.WriteLine(" Metrics Accuracy: " + acc);
             Assert.IsTrue(acc > 80.0, "Network did not learn MNIST");
         }

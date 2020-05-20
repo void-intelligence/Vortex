@@ -425,23 +425,22 @@ namespace VortexTests
         [TestMethod]
         public void SoftmaxPrimeTest()
         {
-            var a = new Matrix(2, 2);
+            var a = new Matrix(4, 4);
             a.InRandomize();
-            var b = a.Duplicate();
 
-            var sumExp = 0.0;
+            // Jacobian Matrix
+            var input = a.Flatten();
+            var jac = new Matrix(input.Rows, input.Rows).Fill(0);
 
-            for (var i = 0; i < b.Rows; i++)
-            for (var j = 0; j < b.Columns; j++) sumExp += Math.Exp(a[i, j]);
+            for (var i = 0; i < input.Rows; i++) jac[i, i] = input[i, 0];
+            for (var i = 0; i < jac.Rows; i++)
+            for (var j = 0; j < jac.Columns; j++)
+                if (i == j) jac[i, j] = input[i, 0] * (1 - input[j, 0]);
+                else jac[i, j] = -input[i, 0] * input[j, 0];
 
-            for (var i = 0; i < b.Rows; i++)
-            for (var j = 0; j < b.Columns; j++)
-                b[i, j] = Math.Exp(a[i, j]) / sumExp * (1.0 - Math.Exp(a[i, j]) / sumExp);
-            
-            var s = new Softmax();
-            a = s.Backward(a);
+            a = new Softmax().Backward(a);
 
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Derivative.");
+            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - jac.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]

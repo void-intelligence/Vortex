@@ -32,17 +32,16 @@ namespace Vortex.Activation.Kernels
 
         public override Matrix Backward(Matrix input)
         {
-            var res = input.Duplicate();
-            SumExp = 0.0;
-
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) SumExp += Exp(input[i, j]);
-
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++)
-                res[i, j] = Exp(input[i, j]) / SumExp * (1.0 - Exp(input[i, j]) / SumExp);
-
-            return res;
+            // Jacobian Matrix
+            input.InFlatten();
+            var jac = new Matrix(input.Rows, input.Rows).Fill(0);
+            
+            for (var i = 0; i < input.Rows; i++) jac[i, i] = input[i,0];
+            for (var i = 0; i < jac.Rows; i++)
+            for (var j = 0; j < jac.Columns; j++)
+                if (i == j) jac[i, j] = input[i, 0] * (1 - input[j, 0]);
+                else jac[i, j] = -input[i, 0] * input[j, 0];
+            return jac;
         }
 
         public override double Activate(double input)

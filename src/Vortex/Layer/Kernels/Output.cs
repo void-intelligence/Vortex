@@ -38,7 +38,14 @@ namespace Vortex.Layer.Kernels
         {
             Grads["DA"] = error;
             Grads["G'"] = ActivationFunction.Backward(Params["Z"]);
-            Grads["DZ"] = Grads["DA"].Hadamard(Grads["G'"]);
+            if (ActivationFunction.Type() == EActivationType.Softmax)
+            {
+                Grads["DZ"] = (Grads["DA"].T() * Grads["G'"]).T();
+            }
+            else
+            {
+                Grads["DZ"] = Grads["DA"].Hadamard(Grads["G'"]);
+            }
             Grads["DW"] = Grads["DZ"] * Params["X"].T();
             Grads["DB"] = Grads["DZ"];
             return Grads["DZ"];

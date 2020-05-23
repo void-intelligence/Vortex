@@ -18,30 +18,26 @@ namespace Vortex.Activation.Kernels
 
         public override Matrix Forward(Matrix input)
         {
-            var res = input.Duplicate();
             SumExp = 0.0;
-
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) SumExp += Exp(input[i, j]);
-
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++) res[i, j] = Exp(input[i, j]) / SumExp;
-
-            return res;
+            SumExp = input.Map(Exp).Sum();
+            return input.Map(Exp) / SumExp;
         }
 
         public override Matrix Backward(Matrix input)
         {
-            // Jacobian Matrix
+            // Softmax Derivative
+
+            // Diagflat
             input.InFlatten();
-            var jac = new Matrix(input.Rows, input.Rows).Fill(0);
-            
-            for (var i = 0; i < input.Rows; i++) jac[i, i] = input[i,0];
-            for (var i = 0; i < jac.Rows; i++)
-            for (var j = 0; j < jac.Columns; j++)
-                if (i == j) jac[i, j] = input[i, 0] * (1 - input[j, 0]);
-                else jac[i, j] = -input[i, 0] * input[j, 0];
-            return jac;
+            var diagFlat = new Matrix(input.Rows, input.Rows).Fill(0);
+            for (var i = 0; i < input.Rows; i++) diagFlat[i, i] = input[i, 0];
+            for (var i = 0; i < diagFlat.Rows; i++)
+            for (var j = 0; j < diagFlat.Columns; j++)
+                if (i == j)
+                    diagFlat[i, j] = input[i, 0] * (1 - input[j, 0]);
+            //else diagFlat[i, j] = -input[i, 0] * input[j, 0];
+
+            return diagFlat - input * input.T();
         }
 
         public override double Activate(double input)

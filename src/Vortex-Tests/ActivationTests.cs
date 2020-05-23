@@ -392,19 +392,12 @@ namespace VortexTests
             a.InRandomize();
             var b = a.Duplicate();
 
-            var res = b.Duplicate();
-            var sumExp = 0.0;
+            var sumExp = a.Map(Math.Exp).Sum();
+            var res = a.Map(Math.Exp) / sumExp;
 
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++)
-                sumExp += Math.Exp(b[i, j]);
+            var y = new Softmax().Forward(a);
 
-            for (var i = 0; i < res.Rows; i++)
-            for (var j = 0; j < res.Columns; j++)
-                res[i, j] = Math.Exp(b[i, j]) / sumExp;
-
-            _ = res;
-            _ = new Softmax().Forward(a);
+            Assert.IsTrue(res.ToString() == y.ToString(), new Softmax().Type().ToString() + " Activation.");
         }
 
 
@@ -428,19 +421,17 @@ namespace VortexTests
             var a = new Matrix(4, 4);
             a.InRandomize();
 
-            // Jacobian Matrix
-            var input = a.Flatten();
-            var jac = new Matrix(input.Rows, input.Rows).Fill(0);
+            // Diagflat
+            a.InFlatten();
+            var diagFlat = new Matrix(a.Rows, a.Rows).Fill(0);
+            for (var i = 0; i < a.Rows; i++) diagFlat[i, i] = a[i, 0];
+            for (var i = 0; i < diagFlat.Rows; i++)
+            for (var j = 0; j < diagFlat.Columns; j++)
+                if (i == j)
+                    diagFlat[i, j] = a[i, 0] * (1 - a[j, 0]);
 
-            for (var i = 0; i < input.Rows; i++) jac[i, i] = input[i, 0];
-            for (var i = 0; i < jac.Rows; i++)
-            for (var j = 0; j < jac.Columns; j++)
-                if (i == j) jac[i, j] = input[i, 0] * (1 - input[j, 0]);
-                else jac[i, j] = -input[i, 0] * input[j, 0];
-
-            a = new Softmax().Backward(a);
-
-            Assert.IsTrue(Math.Abs(a.FrobeniusNorm() - jac.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Derivative.");
+            var b = diagFlat  -a * a.T();
+            Assert.IsTrue(Math.Abs(new Softmax().Backward(a).FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]

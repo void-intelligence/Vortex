@@ -421,17 +421,19 @@ namespace VortexTests
             var a = new Matrix(4, 4);
             a.InRandomize();
 
-            // Diagflat
-            a.InFlatten();
-            var diagFlat = new Matrix(a.Rows, a.Rows).Fill(0);
-            for (var i = 0; i < a.Rows; i++) diagFlat[i, i] = a[i, 0];
-            for (var i = 0; i < diagFlat.Rows; i++)
-            for (var j = 0; j < diagFlat.Columns; j++)
-                if (i == j)
-                    diagFlat[i, j] = a[i, 0] * (1 - a[j, 0]);
+            var sf = new Softmax();
 
-            var b = diagFlat  -a * a.T();
-            Assert.IsTrue(Math.Abs(new Softmax().Backward(a).FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Derivative.");
+            // Jacobian Matrix
+            var cachedSoftmax = sf.Forward(a);
+            a.InFlatten();
+            var jac = new Matrix(a.Rows, a.Rows).Fill(0);
+            for (var i = 0; i < cachedSoftmax.Rows; i++) jac[i, i] = a[i, 0];
+            for (var i = 0; i < jac.Rows; i++)
+            for (var j = 0; j < jac.Columns; j++)
+                if (i == j) jac[i, j] = cachedSoftmax[i, 0] * (1 - cachedSoftmax[j, 0]);
+
+            var b = jac  -a * a.T();
+            Assert.IsTrue(Math.Abs(sf.Backward(a).FrobeniusNorm() - b.FrobeniusNorm()) < 0.1, new Softmax().Type().ToString() + " Derivative.");
         }
 
         [TestMethod]

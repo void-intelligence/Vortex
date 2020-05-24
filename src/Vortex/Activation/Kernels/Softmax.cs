@@ -11,6 +11,8 @@ namespace Vortex.Activation.Kernels
     {
         public double SumExp { get; private set; }
 
+        private Matrix CachedSoftmax;
+
         public Softmax()
         {
             SumExp = 0.0;
@@ -20,24 +22,24 @@ namespace Vortex.Activation.Kernels
         {
             SumExp = 0.0;
             SumExp = input.Map(Exp).Sum();
-            return input.Map(Exp) / SumExp;
+            CachedSoftmax = input.Map(Exp) / SumExp;
+            return CachedSoftmax;
         }
 
         public override Matrix Backward(Matrix input)
         {
             // Softmax Derivative
+            Forward(input);
 
-            // Diagflat
+            // Jacobian Matrix
             input.InFlatten();
-            var diagFlat = new Matrix(input.Rows, input.Rows).Fill(0);
-            for (var i = 0; i < input.Rows; i++) diagFlat[i, i] = input[i, 0];
-            for (var i = 0; i < diagFlat.Rows; i++)
-            for (var j = 0; j < diagFlat.Columns; j++)
-                if (i == j)
-                    diagFlat[i, j] = input[i, 0] * (1 - input[j, 0]);
-            //else diagFlat[i, j] = -input[i, 0] * input[j, 0];
-
-            return diagFlat - input * input.T();
+            var jac = new Matrix(input.Rows, input.Rows).Fill(0);
+            for (var i = 0; i < CachedSoftmax.Rows; i++) jac[i, i] = input[i, 0];
+            for (var i = 0; i < jac.Rows; i++)
+            for (var j = 0; j < jac.Columns; j++)
+                if (i == j) jac[i, j] = CachedSoftmax[i, 0] * (1 - CachedSoftmax[j, 0]);
+                else jac[i, j] = -CachedSoftmax[i, 0] * CachedSoftmax[j, 0];
+            return jac;
         }
 
         public override double Activate(double input)

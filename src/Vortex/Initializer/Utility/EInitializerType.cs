@@ -14,6 +14,7 @@ namespace Vortex.Initializer.Utility
         LeCunUniform,
         Normal,
         One,
+        TruncNormal,
         Uniform,
         Zero
     }

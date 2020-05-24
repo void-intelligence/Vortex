@@ -9,6 +9,7 @@ namespace Vortex.Metrics.Utility
         CategoricalF1Score,
         CategoricalPrecision,
         CategoricalRecall,
+        RegressionCosineSimilarity,
         RegressionRMSE,
         RegressionRMSLE,
         RegressionRSquared

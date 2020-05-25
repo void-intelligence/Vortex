@@ -163,8 +163,8 @@ namespace VortexTests
 
             // Create Network
             var net = new Sequential(new CategoricalCrossEntropy(), new Adam(0.3), null, 128);
-            net.CreateLayer(new Dense(784, new Identity()));
-            net.CreateLayer(new Dense(128, new Tanh()));
+            net.CreateLayer(new Dense(784, new Relu()));
+            net.CreateLayer(new Dense(128, new Relu()));
             net.CreateLayer(new Output(10, new Softmax()));
             net.InitNetwork();
 

@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using Nomad.Matrix;
 using Vortex.Cost.Utility;
 
@@ -58,7 +58,7 @@ namespace Vortex.Network
 
             if (((BaseLayer)layer).OptimizerFunction.Type() == EOptimizerType.Default) ((BaseLayer)layer).OptimizerFunction = OptimizerFunction;
 
-            Layers.Add(((BaseLayer)layer));
+            Layers.Add((BaseLayer)layer);
         }
 
         public void InitNetwork()
@@ -117,12 +117,30 @@ namespace Vortex.Network
         }
 
 #nullable enable
-        public double Train(Matrix input, Matrix expected, IMetric? metrics = null)
+        public double Train(List<Matrix> input, List<Matrix> expected, int epochs, int batchSize = -1, IMetric? metrics = null)
         {
-            if (metrics != null)
+            if (batchSize != -1) BatchSize = batchSize;
+
+            if (metrics != null) MetricsFunction = metrics;
+            if (input.Count != expected.Count) throw new ArgumentException("Input does not have the same count as expected!");
+            if (metrics != null) MetricsFunction = metrics;
+
+            var metricSum = 0.0;
+            for (var x = 0; x < epochs; x++)
             {
-                MetricsFunction = metrics;
+                metricSum = input.Select((t, i) => MetricsFunction.Evaluate(Forward(t), expected[i])).Sum();
+                metricSum /= input.Count;
+                // Todo: OnMetricEvaluation Event
+
+                for (var i = 0; i < input.Count; i++) Train(input[i], expected[i]);
+                // Todo: OnEpoch Event
             }
+
+            return metricSum;
+        }
+
+        public void Train(Matrix input, Matrix expected)
+        {
 
             var yHat = input;
             if (_currentBatch < BatchSize)
@@ -173,10 +191,9 @@ namespace Vortex.Network
                 // Reset Error for the next Batch
                 BatchError = ((BaseCost)CostFunction).BatchCost;
                 ((BaseCost)CostFunction).BatchCost = 0;
-            }
 
-            // Metrics
-            return MetricsFunction.Evaluate(LastOutput, expected);
+                // Todo: OnBatch Event
+            }
         }
 #nullable disable
     }

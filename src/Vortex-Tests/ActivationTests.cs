@@ -87,8 +87,6 @@ namespace VortexTests
         public void EluTest()
         {
             var e = new Elu(0) {Alpha = 2};
-            var p = e.Alpha;
-
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();
@@ -390,8 +388,7 @@ namespace VortexTests
         {
             var a = new Matrix(2, 2);
             a.InRandomize();
-            var b = a.Duplicate();
-
+            
             var sumExp = a.Map(Math.Exp).Sum();
             var res = a.Map(Math.Exp) / sumExp;
 

@@ -164,3 +164,8 @@ You can find the Gist of this example [here](https://gist.github.com/nirex0/77cd
 ## Documentation
 
 The full documentation will be ready as soon as the first release.
+
+
+## Contact
+
+Main Dev: Nirex.0@Gmail.com

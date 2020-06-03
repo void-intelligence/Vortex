@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Cost.Utility;
 
 using Vortex.Layer.Kernels;

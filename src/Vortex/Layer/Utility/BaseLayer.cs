@@ -2,7 +2,7 @@
 
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
-using Nomad.Matrix;
+using Nomad.Core;
 using System.Collections.Generic;
 using Vortex.Activation.Kernels;
 using Vortex.Optimizer.Utility;

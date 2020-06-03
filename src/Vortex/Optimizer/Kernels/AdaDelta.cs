@@ -1,7 +1,7 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using System;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
@@ -40,16 +40,15 @@ namespace Vortex.Optimizer.Kernels
             dJdX.Cache[^1][0, 0]++;
 
             // Cache 1
-            dJdX.Cache[0] = Rho * dJdX.Cache[0] + (1.0 - Rho) * dJdX.Hadamard(dJdX);
+            dJdX.Cache[0] = dJdX.Cache[0] * Rho + dJdX.Hadamard(dJdX) * (1.0 - Rho);
             
             // Delta
-            var oneover = (dJdX.Cache[0] + dJdX.Cache[0].Fill(Epsilon)).OneOver();
-            dJdX.Cache[2] = (dJdX.Cache[1] + dJdX.Cache[1].Fill(Epsilon)).Map(Math.Sqrt).Hadamard(dJdX.Hadamard(oneover));
+            dJdX.Cache[2] = (dJdX.Cache[1] + dJdX.Cache[1].Fill(Epsilon)).Map(Math.Sqrt).Hadamard(dJdX.HadamardDivision(dJdX.Cache[0] + dJdX.Cache[0].Fill(Epsilon)));
 
             // Cache 2
-            dJdX.Cache[1] = Rho * dJdX.Cache[2] + (1.0 - Rho) * dJdX.Cache[2].Hadamard(dJdX.Cache[2]);
+            dJdX.Cache[1] = dJdX.Cache[2]  * Rho + dJdX.Cache[2].Hadamard(dJdX.Cache[2]) * (1.0 - Rho);
 
-            return x - Alpha * dJdX.Cache[2];
+            return x - dJdX.Cache[2] * Alpha;
         }
 
         public override EOptimizerType Type()

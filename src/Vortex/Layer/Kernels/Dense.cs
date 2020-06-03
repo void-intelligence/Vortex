@@ -1,6 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Activation.Utility;
 using Vortex.Regularization.Utility;
 using Vortex.Optimizer.Utility;

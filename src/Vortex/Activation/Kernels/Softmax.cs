@@ -1,7 +1,7 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using System;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Activation.Utility;
 using static System.Math;
 

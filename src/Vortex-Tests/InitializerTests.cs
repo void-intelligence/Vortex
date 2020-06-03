@@ -2,7 +2,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Initializer.Kernels;
 
 namespace VortexTests

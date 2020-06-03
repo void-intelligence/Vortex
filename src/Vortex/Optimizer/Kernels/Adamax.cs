@@ -1,7 +1,7 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using System;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
@@ -44,11 +44,11 @@ namespace Vortex.Optimizer.Kernels
             T = dJdX.Cache[^1][0, 0]++;
 
             // Momentum (VDW)
-            dJdX.Cache[0] = Beta1 * dJdX.Cache[0] + (1.0 - Beta1) * dJdX;
+            dJdX.Cache[0] = dJdX.Cache[0] * Beta1 + dJdX * (1.0 - Beta1);
 
             // Momentum Corrected (VDW C)
             var tt1 = Math.Pow(1.0 - Beta1, T);
-            dJdX.Cache[1] = dJdX.Cache[0].Hadamard(dJdX.Cache[0].Fill(tt1).OneOver());
+            dJdX.Cache[1] = dJdX.Cache[0].HadamardDivision(dJdX.Cache[0].Fill(tt1));
 
             // Max (MaxDw)
             for (var i = 0; i < dJdX.Cache[2].Rows; i++)
@@ -56,8 +56,7 @@ namespace Vortex.Optimizer.Kernels
                 dJdX.Cache[2][i, j] = Math.Max(Beta2 * dJdX.Cache[2][i, j], Math.Abs(dJdX[i, j]));
             
             // X optimization
-            var oneover = (dJdX.Cache[2] + dJdX.Cache[2].Fill(Epsilon)).OneOver();
-            return x - Alpha * dJdX.Cache[1].Hadamard(oneover);
+            return x - dJdX.Cache[1].HadamardDivision(dJdX.Cache[2] + dJdX.Cache[2].Fill(Epsilon)) * Alpha;
         }
 
 

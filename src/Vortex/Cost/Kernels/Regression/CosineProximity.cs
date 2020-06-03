@@ -1,7 +1,7 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Vortex.Cost.Utility;
-using Nomad.Matrix;
+using Nomad.Core;
 
 namespace Vortex.Cost.Kernels.Regression
 {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Activation.Kernels;
 using Vortex.Cost.Kernels.Legacy;
 using Vortex.Layer.Kernels;

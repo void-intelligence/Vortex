@@ -2,7 +2,7 @@
 
 using System;
 using Vortex.Cost.Utility;
-using Nomad.Matrix;
+using Nomad.Core;
 
 namespace Vortex.Cost.Kernels.Regression
 {

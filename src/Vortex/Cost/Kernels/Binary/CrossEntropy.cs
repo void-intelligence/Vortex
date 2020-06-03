@@ -2,7 +2,7 @@
 
 using System;
 using Vortex.Cost.Utility;
-using Nomad.Matrix;
+using Nomad.Core;
 
 namespace Vortex.Cost.Kernels.Binary
 {
@@ -31,8 +31,7 @@ namespace Vortex.Cost.Kernels.Binary
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            var oneover = (actual.Hadamard(actual) - (actual + actual.Fill(double.Epsilon))).OneOver();
-            return (expected - actual).Hadamard(oneover);
+            return (expected - actual).HadamardDivision((actual.Hadamard(actual) - (actual + actual.Fill(double.Epsilon))));
         }
 
         public override ECostType Type()

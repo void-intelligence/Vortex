@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Nomad.Matrix;
+using Nomad.Core;
 
 namespace Vortex.Pooler.Utility
 {

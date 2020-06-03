@@ -1,7 +1,7 @@
 ﻿using System;// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Cost.Kernels.Regression;
 using Vortex.Metric.Kernels.Categorical;
 using Vortex.Metric.Kernels;

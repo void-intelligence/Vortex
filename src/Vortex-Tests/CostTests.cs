@@ -2,7 +2,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Cost.Kernels.Legacy;
 using Vortex.Cost.Kernels.Binary;
 using Vortex.Cost.Kernels.Categorical;
@@ -50,8 +50,7 @@ namespace VortexTests
                 Assert.IsTrue(Math.Abs(error - autoErr) < 0.01, new CrossEntropy().Type().ToString() + " Forward!");
                 
                 var autoDErr = new CrossEntropy().Backward(actual, expected);
-                var oneover = (actual.Hadamard(actual) - (actual + actual.Fill(double.Epsilon))).OneOver();
-                var dErr = (actual - expected).Hadamard(oneover);
+                var dErr = (actual - expected).HadamardDivision(actual.Hadamard(actual) - (actual + actual.Fill(double.Epsilon)));
                 Assert.IsTrue(Math.Abs(dErr.FrobeniusNorm() - autoDErr.FrobeniusNorm()) < 0.01, new CrossEntropy().Type().ToString() + " Backward!");
             }
 
@@ -176,9 +175,8 @@ namespace VortexTests
                 error /= actual.Rows * actual.Columns;
                 Assert.IsTrue(Math.Abs(error - autoErr) < 0.01, new CategoricalCrossEntropy().Type().ToString() + " Forward!");
 
-                var autoDErr = new CategoricalCrossEntropy().Backward(actual, expected);
-                var oneover = (actual + actual.Fill(double.Epsilon)).OneOver();
-                var dErr = (-1 * expected).Hadamard(oneover);
+                var autoDErr = new CategoricalCrossEntropy().Backward(actual, expected); 
+                var dErr = (expected * -1).HadamardDivision(actual + actual.Fill(double.Epsilon));
                 Assert.IsTrue(Math.Abs(dErr.FrobeniusNorm() - autoDErr.FrobeniusNorm()) < 0.01, new CategoricalCrossEntropy().Type().ToString() + " Backward!");
             }
 
@@ -223,8 +221,7 @@ namespace VortexTests
                 Assert.IsTrue(Math.Abs(error - autoErr) < 0.01, new KLD().Type().ToString() + " Forward!");
 
                 var autoDErr = new KLD().Backward(actual, expected);
-                var oneover = (actual + actual.Fill(double.Epsilon)).OneOver();
-                var dErr = (-1 * expected).Hadamard(oneover);
+                var dErr = (expected * -1).HadamardDivision(actual + actual.Fill(double.Epsilon));
                 Assert.IsTrue(Math.Abs(dErr.FrobeniusNorm() - autoDErr.FrobeniusNorm()) < 0.01, new KLD().Type().ToString() + " Backward!");
             }
         }

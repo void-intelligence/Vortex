@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Pooler.Utility;
 
 namespace Vortex.Pooler.Kernels

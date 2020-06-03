@@ -2,7 +2,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Activation.Kernels;
 
 namespace VortexTests
@@ -86,7 +86,6 @@ namespace VortexTests
         [TestMethod]
         public void EluTest()
         {
-            var e = new Elu(0) {Alpha = 2};
             var a = new Matrix(2, 2);
             a.InRandomize();
             var b = a.Duplicate();

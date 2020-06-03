@@ -2,7 +2,7 @@
 
 using System;
 using Vortex.Cost.Utility;
-using Nomad.Matrix;
+using Nomad.Core;
 
 namespace Vortex.Cost.Kernels.Categorical
 {
@@ -28,7 +28,7 @@ namespace Vortex.Cost.Kernels.Categorical
 
         public override Matrix Backward(Matrix actual, Matrix expected)
         {
-            return (-1 * expected).HadamardDivision(actual + actual.Fill(double.Epsilon));
+            return (expected * -1).HadamardDivision(actual + actual.Fill(double.Epsilon));
         }
 
         public override ECostType Type()

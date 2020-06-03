@@ -1,6 +1,6 @@
 ﻿// Copyright © 2020 Void-Intelligence All Rights Reserved.
 
-using Nomad.Matrix;
+using Nomad.Core;
 using Vortex.Decay.Utility;
 using Vortex.Optimizer.Utility;
 
@@ -38,8 +38,8 @@ namespace Vortex.Optimizer.Kernels
             dJdX.Cache[^1][0, 0]++;
 
             dJdX.Cache[1] = dJdX.Cache[0];
-            dJdX.Cache[0] = -Alpha * dJdX + Tao * dJdX.Cache[0];
-            return x - (1.0 + Tao) * dJdX.Cache[0] - Tao * dJdX.Cache[1];
+            dJdX.Cache[0] = dJdX * -Alpha + dJdX.Cache[0] * Tao;
+            return x - dJdX.Cache[0] * (1.0 + Tao) - dJdX.Cache[1] * Tao;
         }
 
         public override EOptimizerType Type()
